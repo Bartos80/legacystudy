@@ -14,6 +14,7 @@ const pdf = require("html-pdf");
 const User = require('../models/User');
 var pdfoptionsA4 = { format: 'A4' };
 
+
 // tengo que requerir los modelos para que mongoose me cree las tablas
 const Mesaentrada = require('../models/mesaentrada')
 
