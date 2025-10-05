@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="form-group btn-center mx-auto">
+        <form action="/multa/findnumacta" method="POST">
+            <input type="search" class="form-control" name="numacta" placeholder="Buscar x Nº Acta..." autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar N° Acta
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/multa/findpropietario" method="POST">
+            <input type="search" class="form-control" name="propietario" placeholder="Buscar x Propietario..."
+                autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar x Propietario
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findubicacion" method="POST">
+            <input type="search" class="form-control" name="adrema" placeholder="Buscar x Ubicación..." autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar x Ubicación
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findinciso" method="POST">
+            <input type="search" class="form-control" name="inspector" placeholder="Buscar x Inciso..." autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar x Inciso
+                </button>
+            </div>
+        </form>
+    </div>
+    <br /><br />
+    <a href="/tasas/add" class="btn btn-success btn-block">Cargar Nueva Tasa!</a>
+    <br /><br />
+    {{#each tasas}}
+
+</div>
+
+<div class="text-dark col-md-3">
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="text-dark display-5 card-title d-flex justify-content-between align-items-center"
+                style="color:rgb(15, 15, 15); font-style:oblique; font-weight: bold;">Acta:</h5>
+            <p class="text-secondary display-5 card-title d-flex justify-content-between align-items-center">
+            <p style="color:brown; font-style:oblique; font-weight: bold;">{{ acta }}
+            </p>
+
+            <h5 class="text-dark display-5 card-title d-flex justify-content-between align-items-center"
+                style="color:rgb(15, 15, 15); font-style:oblique; font-weight: bold;">Nº Acta:</h5>
+            <p class="text-secondary display-5 card-title d-flex justify-content-between align-items-center">
+            <p style="color:brown; font-style:oblique; font-weight: bold;">{{ numacta }}
+            </p>
+            <p style="color:brown; font-style:oblique; font-weight: bold;"
+                class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Fecha Creación:</p>
+            <input type="date" value="{{ date }}" style="color: #29292b" disabled></input>
+            <p style="color:brown; font-style:oblique; font-weight: bold;"
+                class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Propietario:
+            </p>
+            <p>{{ propietario }}</p>
+            {{!-- <p>{{ date }}</p>--}}
+            <p style="color:brown; font-style:oblique; font-weight: bold;"
+                class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Ubicación:</p>
+            <p>{{ ubicacion }}</p>
+            <p style="color:brown; font-style:oblique; font-weight: bold;"
+                class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Inciso:</p>
+            <p>{{ inciso }}</p>
+            <br />
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="mx-auto">
+    <br /> <br />
+    <div class="card mx-auto">
+        <div class="card-body">
+            <p class"lead" style="color:red; font-weight: bold;"> No existen Multas Aun...</p>
+            {{!-- <a href="/notes/add" class="btn btn-success btn-block">Cargar Inspección!</a> --}}
+        </div>
+    </div>
+</div>
+{{/each}}
+</div>

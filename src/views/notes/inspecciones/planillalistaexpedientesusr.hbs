@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/find" method="POST">
+      <input type="search" class="form-control" name="numexpediente" placeholder="Buscar x Expediente..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Expediente
+        </button>
+
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/findadrema" method="POST">
+      <input type="search" class="form-control" name="adremaexp" placeholder="Buscar x Adrema..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Adrema
+        </button>
+
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/findiniciador" method="POST">
+      <input type="search" class="form-control" name="iniciadornomyape" placeholder="Buscar x Iniciador..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Iniciador
+        </button>
+
+      </div>
+    </form>
+  </div>
+  <a href="/expedientes/add" class="btn btn-success btn-block">Agregar Expediente!</a>
+  <a href="/expedientes/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+  {{!-- <br /> --}}
+  <div class="form-group btn-center mx-auto">
+    <br />
+    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE MESA DE ENTRADA</h5> --}}
+    {{!-- <br /><br /> --}}
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(221, 157, 18);;text-shadow: 1px 1px 2px black">
+            <td>Nº Expediente</td>
+            <td>Estado</td>
+            <td>Iniciador (N y A)</td>
+            <td>Adrema</td>
+            <td>Director de Obra/ Perito Visor</td>
+            <td>Domicilio Obra</td>
+            <td>Opciones</td>
+            <td>Suplementario</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each expedientes}}
+          <tr>
+            {{!-- <td>{{ _id }}</td> --}}
+            <td>{{ numexpediente }}</td>
+            <td>{{ estado }}</td>
+            <td style="text-transform: lowercase;">{{ iniciadornomyape }}</td>
+            <td>{{ adremaexp }}</td>
+            <td>{{ directorobraoperitovisor }}</td>
+            <td style="text-transform: lowercase;">{{ domicilio }}</td>
+            <td>
+              <a class="dropdown-item" href="/expedientes/list/{{_id}}"
+                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar Inspec</a> 
+              <a class="dropdown-item" href="/expedientes/list/{{_id}}"
+                style="color:rgb(24, 27, 211);font-weight: bold;text-shadow: 1px 1px 2px black;">Info Completa</a>
+               
+              {{!-- <a class="dropdown-item" href="/expedientes/edit/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">Editar</a> --}}
+            </td>
+            <td>
+              <a class="dropdown-item " href="/expedientes/edit/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">Editar</a>
+              {{!-- <form style="" action="/expedientes/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form> --}}
+            </td>
+          </tr>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{!-- {{else}} --}}

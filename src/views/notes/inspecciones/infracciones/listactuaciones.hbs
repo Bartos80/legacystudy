@@ -1,0 +1,177 @@
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header mx-auto">
+            <h3>Datos de Actuación</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Inicio Tramite
+                    <input type="text" name="origeninspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.fechainiciotramite}}" style="color: black; "
+                        disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Propietario
+                    <input style="font-weight: initial;" type="text" name="numinspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.propietario}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Cuit / DNI
+                    <input type="text" name="expediente" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.cuitdni}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Dirección
+                    <input type="text" name="oficio" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.direccion}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Adrema N°
+                    <input type="text" name="acta" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.adrema}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Inspector (N y A)
+                    <input name="adrema" class="form-control" style="color: black;"
+                        value="{{planiregactuainf.inspector}}" disabled> </input>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Zona
+                    <input type="text" name="date" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.zona}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Descripción
+                    <input type="text" name="inspuser" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.descripcion}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Nº intimación
+                    <input type="text" name="informeinspnum" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.numerointimacion}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Tipo de Acta
+                    <input type="text" name="fechaentradinspec" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.tipoacta}}" style="color: black;" disabled>
+                </div>
+                {{!-- <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Inspección Actual
+                    <input type="text" name="inspecfecha" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.inspecfecha}}" style="color: black; font-weight: bold;" disabled>
+                </div> --}}
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Observaciones
+                    <input type="text" name="inspector" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.observacion}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Expediente N°
+                    <input type="text" name="intimacion" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.expediente}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Número de Faja
+                    <input type="text" name="infraccion" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.numfaja}}" style="color: black;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Acta Reiterada
+                    <textarea type="text" name="observacion" class="form-control" placeholder="Sin Información"
+                        style="color: black;" readonly>{{planiregactuainf.actareiterada}}</textarea>
+                </div>                
+                <label style="color:brown; font-weight:bold">Fotos Actuación::</label>
+                <br />
+                <div class="form-group">
+                    <label style="font-weight:bold">Fotos 1:</label>
+                    <br />
+                    {{!-- <img style="border-radius:30px;" src="{{planiregactuainf.path}}" alt="_Imagen No Cargada"
+                        width="400" />
+                    <br /><br /> --}}
+                    {{!-- <a href="{{planiregactuainf.path}}">Ver Foto en Grande</a> --}}
+                    <a href="{{planiregactuainf.path}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.path}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 2:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathdos}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathdos}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 3:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathtres}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathtres}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div id="myDIV" class="form-group">
+                    <label style="font-weight:bold">Foto 4:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathcuatro}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathcuatro}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 5:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathcinco}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathcinco}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 6:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathseis}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathseis}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 7:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathsiete}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathsiete}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 8:</label>
+                    <br />
+                    <a href="{{planiregactuainf.pathocho}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{planiregactuainf.pathocho}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>                    
+                </div>
+                {{!-- <img style="border-radius:30px;" src="{{planiregactuainf.path}}" width="400" /> <br /><br /> --}}
+                <div class="form-group" style="color:grey; font-style:oblique; font-weight: bold;">
+                    ID Usuario. Cargó Inspección
+                    <input type="text" name="fechapasea" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.name}}" style="color: grey" readonly>
+                </div>
+                <div class="form-group"  style="color:grey; font-style:oblique;">
+                    Fecha y Hora de Carga
+                    <input type="text" name="date" class="form-control" placeholder="Sin Información"
+                        value="{{planiregactuainf.date}}" style="color: grey;" disabled>
+                </div>
+            </form>
+            <br />
+            <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                &laquo; Volver Atrás
+            </a>
+        </div>
+    </div>
+
+</div>

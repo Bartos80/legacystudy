@@ -1,0 +1,141 @@
+<script>
+
+    window.onload = function () {
+        document.getElementById('botonfecha').click();
+    }
+
+    function fecha() {
+        var meses = [
+            "Enero", "Febrero", "Marzo",
+            "Abril", "Mayo", "Junio", "Julio",
+            "Agosto", "Septiembre", "Octubre",
+            "Noviembre", "Diciembre"
+        ]
+        var date = new Date();
+        var dia = date.getDate();
+        var mes = date.getMonth();
+        var yyy = date.getFullYear();
+        var fecha = 'Corrientes, ' + dia + ' de ' + meses[mes] + ' de ' + yyy;
+        document.getElementById("fechahoy").value = fecha;
+        document.getElementById("botonfecha").hidden = true;
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Liquidaciones de Infracciones</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row"
+            style="background:#706f6e; color:rgb(0, 0, 0); font-weight:bold; padding:1px; margin-top:1px; margin-bottom:1px; text-align:center; font-size:16px;">
+            <!-- border:1px solid #121213 -->
+            <div class="form-group btn-center mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="color:black" class="form-group">
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center;font-family: Garamond">
+                                <img style=" text-align: center; display: grid; justify-content: center;font-family: Garamond"
+                                    width="220" height="70" src="http://madago:8080/css/img/logomunicipalidad.png" />
+                                <img style=" text-align: center; display: grid; justify-content: center;font-family: Garamond"
+                                    width="70" src="http://madago:8080/css/img/escudomunicipalidad.png" />
+                            </div>
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center; font-family: Garamond">
+                                <h5>MUNICIPALIDAD DE LA CUIDAD DE CORRIENTES</h5>
+                            </div>
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center;font-family: Garamond">
+                                <h5>SECRETARIA DE DESARROLLO URBANO</h5>
+                            </div>
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center;font-family: Garamond">
+                                <h5>SUBSECRETARIA DE FISCALIZACIÓN</h5>
+                            </div>
+                            <div
+                                style="display: grid; justify-content: center;font-family: Garamond; text-align: center;">
+                                <h5>DIRECCIÓN GENERAL DE OBRAS PARTICULARES</h5>
+                            </div>
+                            <h5
+                                style="display: grid; justify-content: center;font-family: Garamond; text-align: center; font-weight:bold;">
+                                ”1983/2023 40 Años de Democracia”</h5>
+                        </div>
+                        <div style="font-family: Arial, Helvetica, sans-serif; text-align: center; margin:20px"
+                            class="card-body">
+                            <p
+                                style="background:#706f6e; color:rgb(0, 0, 0); font-weight:bold; border:2px solid #121213; margin: 10px; margin-bottom:1px; text-align:center; font-size:14px;">
+                                LIQUIDACIONES DE INFRACCIONES</p>
+                            <!-- <h5 style="font-family: Times New Roman, Times, serif; text-align: center;">LIQUIDACIONES DE INFRACCIONES</h5> -->
+
+                            <button id="botonfecha" onclick="fecha()">poner fecha</button>
+                            <div style="font-family: Arial, Helvetica, sans-serif; text-align: right; margin:20px">
+                                <input size=33 id="fechahoy" style="text-align: right;" disabled />
+                            </div>
+                            <div style="font-family: Arial, Helvetica, sans-serif; text-align:left;">
+                                <h4> A la Administración del tribunal de faltas:</h4>
+                                <h4 style="font-weight:bold;"> Dr. Angelina Andres Ignacio</h4>
+                                <h5> S_______/________D:</h5>
+                            </div>
+                            <p style="font-family: Arial, Helvetica, sans-serif; text-align: left;">Se remiten las
+                                actas de infracción,
+                                las
+                                cuales
+                                fueron la bradas por la Dirección Gral. de
+                                Inspeccion
+                                de Obras.</p>
+                            <p style="font-family: Arial, Helvetica, sans-serif; text-align: center;">Corresponde la
+                                Aplicación de la
+                                Ordenanza
+                                5689/12</p>
+                            <h5 style="font-family: Arial, Helvetica, sans-serif; text-align: center;">Art.1.6.5. MULTAS
+                                AL PROPIETARIO</h5>
+                        </div>
+
+                        <table class="table table-sm" style="font-family: Sans-serif; font-size: small">
+                            <tbody>
+
+                                <thead>
+                                    <tr style="background-color: rgb(226, 222, 226); font-family: Arial, Helvetica">
+                                        <td>-</td>
+                                        <td>Acta</td>
+                                        <td>Propietario</td>
+                                        <td>Ubicación</td>
+                                        <td>Inciso</td>
+                                        <td>fórmula</td>
+                                        <td>Monto Total</td>
+                                        <td>Infracción/Paralización</td>
+                                        <td>-</td>
+                                    </tr>
+                                </thead>
+                                {{tablamultas}}
+                            <tfoot>
+                                <!-- <tr>
+                                    <td>{{ fecha }}</td>
+                                    <td>{{ numacta }}</td>
+                                    <td>{{ propietario }}</td>
+                                    <td>{{ ubicacion }}</td>
+                                    <td>{{ inciso }}</td>
+                                    <td>{{ formulamulta }}</td>
+                                    <td>{{ montototal }}</td>
+                                </tr> -->
+                            </tfoot>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</body>
+
+</html>

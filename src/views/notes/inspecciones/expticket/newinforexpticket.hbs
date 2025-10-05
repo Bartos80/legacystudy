@@ -1,0 +1,191 @@
+<script>
+    const funciones = require('./funciones/funciones.js');
+
+    function seleccionarintimacion() {
+        var seleccion = document.getElementById('selectintimacion');
+        var numintimacion = document.getElementById("numintimacion");
+        var darcumplimientoa = document.getElementById("darcumplimientoa");
+        var plazointimacion = document.getElementById("plazointimacion");
+        var labelplazointimacion = document.getElementById("labelplazointimacion");
+        if ((seleccion.selectedIndex == 0)) {
+            numintimacion.value = "x";
+            numintimacion.style.display = "none";
+            darcumplimientoa.style.display = "none";
+            plazointimacion.style.display = "none";
+            plazointimacion.style.display = "none";
+            labelplazointimacion.required = false;
+        } else if ((seleccion.selectedIndex == 1)) {
+            //numintimacion.focus();
+            numintimacion.required = true;
+            numintimacion.value = "";
+            numintimacion.style.display = "block";
+            darcumplimientoa.style.display = "block";
+            plazointimacion.style.display = "block";
+            labelplazointimacion.style.display = "block";
+        }
+    }
+    function seleccionarinfraccion() {
+        var seleccioninf = document.getElementById('selectinfraccion');
+        var numinfraccion = document.getElementById("numinfraccion")
+        var causas = document.getElementById("causas");
+        var labelparaliz = document.getElementById("labelparaliz");
+        var selectparalizacion = document.getElementById("selectparalizacion");
+        if ((seleccioninf.selectedIndex == 0)) {
+            numinfraccion.required = false;
+            numinfraccion.value = "x";
+            numinfraccion.style.display = "none";
+            causas.style.display = "none";
+            labelparaliz.style.display = "none";
+            selectparalizacion.style.display = "none";
+            selectparalizacion.style.display = "none";
+        } else if ((seleccioninf.selectedIndex == 1)) {
+            numinfraccion.required = true;
+            //numinfraccion.focus();
+            numinfraccion.value = "";
+            numinfraccion.style.display = "block";
+            causas.style.display = "block";
+            selectparalizacion.style.display = "block";
+            labelparaliz.style.display = "block";            
+        }
+    }
+    function seleccionarparalizacion() {
+        var selectparalizacion = document.getElementById('selectparalizacion');        
+        var causasparalizacion = document.getElementById("causasparalizacion");        
+        if ((selectparalizacion.selectedIndex == 0)) {                        
+            causasparalizacion.style.display = "none";            
+        } else if ((selectparalizacion.selectedIndex == 1)) {                                            
+            causasparalizacion.style.display = "block";            
+        }
+    } 
+</script>
+
+
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        <div class="car-header mx-auto">
+            <br />
+            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Nuevo Informe Insp exp Ticket</h3>
+        </div>
+        <div class="card-body">
+            <p style="color:red">(*) Obligatorio</p>
+            <form action="/ticket/informeinspeccion/newinforexpticket" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <p style="font-weight: bold;">ID Expediente de Ticket:</p>
+                    <input value="{{expedticket._id}}" style="display:none; font-weight: bold; color:green" type="text"
+                        name="idexpediente" class="form-control" placeholder="No Posee"/>
+                    <label style="font-weight: bold; color:gray" >{{expedticket._id}}</label>
+                    <br/>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">N° Expediente:</p>
+                    <input value="{{expedticket.numticket}}" style="display:none;font-weight: bold; color:green"
+                        type="text" name="numexpediente" class="form-control" placeholder="No Posee"/>
+                        <label style="font-weight: bold; color:green" >{{expedticket.numticket}}</label>
+                    <br/>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">N° Adrema:</p>
+                    <input value="{{expedticket.adrema}}" style="display:none;font-weight: bold; color:green"
+                        type="text" name="numadrema" class="form-control" placeholder="No Posee"/>
+                        <label style="font-weight: bold; color:green" >{{expedticket.adrema}}</label>
+                    <br/>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">N° Ticket:</p>
+                    <input value="{{expedticket.numticket}}" style="display:none;font-weight: bold; color:green"
+                        type="text" name="numticket" class="form-control" placeholder="No Posee"/>
+                        <label style="font-weight: bold; color:green" >{{expedticket.numticket}}</label>
+                    <br/>
+                </div> 
+                <div class="form-group">
+                    <p style="font-weight: bold;">(*) Fecha Entrada a Inspección</p>
+                    <input name="fechaentradainspeccion" class="form-control" placeholder="fecha Entrada Inspección"
+                        type="text" required></input>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">(*) Fecha entrada a Inspección / Inspector:</p>
+                    <input name="fechaeinspectorinspeccion" id="fechaeinspectorinspeccion" class="form-control"
+                        placeholder="Fecha entrada y nombre inspector" type="text"></input>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">Intimación:</p>
+                    <select name="selectintimacion" id="selectintimacion" onclick="seleccionarintimacion()">
+                        <option value="x">No</option>
+                        <option>Si</option>
+                    </select>
+                    </p>
+                </div>
+                <div class="form-group">
+                    {{!-- <p style="font-weight: bold;">(*) Nº Intimación:</p> --}}
+                    <input style="color: green; width:200px; display:none;" type="text" name="numintimacion"
+                        value="x"  id="numintimacion" class="form-control" placeholder="Num. Intimación:" />
+                </div>
+                <div class="form-group">
+                    {{!-- <p style="font-weight: bold;">Informe</p> --}}
+                    <textarea style="display:none;" name="darcumplimientoa" id="darcumplimientoa" class="form-control"
+                        placeholder="Dar Cumplimiento a:"></textarea>
+                </div>                
+                <div class="form-group">
+                    <p id="labelplazointimacion" style="font-weight: bold; display:none;">Plazo de Intimación: (en Horas) </p>
+                    <input style="color: red; width:100px; display:none;font-weight: bold;" type="number" name="plazointimacion" id="plazointimacion" class="form-control"
+                        placeholder=""></input>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">Infracción:</p>
+                    <select name="selectinfraccion" id="selectinfraccion" onclick="seleccionarinfraccion()">
+                        <option value="x">No</option>
+                        <option>Si</option>
+                    </select>
+                    </p>
+                </div>
+                <div class="form-group">
+                    {{!-- <p style="font-weight: bold;">(*) Nº Infracción:</p> --}}
+                    <input style="color: green; width:200px; display:none;" type="text" id="numinfraccion"
+                        value="x" name="numinfraccion" class="form-control" placeholder="Num. Infracción" />
+                </div>
+                <div class="form-group">
+                    {{!-- <p style="font-weight: bold;">Informe</p> --}}
+                    <textarea style="display:none;" name="causas" id="causas" class="form-control"
+                        placeholder="Causas:"></textarea>
+                </div>
+                <div class="form-group">
+                    <p style="color:red;font-weight: bold;display:none;" id="labelparaliz">Paralización:</p>
+                    <select style="font-weight: bold;display:none;" name="paralizacion" id="selectparalizacion" onclick="seleccionarparalizacion()">
+                        <option value="No">No</option>
+                        <option value="Si">Si</option>
+                    </select>
+                    </p>
+                </div>
+                <div class="form-group">
+                    {{!-- <p style="font-weight: bold;">Informe</p> --}}
+                    <textarea style="display:none;" name="causasparalizacion" id="causasparalizacion" class="form-control"
+                        placeholder="Causas Paralización:"></textarea>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">Informe</p>
+                    <textarea name="informe" id="informe" class="form-control" placeholder="Informe"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <p style="font-weight: bold;">Destino / Pase:</p>
+                    <input name="destinopase" id="destinopase" class="form-control"
+                        placeholder="Destino / Pase"></input>
+                </div>
+                <div class="form-group">
+                    <p style="font-weight: bold;">Fecha Salida:</p>
+                    <input type="text" name="fechasalida" id="fechasalida" class="form-control"
+                        placeholder="Fecha Salida"></input>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>
+                </div>
+                <div class="form-group">                  
+                    <p style="color:blue; font-style:oblique; font-weight: bold;"><a href="/expedientes/listadoticket"><i
+                                class="fas fa-list" style='font-size:24px;color:black'></i></a> Volver-Listado</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

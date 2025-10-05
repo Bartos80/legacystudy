@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/css/img/logoredondo.png">
+
+
+  {{!--
+  <link rel="shortcut icon" href="/css/img/obras-y-gestion 3.png"> --}}
+
+
+
+  <title>SALOMON STUDY</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+<body>
+
+  {{!-- <p>Navigation</p> --}}
+  <div class="mx-auto">
+    <img style="border-radius:10px;" height="80" src="/css/img/LogoGarciayAsociados.png" />
+  </div>
+
+  {{>navigation}}
+
+  <div class="navbar-nav mx-auto">
+
+    {{!-- <img style="text-align: center;" height=""
+      src="https://ciudaddecorrientes.gov.ar/sites/default/themes/ciudaddecorrientes/images/bottom-bg.png" /> --}}
+  </div>
+  <main class="container p-5">
+
+    {{!-- <div class="col-md-4 offset-md-4"> --}}
+      {{> messages }}
+      {{> errors }}
+      {{{ body }}}
+      {{!-- {{hoyes}} --}}
+      {{!-- {{> messages }} --}}
+      {{!-- {{> errors }} --}}
+      {{!-- </div> --}}
+    {{!-- {{{ body }}} --}}
+    <br />
+    <br><br>
+
+    <div class="navbar-nav mx-auto">
+      <img style="text-align: center;" height=""
+        src="https://ciudaddecorrientes.gov.ar/sites/default/themes/ciudaddecorrientes/images/bottom-bg.png" />
+      <br />
+      <div style="text-align: center">
+        <a href="tel: 080055556864" target="_blank"><img src="/css/img/pie-pagina.png" /></a>
+        <a href="https://www.google.com/maps/place/25+de+Mayo+1178,+W3400+BCO,+Corrientes/@-27.4643245,-58.8359019,19z/data=!4m5!3m4!1s0x94456ca5cf8581b3:0xc800c5930b7d65f0!8m2!3d-27.4645143!4d-58.835628"
+          target="_blank">
+          <img src="/css/img/pie-pagina2.png" /></a>
+
+        {{!--
+        <script type="text/javascript">
+          var d = new Date();
+          var dia = new Array(7);
+          dia[0] = "Domingo";
+          dia[1] = "Lunes";
+          dia[2] = "Martes";
+          dia[3] = "Miercoles";
+          dia[4] = "Jueves";
+          dia[5] = "Viernes";
+          dia[6] = "Sabado";
+          document.write("Hoy es: " + dia[d.getDay()]);
+        </script> --}}
+
+        <p>TODOS LOS DERECHOS RESERVADOS • CIUDAD DE CORRIENTES • © 2025</p>
+        {{!-- <a href="tel: 080055556864"
+          src="https://ciudaddecorrientes.gov.ar/sites/default/themes/ciudaddecorrientes/images/call_negro.png" /></a>
+        <a target="_blank"
+          href="https://www.google.com/maps/place/25+de+Mayo+1178,+W3400+BCO,+Corrientes/@-27.4643245,-58.8359019,19z/data=!4m5!3m4!1s0x94456ca5cf8581b3:0xc800c5930b7d65f0!8m2!3d-27.4645143!4d-58.835628"
+          src=('https://ciudaddecorrientes.gov.ar/sites/default/files/direccion_negro.png') /></a> --}}
+      </div>
+    </div>
+  </main>
+  {{!-- 3 llaves son sintaxis de handlebars --}}
+
+  {{!-- <p>Footer</p> --}}
+  <!-- SCRIPT -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

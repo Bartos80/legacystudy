@@ -1,0 +1,126 @@
+<script>
+    function seleccionarPermisoEdificacion() {
+        var selecpermisoedificacion = document.getElementById('selecpermisoedificacion');
+        var labelplanoregistrado = document.getElementById("labelplanoregistrado")
+        var permisoedificacionnumero = document.getElementById("permisoedificacionnumero");
+        var labelfechapermisoedificacion = document.getElementById("labelfechapermisoedificacion");
+        var fechapermisoedificacion = document.getElementById("fechapermisoedificacion");
+        if ((selecpermisoedificacion.selectedIndex == 0)) {
+            permisoedificacionnumero.required = false;
+            fechapermisoedificacion.required = false;
+            labelplanoregistrado.style.display = "none";
+            permisoedificacionnumero.style.display = "none";
+            labelfechapermisoedificacion.style.display = "none";
+            fechapermisoedificacion.style.display = "none";
+        } else if ((selecpermisoedificacion.selectedIndex == 1)) {
+            permisoedificacionnumero.required = true;
+            fechapermisoedificacion.required = true;
+            labelplanoregistrado.style.display = "block";
+            permisoedificacionnumero.style.display = "block";
+            labelfechapermisoedificacion.style.display = "block";
+            fechapermisoedificacion.style.display = "block";
+        }
+    }
+    function seleccionarPermisoDemolicion() {
+        var selecpermisodemolicion = document.getElementById('selecpermisodemolicion');
+        var labelplanovisado = document.getElementById("labelplanovisado")
+        var permisodemolicionnumero = document.getElementById("permisodemolicionnumero");
+        var labelfechapermisodemolicion = document.getElementById("labelfechapermisodemolicion");
+        var fechapermisodemolicion = document.getElementById("fechapermisodemolicion");
+        if ((selecpermisodemolicion.selectedIndex == 0)) {
+            permisodemolicionnumero.required = false;
+            fechapermisodemolicion.required = false;
+            labelplanovisado.style.display = "none";
+            labelfechapermisodemolicion.style.display = "none";
+            permisodemolicionnumero.style.display = "none";
+            fechapermisodemolicion.style.display = "none";
+        } else if ((selecpermisodemolicion.selectedIndex == 1)) {
+            permisodemolicionnumero.required = true;
+            fechapermisodemolicion.required = true;
+            labelplanovisado.style.display = "block";
+            permisodemolicionnumero.style.display = "block";
+            labelfechapermisodemolicion.style.display = "block";
+            fechapermisodemolicion.style.display = "block";
+        }
+    }
+</script>
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 style="color:red; text-shadow: 0 0 3px #FF0000;">Editar Expediente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editexpediente/{{expediente._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="card-body">
+                    {{!-- <form action="/notes/editinfraccion/{{expediente._id}}?_method=PUT" method="POST"> --}}
+                        {{!-- <input type="hidden" name="_method" value="PUT"> --}}
+                        <div class="form-group">
+                            Juzgado:
+                            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Juzgado"
+                                value="{{expediente.juzgado}}">
+                        </div>
+                        <div class="form-group">
+                            Secretaria:
+                            <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Secretaria"
+                                value="{{expediente.secretaria}}">
+                        </div>
+                        <div class="form-group">
+                            Expediente Nº:
+                            <input type="text" name="numexpediente" class="form-control" placeholder="Num.Expediente"
+                                value="{{expediente.numexpediente}}">
+                        </div>
+                        <div class="form-group">
+                            Tipo:
+                            <input type="text" id="tipo" name="tipo" class="form-control" placeholder="Tipo"
+                                value="{{expediente.tipo}}">
+                        </div>
+                        <div class="form-group">
+                            Ultima Notificación:
+                            <input type="text" id="ultimanotificacion" name="ultimanotificacion" class="form-control" placeholder="Ultima Notificación"
+                                value="{{expediente.ultimanotificacion}}">
+                        </div>
+                        <div class="form-group">
+                            Partes:
+                            <input type="text" id="partes" name="partes" class="form-control" placeholder="Partes"
+                                value="{{expediente.partes}}">
+                        </div>
+                        <div class="form-group">
+                            Estado:
+                            <input type="text" id="estado" name="estado" class="form-control"
+                                placeholder="Estado" value="{{expediente.estado}}">
+                        </div>                        
+                        <div class="form-group">
+                            Foto Expediente:
+                            <input type="file" name="inspectorinf" class="form-control" placeholder="Foto Expediente"
+                                value="{{expediente.fotoexpediente}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            Fecha inicio entrada:
+                            <input type="text" id="date" name="date" class="form-control"
+                                placeholder="Date" value="{{expediente.date}}">
+                        </div>
+                        <div class="form-group">
+                            user:
+                            <input type="text" name="detallegeneral" class="form-control" placeholder="user"
+                                value="{{expediente.name}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">
+                                Grabar
+                            </button>
+                        </div>
+                        {{!-- <div class="form-group">
+                            <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes"><i
+                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
+                        </div> --}}
+                        <br />
+                        <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                            &laquo; Volver Atrás
+                        </a>
+                        <br /><br />
+                    </form>
+                </div>
+        </div>
+
+    </div>

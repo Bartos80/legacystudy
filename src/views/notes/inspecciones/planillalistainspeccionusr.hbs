@@ -1,0 +1,139 @@
+<script>
+    function desabilitar() {
+        //document.getElementById("verfactura").hidden = true;
+        //document.getElementById("descargarfactura").hidden = true;
+        document.getElementById("tabla").hidden = true;
+    }
+</script>
+
+<div class="row">
+    {{!-- <br /><br /> --}}
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findinspeccion" method="POST">
+            <input type="search" class="form-control" name="numinspeccion" placeholder="Buscar x Nº Inspección..."
+                autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar Inspección
+                </button>
+
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findexpediente" method="POST">
+            <input type="search" class="form-control" name="expediente" placeholder="Buscar x Expediente..."
+                autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar Expediente
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findadrema" method="POST">
+            <input type="search" class="form-control" name="adrema" placeholder="Buscar x Adrema..." autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar Adrema
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findinspector" method="POST">
+            <input type="search" class="form-control" name="inspector" placeholder="Buscar x Inspector..." autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar Inspector
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <a href="/notes/add" class="btn btn-success btn-block">Agregar Inspección!</a>
+    <a href="/notes/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+    {{!-- <br /> --}}
+    <div class="form-group btn-center mx-auto">
+        {{!-- <br /> --}}
+        {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+            LISTADO DE MESA DE ENTRADA</h5> --}}
+        <br />
+        <div class="form-group btn-center mx-auto">
+            <table id="tabla" class="table table-dark table-hover">
+                <thead>
+                    <tr style="background-color: rgb(172, 214, 22);font-weight: bold;; color:black;">
+                        {{!-- <td style="visibility:collapse;">ID</td> --}}
+                        <td>Origen Inspección</td>
+                        <td>N° Inspección</td>
+                        {{!-- <td>Domicilio Particular</td> --}}
+                        <td>Expediente</td>
+                        <td>Oficio</td>
+                        <td>Acta</td>
+                        <td>Adrema</td>
+                        <td>Fecha-Inspec.</td>
+                        <td>Inspector</td>
+                        <td>N° Intimaciones</td>
+                        <td>N° Infracciones</td>
+                        <td>+Datos</td>
+                        <td>Opciones</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each inspeccions}}
+                    <tr>
+                        {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+                        <td>{{ origeninspeccion }}</td>
+                        <td>{{ numinspeccion }}</td>
+                        <td>{{ expediente }}</td>
+                        <td>{{ oficio }}</td>
+                        <td>{{ acta }}</td>
+                        <td>{{ adrema }}</td>
+                        <td>{{ fechaentradinspec }}</td>
+                        <td>{{ inspector }}</td>
+                        <td>{{ intimacion }}</td>
+                        <td>{{ infraccion }}</td>
+                        <td>
+                            <a class="dropdown-item" href="/intimaciones/add/{{_id}}"
+                                style="color:rgb(24, 211, 71);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar
+                                Intimación</a>
+                            <a class="dropdown-item" href="/infracciones/add/{{_id}}"
+                                style="color:rgb(24, 211, 71);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar
+                                Infracción</a>
+                            <a class="dropdown-item" href="/notes/edit/{{_id}}"
+                                style="color:rgb(165, 196, 28)">Editar</a>
+                        </td>
+                        <td>
+                            <a class="dropdown-item" href="/notes/list/{{_id}}"
+                                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info</a>
+                            {{!-- <a class="dropdown-item" href="/notes/delete/{{_id}}"
+                                style="color:rgb(17, 231, 10);font-weight: bold;text-shadow: 1px 1px 2px rgb(235, 11, 11)">Borrar</a> --}}
+                            {{!-- <form onSubmit="return confirm('Desea Borrar?')"
+                                action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                                    Borrar ADM
+                                </button>
+                            </form> --}}
+                        </td>
+                    </tr>
+                    {{else}}
+                    <div class="mx-auto">
+                        <br /> <br />
+                        <div class="card mx-auto">
+                            <div class="card-body">
+                                <p class"lead" style="color:red; font-weight: bold;"> No existen Inspección Aun...</p>
+                                {{!-- <a href="/notes/add" class="btn btn-success btn-block">Cargar Inspección!</a> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        desabilitar()
+                    </script>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>

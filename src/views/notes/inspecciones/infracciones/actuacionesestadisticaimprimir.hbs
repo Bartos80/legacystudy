@@ -1,0 +1,125 @@
+<script>
+
+    window.onload = function () {
+        document.getElementById('botonfecha').click();
+    }
+    lp
+    function fechahoy() {
+        var meses = [
+            "Enero", "Febrero", "Marzo",
+            "Abril", "Mayo", "Junio", "Julio",
+            "Agosto", "Septiembre", "Octubre",
+            "Noviembre", "Diciembre"
+        ]
+        var date = new Date();
+        var dia = date.getDate();
+        var mes = date.getMonth();
+        var yyy = date.getFullYear();
+        var fecha = 'Corrientes, ' + dia + ' de ' + meses[mes] + ' de ' + yyy;
+        document.getElementById("fechahoy").value = fecha;
+        document.getElementById("botonfecha").hidden = true;
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mesa de Entradas - Estadistica</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row"
+            style="background:#706f6e; color:rgb(0, 0, 0); font-weight:bold; padding:1px; margin-top:10px; margin-bottom:1px; text-align:center; font-size:16px;">
+            <!-- border:1px solid #121213 -->
+            <div class="form-group btn-center mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="color:black" class="form-group">
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center;font-family: Garamond">
+                                <img style=" text-align: center; display: grid; justify-content: center;font-family: Garamond"
+                                    width="250" height="95"
+                                    src="https://ciudaddecorrientes.gov.ar/sites/default/themes/ciudaddecorrientes/logo.png" />
+                                <img style=" text-align: center; display: grid; justify-content: center;font-family: Garamond"
+                                    width="100"
+                                    src="https://ciudaddecorrientes.gov.ar/sites/default/files/escudo_municipalidad_nuevo-01_2.png" />
+                            </div>
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center; font-family: Garamond">
+                                <h5>MUNICIPALIDAD DE LA CUIDAD DE CORRIENTES</h5>
+                            </div>
+                            <div
+                                style=" text-align: center; display: grid; justify-content: center;font-family: Garamond">
+                                <h5>REGISTRO DE ACTUACIONES</h5>
+                            </div>
+                            <div
+                                style="display: grid; justify-content: center;font-family: Garamond; text-align: center;">
+                                <h5>DIRECCIÓN GENERAL DE OBRAS PARTICULARES</h5>
+                            </div>
+                            <h5
+                                style="display: grid; justify-content: center;font-family: Garamond; text-align: center; font-weight:bold;">
+                                ”1983/2023 40 Años de Democracia”</h5>
+                        </div>
+                        <div style="font-family: Arial, Helvetica, sans-serif; text-align: center; margin:20px"
+                            class="card-body">
+                            <p
+                                style="background:#706f6e; color:rgb(0, 0, 0); font-weight:bold; border:2px solid #121213; margin: 20px; margin-bottom:1px; text-align:center; font-size:16px;">
+                                ACTUACIONES (ESTADISTICA)</p>
+                            <!-- <h5 style="font-family: Times New Roman, Times, serif; text-align: center;">LIQUIDACIONES DE INFRACCIONES</h5> -->
+                            </br>
+                            <button id="botonfecha" onclick="fechahoy()">poner fecha</button>
+                            <div style="font-family: Arial, Helvetica, sans-serif; text-align: right; margin:20px">
+                                <input size=27 id="fechahoy" style="text-align: right;" disabled />
+                            </div>
+                        </div>
+                        <div id="montototalcobrado">  
+                            <p style="color:rgb(55, 22, 202)">                                
+                                <p style="color:green; font-weight: bold;">
+                                Totales Generales: {{contador}}
+                                <p />
+                            <p />
+
+                        </div>
+                        <table class="table table-condensed table-bordered table-striped"
+                            style="font-family: Serif; font-size: smaller">
+                            <tbody>
+                                <thead>
+                                    <tr style="background-color: rgb(226, 222, 226)">
+                                        <td>-</td>
+                                        <td>FechaInicio</td>
+                                        <td>Propietario</td>
+                                        <td>Cuit/Dni</td>
+                                        <td>Dirección</td>
+                                        <td>adrema</td>
+                                        <td>Inspector</td>
+                                        <td>ActaReiterada</td>
+                                        <td>-</td>
+                                    </tr>
+                                </thead>
+                                {{tablaactuaciones}}
+                            <tfoot>
+
+                            </tfoot>
+                            </tbody>
+                            <h5
+                                style="display: grid; justify-content: center;font-family: Garamond; text-align: center;">
+                                ============================== ============================== </h5>
+                        </table>
+                        <p style="color:rgb(29, 131, 179)">Filtro realizado por: {{tipofiltro}} </p>
+                        <h4 style="color:red; border-radius:70px; box-shadow: 5px 5px 5px black;">Dato Buscado:
+                            {{filtro}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

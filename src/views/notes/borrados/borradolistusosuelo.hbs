@@ -1,0 +1,154 @@
+<script>
+
+  function desactivarelementos() {
+    document.getElementById("tabla").style.color = "rgb(22, 166, 214)"
+    document.getElementById("botones").style.display = "none";
+    document.getElementById("recargarlistado").style.display = "none";
+    document.getElementById("recuperartodosmesa").disabled = true;
+  }
+
+</script>
+
+
+<div>
+  {{!-- <br /><br /> --}}
+  <div class="row center" id="botones">    
+    <div class="form-group btn-center mx-auto">
+      <form action="/usosuelo/borradofindlistainiciador" method="POST">
+        <input size=15 type="search" class="form-control" name="nomyape" placeholder="Buscar x NyApellido..." autofocus />
+        <div class="form-group">
+          <button class="btn btn-warning btn-block btn-sm" type="submit">
+            Buscar Iniciador
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+      <form action="/usosuelo/borradofindlistadni" method="POST">
+        <input  size=15 id="inputbuscardni" type="search" class="form-control" name="dni" placeholder="Buscar x DNI..." />
+        <div class="form-group">
+          <button class="btn btn-warning btn-block btn-sm" type="submit">
+            Buscar DNI
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+      <form action="/usosuelo/borradofindlistafechaentrada" method="POST">
+        <input  size=15 id="inputbuscarfecha" type="search" class="form-control" name="fechaingreso"
+          placeholder="Buscar x Fecha..." />
+        <div class="form-group">
+          <button class="btn btn-warning btn-block btn-sm" type="submit">
+            Buscar Fecha
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+      <form action="/usosuelo/borradofindlistaexpediente" method="POST">
+        <input  size=15 id="inputbuscarexpediente" type="search" class="form-control" name="numexpediente"
+          placeholder="Buscar x Expediente..." />
+        <div class="form-group">
+          <button class="btn btn-warning btn-block btn-sm" type="submit">
+            Buscar Expediente
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <form class="btn-block" onSubmit="return confirm('Desea Recuperar Todos los Datos?')" style=""
+    action="/usosuelo/recuperarlistado?_method=PUT" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <button id="recuperartodosmesa" class="btn btn-warning btn-block btn-sm" type="submit">
+      Recuperar Todos los Registros eliminados de Uso de Suelo
+    </button>
+  </form>
+  <a id="recargarlistado" href="/usosuelo/borradolistado" class="btn btn-outline-warning btn-block btn-sm">
+    Recargar Listado
+  </a>
+  <a href="/usosuelo/listado" class="btn btn-success btn-block btn-sm">Volver a Uso de Suelo</a>
+
+  <div class="car-header mx-auto">
+    <br />
+    <h5 style="color: yellow;text-shadow: 3px 2px 10px black">
+      Papelera de Uso de Suelo</h5>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    {{!-- <br /> --}}
+    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE BORRADOS DE MESA DE ENTRADA</h5> --}}
+    <br />
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover" id="tabla">
+        <thead>
+          <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+            {{!-- <td style="visibility:collapse;">ID</td> --}}            
+            <td>Expediente</td>
+            <td>Iniciador</td>
+            <td>D.N.I.</td>
+            <td>Contacto</td>
+            <td>Fecha/Ingreso</td>
+            <td>Fecha/Egreso</td>
+            <td>Opciones</td>
+            <td>Suplementario</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each usosuelo}}
+          <tr>
+            {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}} 
+            <td style="color:yellowgreen">{{expediente}}</td>           
+            <td>{{ iniciador }}</td>
+            <td>{{ dni }}</td>
+            <td>{{ contacto }}</td>
+            <td>{{ fechaingresodus }}</td>
+            <td>{{ fechaegresodus }}</td>
+            <td>
+              <a class="dropdown-item" href="/usosuelo/infoborradolist/{{_id}}"
+                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info</a>
+              {{!-- <a class="dropdown-item" href="/usosuelo/edit/{{_id}}" style="color:rgb(165, 196, 28)">Editar</a>
+              --}}
+            </td>
+            <td>
+              {{!-- <form onSubmit="return confirm('Desea enviar Papelera?')" style="box-shadow: 3px 4px;"
+                action="/usosuelo/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form> --}}
+              {{!-- **** EL BORRADO DE ABAJO ES DEFINITIVO PARA ADMIN --}}
+              <form onSubmit="return confirm('Desea Restaurar?')" style=""
+                action="/usosuelo/marcadeleterestaurar/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-info btn-block btn-sm" type="submit">
+                  Restaurar
+                </button>
+              </form>
+              <form onSubmit="return confirm('Desea Borrar definitivamente?')" style=""
+                action="/usosuelo/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+
+        {{else}}
+        <script>
+          desactivarelementos()
+        </script>
+        <div class="mx-auto">
+          <div class="card mx-auto">
+            <div class="card-body">
+              <p class"lead" style="color:red; font-weight: bold;"> No existe Dato Buscado en Papelera...</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+  {{!-- {{else}} --}}

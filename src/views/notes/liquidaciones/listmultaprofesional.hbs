@@ -1,0 +1,165 @@
+<script>
+    function impreso() {
+        const arr = {{multas.fechaimpreso}};        
+        let fecha = arr.split(' ');
+        const year = fecha[0];
+        const month = fecha[1]
+        const day = fecha[2]
+        const hours = fecha[3]
+        const fechai = month + "/" + day + "/" + year + " " + hours;
+        console.log("IMPRESO",arr,"fecha",fechai);
+        document.getElementById("fechaimpreso").value = fecha
+    }
+    //impreso();
+</script>
+
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header mx-auto">
+            <h4 style="color: #3d0ee7; font-weight: bold;"
+                class="text-dark card-title d-flex justify-content-between align-items-center">
+                Info Suplementaria Profesional (Multas/Tasas)
+            </h4>
+            <div class="card-body">
+                <form>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Fecha:
+                        <input type="date" name="fecha" class="form-control" placeholder="Sin Información"
+                            value="{{multas.fecha}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Numº Acta:
+                        <input type="text" name="numacta" class="form-control" placeholder="No Especificado"
+                            value="{{ multas.numacta }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Acta:
+                        <input type="text" name="acta" class="form-control" placeholder="Sin Información"
+                            value="{{multas.acta}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Formula Utilizada:
+                        <input type="text" name="formulamulta" class="form-control" placeholder="Sin Información"
+                            value="{{multas.formulamulta}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    {{!-- <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Observaciones/Posible variación fórmula:
+                        <input type="text" name="observaciones" class="form-control" placeholder="Sin Información"
+                            value="{{ multas.observaciones }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Tasa Utilizada:
+                        <input type="text" name="tcactual" class="form-control" placeholder="Sin Información"
+                            value="{{ multas.tcactual }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Con Sanción/ Sin Sanción:
+                        <input type="text" name="sancionprof" class="form-control" placeholder="Sin Información"
+                            value="{{ multas.sancionprof }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Porcentaje Sanción:
+                        <input type="text" name="sancionprorc" class="form-control" placeholder="Sin Información"
+                            value="{{ multas.sancionprorc }}" style="color: black; font-weight: bold;" disabled>
+                    </div> --}}
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Apercibimiento Profesional:
+                        <input type="text" name="apercibimientoprofesional" class="form-control"
+                            placeholder="Sin Información" value="{{ multas.apercibimientoprofesional }}"
+                            style="color: black; font-weight: bold;" disabled>
+                    </div>
+
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Reiteraciones:
+                        <input type="text" name="reiteracion" class="form-control" placeholder="Sin Información"
+                            value="{{ multas.reiteracion }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Monto Total Cobrado:
+                        <input type="text" name="montototal" class="form-control" placeholder="Sin Información"
+                            value="{{multas.montototal}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Expediente:
+                        <input type="text" name="expediente" class="form-control" placeholder="Sin Información"
+                            value="{{multas.expediente}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Adrema:
+                        <input type="text" name="adrema" class="form-control" placeholder="Sin Información"
+                            value="{{multas.adrema}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Infracción/Infracción y Paralización:
+                        <input type="text" name="infraccionoparalizacion" class="form-control"
+                            placeholder="Sin Información" value="{{multas.infraccionoparalizacion}}"
+                            style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Impreso:
+                        <input type="text" name="impreso" class="form-control" placeholder="Sin Información"
+                            value="{{multas.impreso}}" style="color: rgb(255, 0, 0); font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Fecha Impresion:
+                        <input type="text" name="fechaimpreso" id="fechaimpreso" class="form-control"
+                            placeholder="Sin Información" value="{{multas.fechaimpreso}}"
+                            style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Re-Impreso:
+                        <input type="text" name="reimpreso" class="form-control" placeholder="Sin Información"
+                            value="{{multas.reimpreso}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Veces Re-Impreso:
+                        <input type="text" name="reimpreso" class="form-control" placeholder="Sin Información"
+                            value="{{multas.vecesreimpreso}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Fecha Re-Impresion:
+                        <input type="text" name="fechareimpreso" id="fechareimpreso" class="form-control"
+                            placeholder="Sin Información" value="{{multas.fechareimpreso}}"
+                            style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Datos Exactos Creación Multa:
+                        <input type="text" id="date" name="date" class="form-control" placeholder="Sin Información"
+                            value="{{multas.date}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Cargo Tasas/Multa:
+                        <input type="text" name="name" class="form-control" placeholder="Sin Información"
+                            value="{{multas.name}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Borrado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{multas.borrado}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Fecha Borrado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{multas.fechaborrado}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Usuario que realizo el borrado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{multas.userborrado}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <br />
+                    <p style="color:green; font-style:oblique; font-weight: bold;"><a
+                            href="/multas/reimprimirfacturaprofesional/{{multas._id}}"><i class="fa fa-print"
+                                style='font-size:24px;color:blue'></i></a> Re-Imprimir</p>
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/multas"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado Multas
+                        Propietarios</p>
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/multasprofesionales"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado Multas
+                        Profesionales</p>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

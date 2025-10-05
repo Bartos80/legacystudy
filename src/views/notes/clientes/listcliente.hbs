@@ -1,0 +1,58 @@
+<div class="col-md-5 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header mx-auto">
+            <p></p>
+            <div class="card-body">
+                <h4 style="color: rgb(26, 51, 189); font-weight: bold;">- Información Cliente -</h4>
+                <form action="/clientes/list/{{clientes._id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="form-group">
+                        Nombre y Apellido:
+                        <input onkeyup="ShowName();" type="text" class="form-control" id="nyacliente"
+                            name="nyacliente" value="{{clientes.nyacliente}}" disabled>
+                    </div>                    
+                    <div class="form-group">
+                        Documento (D.N.I.):
+                        <input type="number" class="form-control" id="dnicliente" name="dnicliente"
+                            value="{{clientes.dnicliente}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        Domicilio:
+                        <input type="text" class="form-control" id="domiciliocliente" name="domiciliocliente"
+                            value="{{clientes.domiciliocliente}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        Telefono/Celular:
+                        <input onkeyup="ponerminuscula()" id="telefonocliente" type="text" class="form-control"
+                            name="telefonocliente" value="{{clientes.telefonocliente}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        Correo/Email:
+                        <input onkeyup="ponerminuscula()" id="emailcliente" type="text" class="form-control"
+                            name="emailcliente" value="{{clientes.emailcliente}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        Localidad/Cuidad:
+                        <input type="text" class="form-control" name="localidadcliente"
+                            value="{{clientes.localidadcliente}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        Observaciones:
+                        <input type="text" class="form-control" name="observacionescliente" placeholder="Observaciones"
+                            value="{{clientes.observacionescliente}}" disabled>
+                    </div>
+                    <div>
+                        <br />
+                        <a class="btn btn-warning btn-block"  href="/clientes/edit/{{clientes._id}}" style="color:white; font-weight: bold;">
+                            Editar Cliente
+                        </a>
+                        <br /><br />
+                        <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                            &laquo; Volver Atrás
+                        </a>
+                        <br /><br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

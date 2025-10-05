@@ -1,0 +1,168 @@
+<script>
+    function seleccionarPermisoEdificacion() {
+        var selecpermisoedificacion = document.getElementById('selecpermisoedificacion');
+        var labelplanoregistrado = document.getElementById("labelplanoregistrado")
+        var permisoedificacionnumero = document.getElementById("permisoedificacionnumero");
+        var labelfechapermisoedificacion = document.getElementById("labelfechapermisoedificacion");
+        var fechapermisoedificacion = document.getElementById("fechapermisoedificacion");
+        if ((selecpermisoedificacion.selectedIndex == 0)) {
+            permisoedificacionnumero.required = false;
+            fechapermisoedificacion.required = false;
+            labelplanoregistrado.style.display = "none";
+            permisoedificacionnumero.style.display = "none";
+            labelfechapermisoedificacion.style.display = "none";
+            fechapermisoedificacion.style.display = "none";
+        } else if ((selecpermisoedificacion.selectedIndex == 1)) {
+            permisoedificacionnumero.required = true;
+            fechapermisoedificacion.required = true;
+            labelplanoregistrado.style.display = "block";
+            permisoedificacionnumero.style.display = "block";
+            labelfechapermisoedificacion.style.display = "block";
+            fechapermisoedificacion.style.display = "block";          
+        }
+    }
+    function seleccionarPermisoDemolicion() {
+        var selecpermisodemolicion = document.getElementById('selecpermisodemolicion');
+        var labelplanovisado = document.getElementById("labelplanovisado")
+        var permisodemolicionnumero = document.getElementById("permisodemolicionnumero");
+        var labelfechapermisodemolicion = document.getElementById("labelfechapermisodemolicion");
+        var fechapermisodemolicion = document.getElementById("fechapermisodemolicion");
+        if ((selecpermisodemolicion.selectedIndex == 0)) {
+            permisodemolicionnumero.required = false;
+            fechapermisodemolicion.required = false;
+            labelplanovisado.style.display = "none";
+            labelfechapermisodemolicion.style.display = "none";
+            permisodemolicionnumero.style.display = "none";
+            fechapermisodemolicion.style.display = "none";
+        } else if ((selecpermisodemolicion.selectedIndex == 1)) {
+            permisodemolicionnumero.required = true;
+            fechapermisodemolicion.required = true;
+            labelplanovisado.style.display = "block";
+            permisodemolicionnumero.style.display = "block";
+            labelfechapermisodemolicion.style.display = "block";
+            fechapermisodemolicion.style.display = "block";          
+        }
+    }
+</script>
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 style="color:red; text-shadow: 0 0 3px #FF0000;">Editar Ticket de Expediente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editexpedticket/{{expedticket._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="card-body">
+                    {{!-- <form action="/notes/editinfraccion/{{expedticket._id}}?_method=PUT" method="POST"> --}}
+                        {{!-- <input type="hidden" name="_method" value="PUT"> --}}
+                        <div class="form-group">
+                            expedticket Nº:
+                            <input type="text" name="numticket" class="form-control" placeholder="Num.expedticket"
+                                value="{{expedticket.numticket}}">
+                        </div>
+                        <div class="form-group">
+                            Estado:
+                            <input type="text" name="estado" class="form-control" placeholder="Estado"
+                                value="{{expedticket.estado}}">
+                        </div>                        
+                        <div class="form-group">
+                            Iniciador (NyA):
+                            <input type="text" name="iniciador" class="form-control" placeholder="Iniciador"
+                                value="{{expedticket.iniciador}}">
+                        </div>
+                        <div class="form-group">
+                            Domicilio Iniciador:
+                            <input type="text" name="domicilio" class="form-control" placeholder="Domicilio Iniciador"
+                                value="{{expedticket.domicilio}}">
+                        </div>
+                        <div class="form-group">
+                            Adrema:
+                            <input type="text" name="adrema" class="form-control" placeholder="Adrema"
+                                value="{{expedticket.adrema}}">
+                        </div>
+                        <div class="form-group">
+                            Fiduciario, propietario o socio (AyN):
+                            <input type="text" name="fiduciariopropsocio" class="form-control"
+                                placeholder="Fiduciario propietario o socio" 
+                                value="{{expedticket.fiduciariopropsocio}}">
+                        </div>
+                        <div class="form-group">
+                            Domicilio Fiduciario, propietario o socio:
+                            <input type="text" name="direcfiduciariopropsocio" class="form-control"
+                                placeholder="Domicilio Fiduciario propietario o socio"
+                                value="{{expedticket.direcfiduciariopropsocio}}"></input>
+                        </div>
+                        <div class="form-group">
+                            Correo Fiduciario, propietario o socio:
+                            <input type="text" name="correofiduciariopropsocio" class="form-control"
+                                placeholder="Correo Fiduciario propietario o socio"
+                                value="{{expedticket.correofiduciariopropsocio}}">
+                        </div>
+
+                        <div class="form-group">
+                            Director de obra o perito visor:
+                            <input type="text" name="directorobraoperitovisor" class="form-control"
+                                placeholder="Director de obra o perito visor"
+                                value="{{expedticket.directorobraoperitovisor}}">
+                        </div>
+                        <div class="form-group">
+                            Destino de Obra:
+                            <input type="text" name="destinodeobra" class="form-control" placeholder="Destino de Obra"
+                                value="{{expedticket.destinodeobra}}">
+                        </div>
+
+                        <div class="form-group">
+                            Superficie terreno:
+                            <input type="number" step="0.01" name="superficieterreno" class="form-control"
+                                placeholder="Superficie terreno" 
+                                value="{{expedticket.superficieterreno}}">
+                        </div>
+                        <div class="form-group">
+                            Superficie a construir:
+                            <input type="text" name="superficieaconstruir" class="form-control"
+                                placeholder="Superficie a construir" 
+                                value="{{expedticket.superficieaconstruir}}">
+                        </div>
+                        <div class="form-group">
+                            Superficie subsuelo, planta baja:
+                            <input  type="number" step="0.01" name="superficiesubsueloplantabaja" class="form-control"
+                                placeholder="Superficie subsuelo, planta baja"
+                                value="{{expedticket.superficiesubsueloplantabaja}}"></input>
+                        </div>
+                        <div class="form-group">
+                            Superficie primer piso y más pisos:
+                            <input  type="number" step="0.01" name="superficieprimerpisoymaspisos" class="form-control"
+                                placeholder="Superficie primer piso y más pisos"
+                                value="{{expedticket.superficieprimerpisoymaspisos}}">
+                        </div>
+                        <div class="form-group">
+                            Observación:
+                            <input type="text" name="observaciones" class="form-control" placeholder="Observación"
+                                value="{{expedticket.observaciones}}">
+                        </div>
+                        <div class="form-group">
+                            Permiso obra o acta infracción:
+                            <input type="text" name="permisobraoactainfrac" class="form-control"
+                                placeholder="Permiso obra o acta infracción"
+                                value="{{expedticket.permisobraoactainfrac}}">
+                        </div>                        
+                        <div class="form-group">
+                            user:
+                            <input type="text" name="name" class="form-control" placeholder="user"
+                                value="{{expedticket.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">
+                                Grabar
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/listadoticket"><i
+                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
+                        </div>
+                    </form>
+                </div>
+        </div>
+
+    </div>

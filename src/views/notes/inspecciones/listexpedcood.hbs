@@ -1,0 +1,113 @@
+<script>
+
+    function ShowName(name) {
+        var writtenName = ""
+        writtenName = document.getElementById(name).value;
+        document.getElementById(name).value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+
+    function ponerMayuscula(mayu) {
+        let ex = document.getElementById(mayu);
+        ex.value = ex.value.toUpperCase();
+        //let ex = document.getElementById("numexpediente");
+        //ex.value = ex.value.toUpperCase();
+        //let y = document.getElementById("adremaexp");
+        //y.value = y.value.toUpperCase();
+    }
+
+
+    function ponerminuscula(minus) {
+        let ex = document.getElementById(minus);
+        ex.value = ex.value.toLocaleLowerCase();
+        //let ex = document.getElementById("correofiduciariopropsocio");
+        //ex.value = ex.value.toLocaleLowerCase();
+    }
+</script>
+
+<div class="col-md-6 mx-auto">
+    <div class="card">
+        <div class="car-header mx-auto">
+            <br />
+            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Listado Coordinación de Inspección
+            </h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/newexpedcoordin" method="POST">
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Expediente Nº:
+                    <input style="color:black" onkeyup="ponerMayuscula('numexpediente')" id="numexpediente" type="text" name="numexpediente"
+                        class="form-control" placeholder="Expediente Nº" value="{{expedcoordinado.numexpediente}}"
+                        disabled>
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Estado:
+                    <input style="color:black" onkeyup="ShowName('codigoinspector')" type="text" id="estado" name="estado"
+                        class="form-control" placeholder="Código Inspector" value="{{expedcoordinado.estado}}"
+                        disabled />
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Código Inspector:
+                    <input style="color:black" onkeyup="ShowName('codigoinspector')" type="text" id="codigoinspector" name="codigoinspector"
+                        class="form-control" placeholder="Código Inspector" value="{{expedcoordinado.codigoinspector}}"
+                        disabled />
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Inspector (NyA):
+                    <input style="color:black" onkeyup="ShowName('inspector')" type="text" id="inspector" name="inspector"
+                        class="form-control" placeholder="Inspector (NyA)" value="{{expedcoordinado.inspector}}"
+                        disabled />
+                </div>
+                <div style="color:brown;font-weight: bold;" class="form-group">
+                    Iniciador (NyA):
+                    <input style="color:black" onkeyup="ShowName('iniciadornomyape')" type="text" id="iniciadornomyape"
+                        name="iniciadornomyape" class="form-control" placeholder="Iniciador (NyA)"
+                        value="{{expedcoordinado.iniciadornomyape}}" disabled />
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Domicilio:
+                    <input style="color:black" onkeyup="ShowName('domicilio')" type="text" id="domicilio" name="domicilio"
+                        class="form-control" placeholder="Domicilio" value="{{expedcoordinado.domicilio}}" disabled />
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Adrema Nº:
+                    <input style="color:black" onkeyup="ponerMayuscula('adremaexp')" id="adremaexp" name="adremaexp" class="form-control"
+                        placeholder="Nº Adrema" value="{{expedcoordinado.adremaexp}}" disabled></input>
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Fecha Inspección:
+                    <input style="color:black" type="text" name="fechainicioentrada" class="form-control" placeholder="Fecha inicio entrada"
+                        value="{{expedcoordinado.fechainspeccion}}" disabled></input>
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Hora Inspección:
+                    <input style="color:black" type="text" name="horainspeccion" class="form-control" placeholder="Fecha Hora Inspección"
+                        value="{{expedcoordinado.horainspeccion}}" disabled></input>
+                </div>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    Resultado Inspección:
+                    <input style="color:black" type="text" name="horainspeccion" class="form-control" placeholder="Fecha Hora Inspección"
+                        value="{{expedcoordinado.resultadoinspeccion}}" disabled></input>
+                </div>
+                <p></p>
+                 <div style="color:brown;font-weight: bold;" class="form-group">
+                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                        &laquo; Volver Atrás
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

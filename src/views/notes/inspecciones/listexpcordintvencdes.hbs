@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/intimacionesvencidas/findinspector" method="POST">
+      <input type="search" class="form-control" name="inspector" placeholder="Buscar x Inspector..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Inspector
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/intimacionesvencidas/find" method="POST">
+      <input type="search" class="form-control" name="numexpediente" placeholder="Buscar x Expediente..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Expediente
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/intimacionesvencidas/findadrema" method="POST">
+      <input type="search" class="form-control" name="adremaexp" placeholder="Buscar x Adrema..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Adrema
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/intimacionesvencidas/findiniciador" method="POST">
+      <input type="search" class="form-control" name="iniciadornomyape" placeholder="Buscar x Iniciador..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Iniciador
+        </button>
+      </div>
+    </form>
+  </div>
+  <a href="/expedientes/coordinados/intiminfracdesestimados" class="btn btn-outline-warning btn-block btn-sm">Recargar
+    Listado Completo</a> 
+<a href="/expedientes/coordinados/intimacionesvencidas" class="btn btn-outline-danger btn-block btn-sm">
+    Volver Intimaciones vencidas </a>
+  <a href="/expedientes/coordinados" class="btn btn-outline-success btn-block btn-sm">Volver Expedientes Coordinados</a>
+  {{!-- <br /> --}}
+  <div class="form-group btn-center mx-auto">
+    <br />
+    <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE INTIMACIONES VENCIDAS DESESTIMADAS</h5>
+    <br /><br />
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr id="cabezeralistado" style="background-color: rgb(221, 157, 18);;text-shadow: 1px 1px 2px black">
+            <td>Estado</td>
+            <td>Nº Expediente</td>
+            <td>Adrema</td>
+            <td>Codigo-Insp</td>
+            <td>Iniciador (N y A)</td>
+            <td>Domicilio</td>
+            <td>Venc.Intim.</td>
+            <td>Opciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each expedcoordresultado}}
+          <tr>
+            {{!-- <td>{{ _id }}</td> --}}
+            <td style="color:yellow;">{{ estado }}</td>
+            <td style="text-shadow: 1px 1px 2px black;color:rgb(42, 209, 20);">{{ numexpediente }}</td>
+            <td style="text-shadow: 1px 1px 2px black;color:rgb(42, 209, 20);">{{ adremaexp }}</td>
+            <td>{{codigoinspector}}</td>
+            <td style="text-transform: capitalize;">{{ iniciadornomyape }}</td>
+            <td style="text-transform: capitalize;">{{ domicilio }}</td>
+            <td style="font-weight: bold;text-shadow: 1px 1px 2px black;color:rgb(42, 209, 20);">
+              {{ vencimientointimacin }}</td>
+            <td>              
+              <form
+                onSubmit="return confirm('Desea Desestimar Intimación?')" style=""
+                action="/expedcoordinmov/borrarmarcadesestimar/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button  id="borrardesestimar" class="btn btn-outline-warning btn-block btn-sm" type="submit">
+                  Recuperar Desestimar
+                </button>
+              </form>
+              <a class="dropdown-item " href="/expedcoordin/intimacionesvencidas/list/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Info Intimación
+              </a>
+              <form onSubmit="return confirm('Desea enviar Papelera?')" style=""
+                action="/expedcoordinmovdes/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-outline-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+          </tr>
+          {{else}}
+          <script>
+            document.getElementById('cabezeralistado').style.display = "none";
+          </script>
+          <div class="mx-auto">
+            <div class="card mx-auto">
+              <div class="card-body">
+                <p style="color:red; font-weight: bold;">
+                  No se Encontraron Movimientos de Intimaciones Vencidas!
+                </p>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{{!-- {{else}} --}}

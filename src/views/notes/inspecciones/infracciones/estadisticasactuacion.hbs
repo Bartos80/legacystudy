@@ -1,0 +1,521 @@
+<script>
+
+    function selecdatoestadistico() {
+        const seleccion = document.getElementById('datoestadistico');
+        const x = document.getElementById("armarestadistica")
+        //const imp = document.getElementById("imprimiresadistica")
+        const p = document.getElementById("propietario")
+        const a = document.getElementById("adrema")
+        const na = document.getElementById("inspector")
+        const fd = document.getElementById("desde")
+        const fa = document.getElementById("hasta")
+        const lt = document.getElementById("lugartipo")
+        //var mtc = document.getElementById("montototalcobrado")        
+        if (seleccion.selectedIndex == 0) {
+            x.disabled = true;
+            //imp.disabled = true;
+            p.disabled = true;
+            a.disabled = true;
+            na.disabled = true;
+            fd.disabled = true;
+            fa.disabled = true;
+            lt.disabled = true;
+            fd.style.hidden = true;
+            fa.style.hidden = true;
+            p.type = "text";
+            a.type = "text";
+            na.type = "text";
+            fd.type = "text";
+            fa.type = "text";
+            lt.type = "text";
+        } else if (seleccion.selectedIndex == 1) {
+            x.disabled = false;
+            //imp.disabled = false;
+            p.disabled = false;
+            //p.style.background= "rgb(130, 185, 192)";
+            a.disabled = true;
+            na.disabled = true;
+            fd.disabled = true;
+            fa.disabled = true;
+            lt.disabled = true;
+            p.type = "search";
+            a.type = "text";
+            na.type = "text";
+            fd.type = "text";
+            fa.type = "text";
+            fd.style.hidden = true;
+            fa.style.hidden = true;
+            p.required = true;
+            a.required = false;
+            na.required = false;
+            fd.required = false;
+            fa.required = false;
+            lt.required = false;
+        } else if (seleccion.selectedIndex == 2) {
+            x.disabled = false;
+            //imp.disabled = false;
+            p.disabled = true;
+            a.disabled = false;
+            na.disabled = true;
+            fd.disabled = true;
+            fa.disabled = true;
+            lt.disabled = true;
+            p.type = "text";
+            a.type = "search";
+            na.type = "text";
+            fd.type = "text";
+            fa.type = "text";
+            fd.style.hidden = true;
+            fa.style.hidden = true;
+            p.required = false;
+            a.required = true;
+            na.required = false;
+            fd.required = false;
+            fa.required = false;
+            lt.required = false;
+        } else if (seleccion.selectedIndex == 3) {
+            x.disabled = false;
+            //imp.disabled = false;
+            p.disabled = true;
+            a.disabled = true;
+            na.disabled = false;
+            fd.disabled = true;
+            fa.disabled = true;
+            lt.disabled = true;
+            p.type = "text";
+            a.type = "text";
+            na.type = "search";
+            fd.type = "text";
+            fa.type = "text";
+            fd.style.hidden = true;
+            fa.style.hidden = true;
+            p.required = false;
+            a.required = false;
+            na.required = true;
+            fd.required = false;
+            fa.required = false;
+            lt.required = false;
+        } else if (seleccion.selectedIndex == 4) {
+            x.disabled = false;
+            //imp.disabled = false;
+            p.disabled = true;
+            a.disabled = true;
+            na.disabled = true;
+            fd.disabled = false;
+            fa.disabled = false;
+            lt.disabled = true;
+            p.type = "text";
+            a.type = "text";
+            na.type = "text";
+            fd.type = "date";
+            fa.type = "date";
+            fd.style.hidden = false;
+            fa.style.hidden = false;
+            p.required = false;
+            a.required = false;
+            na.required = false;
+            fd.required = true;
+            fa.required = true;
+            lt.required = false;
+        } else if (seleccion.selectedIndex == 5) {
+            x.disabled = false;
+            //imp.disabled = false;
+            p.disabled = true;
+            a.disabled = true;
+            na.disabled = false;
+            fd.disabled = false;
+            fa.disabled = false;
+            lt.disabled = true;
+            p.type = "text";
+            a.type = "text";
+            //na.type = "text";
+            fd.type = "date";
+            fa.type = "date";
+            fd.style.hidden = false;
+            fa.style.hidden = false;
+            p.required = false;
+            a.required = false;
+            na.required = true;
+            fd.required = true;
+            fa.required = true;
+            lt.required = false;
+        } else if (seleccion.selectedIndex == 6) {
+            x.disabled = false;
+            //imp.disabled = false;
+            p.disabled = true;
+            a.disabled = true;
+            na.disabled = true;
+            fd.disabled = true;
+            fa.disabled = true;
+            lt.disabled = false;
+            p.type = "text";
+            a.type = "text";
+            //na.type = "text";
+            fd.type = "date";
+            fa.type = "date";
+            fd.style.hidden = false;
+            fa.style.hidden = false;
+            p.required = false;
+            a.required = false;
+            na.required = false;
+            fd.required = false;
+            fa.required = false;
+            lt.required = true;
+        }
+    }
+    function selecdatoestadisticoo() {
+        const selecciono = document.getElementById('datoestadisticoo');
+        //const xo = document.getElementById("armarestadisticao")
+        const impo = document.getElementById("imprimiresadisticao")
+        const po = document.getElementById("propietarioo")
+        const ao = document.getElementById("adremao")
+        const nao = document.getElementById("inspectoro")
+        const fdo = document.getElementById("desdeo")
+        const fao = document.getElementById("hastao")
+        const lto = document.getElementById("lugartipoo")
+        //var mtc = document.getElementById("montototalcobrado")        
+        if (selecciono.selectedIndex == 0) {
+            //xo.disabled = true;
+            impo.disabled = true;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            lto.disabled = true;
+            fdo.style.hidden = true;
+            fao.style.hidden = true;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "text";
+            fao.type = "text";
+            lto.type = "text";
+        }
+        else if (selecciono.selectedIndex == 1) {
+            //xo.disabled = false;
+            impo.disabled = false;
+            po.disabled = false;
+            //p.style.background= "rgb(130, 185, 192)";
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            lto.disabled = true;
+            po.type = "search";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "text";
+            fao.type = "text";
+            fdo.style.hidden = true;
+            fao.style.hidden = true;
+            po.required = true;
+            ao.required = false;
+            nao.required = false;
+            fdo.required = false;
+            fao.required = false;
+        } else if (selecciono.selectedIndex == 2) {
+            //xo.disabled = false;
+            impo.disabled = false;
+            po.disabled = true;
+            ao.disabled = false;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            lto.disabled = true;
+            po.type = "text";
+            ao.type = "search";
+            nao.type = "text";
+            fdo.type = "text";
+            fao.type = "text";
+            fdo.style.hidden = true;
+            fao.style.hidden = true;
+            po.required = false;
+            ao.required = true;
+            nao.required = false;
+            fdo.required = false;
+            fao.required = false;
+        } else if (selecciono.selectedIndex == 3) {
+            //xo.disabled = false;
+            impo.disabled = false;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = false;
+            fdo.disabled = true;
+            fao.disabled = true;
+            lto.disabled = true;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "search";
+            fdo.type = "text";
+            fao.type = "text";
+            fdo.style.hidden = true;
+            fao.style.hidden = true;
+            po.required = false;
+            ao.required = false;
+            nao.required = true;
+            fdo.required = false;
+            fao.required = false;
+        } else if (selecciono.selectedIndex == 4) {
+            //xo.disabled = false;
+            impo.disabled = false;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = false;
+            fao.disabled = false;
+            lto.disabled = true;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "date";
+            fao.type = "date";
+            fdo.style.hidden = false;
+            fao.style.hidden = false;
+            po.required = false;
+            ao.required = false;
+            nao.required = false;
+            fdo.required = true;
+            fao.required = true;
+        } else if (selecciono.selectedIndex == 5) {
+            //xo.disabled = false;
+            impo.disabled = false;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = false;
+            fdo.disabled = false;
+            fao.disabled = false;
+            lto.disabled = true;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "date";
+            fao.type = "date";
+            fdo.style.hidden = false;
+            fao.style.hidden = false;
+            po.required = false;
+            ao.required = false;
+            nao.required = true;
+            fdo.required = true;
+            fao.required = true;
+        } else if (selecciono.selectedIndex == 6) {
+            //xo.disabled = false;
+            impo.disabled = false;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            lto.disabled = false;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "date";
+            fao.type = "date";
+            fdo.style.hidden = false;
+            fao.style.hidden = false;
+            po.required = false;
+            ao.required = false;
+            nao.required = false;
+            fdo.required = false;
+            fao.required = false; 
+            lto.required = true;
+        }
+    }
+
+    function selectfiltro() {
+        const selecfiltro = document.getElementById('formfiltro');
+        const fde = document.getElementById("formdatoestadistico")
+        const fdei = document.getElementById("formdatoestadisticoo")
+
+        if (selecfiltro.selectedIndex == 0) {
+            fde.style.display = "block";
+            fdei.style.display = "none";
+        } else if (selecfiltro.selectedIndex == 1) {
+            fde.style.display = "none";
+            fdei.style.display = "block";
+        }
+    }
+    function recargar() {
+        javascript: location.reload()
+    }
+    function actualizar() {
+        location.reload(true)
+    }
+    // Función para actualizar cada 4 segundos(4000 milisegundos)
+    function limpiarpagina() {
+        setInterval("actualizar()", 5000);
+    }
+</script>
+
+
+<div class="row">
+    <div class="form-group btn-center mx-auto">
+        <div style="color: rgb(172, 214, 22);text-shadow: 1px 1px 2px black">
+            <h5>Registro Actuaciones - ESTADISTICAS (Jefe Inspector/Administrador)</h5>
+        </div>
+        <label style="font-weight: bold; color:rgb(252, 93, 2)" for="formfiltro"></label>
+        <select style="text-align:center;background-color: #112fda;" name="formfiltro" id="formfiltro"
+            onclick="selectfiltro()">
+            <option value=0> Busqueda filtro </option>
+            <option value=1> Imprimir/Descargar Busqueda filtro </option>
+            {{!-- <option value=2>Imprimir/Descargar Busqueda filtro</option> --}}
+        </select>
+        <p></p>
+        <form action="/actuaciones/sacarestadistica" method="POST" id="formdatoestadistico">
+            <label style="font-weight: bold; color:rgb(252, 93, 2)" for="datoestadistico">Selección:</label>
+            <select name="datoestadistico" id="datoestadistico" onclick="selecdatoestadistico()">
+                <option value=0>Elija Filtro de Estadistica</option>
+                <option value=1>por Propietario/dni</option>
+                <option value=2>por Expediente/Adrema</option>
+                <option value=3>por Inspector</option>
+                <option value=4>por Fechas</option>
+                <option value=5>inspector/fecha</option>
+                <option value=6>por Lugar/tipo</option>
+            </select>
+            <br />
+            <input class="pl-3" type="text" size="12" id="propietario" name="propietario"
+                placeholder="Propietario/DNI..." disabled />
+            <input class="pl-3" type="text" size="12" id="adrema" name="adrema" placeholder="Expediente/Adrema..."
+                disabled />
+            {{!-- <input class="pl-3" type="text" id="inspector" name="inspector" placeholder="inspector..." disabled />
+            --}}
+            <input class="pl-3" type="text" id="inspector" name="inspector" placeholder="Inspector..." disabled />
+            <input class="pl-3" type="text" size="12" id="desde" name="desde" placeholder="Desde..." disabled />
+            <input class="pl-3" type="text" size="12" id="hasta" name="hasta" placeholder="Hasta..." disabled />
+            {{!-- <input class="pl-3" type="text" size="12" id="lugartipo" name="lugartipo" placeholder="Lugar/Tipo..."
+                disabled /> --}}
+            <select name="lugartipo" id="lugartipo" disabled>
+                <option value="Obras">Obras</option>
+                <option value="Via-Publica">Vía Pública</option>
+                <option value="Carteleria">Cartelería</option>
+            </select>
+
+            <p></p>
+            <div class="form-group">
+                <button id="armarestadistica" class="btn btn-success btn-block btn-sm" type="submit" disabled>
+                    Armar Estadistica...
+                </button>
+            </div>
+        </form>
+        <form style="display:none" action="/actuaciones/descargarestadisticaactu" method="POST" Target="_blank"
+            id="formdatoestadisticoo">
+            <label style="font-weight: bold; color:rgb(252, 93, 2)" for="datoestadisticoo">Selección:</label>
+            <select name="datoestadisticoo" id="datoestadisticoo" onclick="selecdatoestadisticoo()">
+                <option value=0>Elija Filtro de Estadistica</option>
+                <option value=1>por Propietario/dni</option>
+                <option value=2>por Expediente/Adrema</option>
+                <option value=3>por Inspector</option>
+                <option value=4>por Fechas</option>
+                <option value=5>inspector/fecha</option>
+                <option value=6>por Lugar/Tipo</option>
+            </select>
+            <br />
+            <input class="pl-3" type="text" size="12" id="propietarioo" name="propietario"
+                placeholder="Propietario/DNI..." disabled />
+            <input class="pl-3" type="text" size="12" id="adremao" name="adrema" placeholder="Expediente/Adrema..."
+                disabled />
+            {{!-- <input class="pl-3" type="text" id="inspectoro" name="inspector" placeholder="inspector..."
+                disabled /> --}}
+            <input class="pl-3" type="text" id="inspectoro" name="inspector" placeholder="Inspector..." disabled />
+            <input class="pl-3" type="text" size="12" id="desdeo" name="desde" placeholder="Desde..." disabled />
+            <input class="pl-3" type="text" size="12" id="hastao" name="hasta" placeholder="Hasta..." disabled />
+            {{!-- <input class="pl-3" type="text" size="12" id="lugartipoo" name="lugartipo" placeholder="Lugar/Tipo..."
+                disabled /> --}}
+            <select name="lugartipo" id="lugartipoo" disabled>
+                <option value="Obras">Obras</option>
+                <option value="Via-Publica">Vía Pública</option>
+                <option value="Carteleria">Cartelería</option>
+            </select>
+            <p></p>
+            <button onclick="limpiarpagina()" id="imprimiresadisticao" class="btn btn-warning btn-block btn-sm"
+                type="submit" disabled>
+                Armar e Imprimir Estadistica...
+            </button>
+            <p></p>
+        </form>
+        {{!--
+        <div class="form-group">
+            <a id="volverlistado" href="/multas" class="btn btn-outline-warning btn-block btn-sm">Volver
+                Listado Liquidaciones</a>
+        </div> --}}
+        <a href="/actuaciones/listado" class="btn btn-dark btn-block btn-sm">Volver Listado Actuaciones</a>
+    </div>
+    <br /><br />
+    <div class="form-group btn-center mx-auto">
+        <br />
+        <div class="form-group btn-center mx-auto">
+            <table class="table table-striped table-dark table-bordered">
+                <thead>
+                    <tr id="tdtable" style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+                        {{!-- <td>_ID</td> --}}
+                        <td>Fecha-Inicio</td>
+                        <td>Iniciador</td>
+                        <td>Domicilio Particular</td>
+                        <td>Cuit-Dni</td>
+                        <td>Adrema</td>
+                        <td>Zona</td>
+                        <td>Inspector</td>
+                        <td>Opciones</td>
+                        {{!-- <td>Suplementario</td> --}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each planiregactuainf}}
+                    <tr>
+                        {{!-- <td>
+                            <input onclick="agregarimpresion()" type="checkbox" href="/multas/list/{{_id}}" id='_id'
+                                value=''
+                                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black"></input>
+                        </td> --}}                       
+                        <td style="color:rgb(172, 214, 22)">{{ fechainiciotramite }}</td>
+                        <td style="">{{ propietario }}</td>
+                        <td style="">{{ direccion }}</td>
+                        <td style="text-transform: lowercase;">{{ cuitdni }}</td>
+                        <td style="text-transform: uppercase;">{{ adrema }}</td>
+                        <td style="text-transform: lowercase;">{{ zona }}</td>
+                        <td style="">{{ inspector }}</td>
+                        <td>
+                            {{!-- <a class="dropdown-item" href="/mesaentrada/add/{{_id}}"
+                                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar</a>
+                            --}}
+                            <a class="dropdown-item" href="/actuaciones/list/{{_id}}"
+                                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info</a>
+                        </td>
+                        {{!-- <td> --}}
+                            {{!--
+                        <td>
+                            <a class="dropdown-item" href="/multas/reimprimirfactura/{{_id}}"
+                                style="color:rgb(123, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black">ReImprimir</a>
+                        </td> --}}
+
+                    </tr>
+                    {{else}}
+                    <div class="mx-auto">
+                        <br /> <br />
+                        <div class="card mx-auto">
+                            <div class="card-body">
+                                <p class"lead" style="color:red; font-weight: bold;"> No se Encontraron Datos...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{/each}}
+                </tbody>
+                <div id="msg"></div>
+            </table>
+            <div id="montototalcobrado">
+                <h4 style="text-align: center;color:rgb(55, 22, 202); font-weight: bold;">
+                    Totales:
+                    <h4 />
+                    <h4
+                        style="text-align: center; background-color: #b1b2b9; border-radius: 12px; border-color: grey; border-style: solid; color: #ff0000; font-size: 26px; font-weight: bold;">
+                        {{contador}}
+                        <h4 />
+            </div>
+        </div>
+
+    </div>
+
+</div>

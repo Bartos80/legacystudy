@@ -1,0 +1,94 @@
+<div class="row">
+  {{!-- <br /><br /> --}}
+  <div class="form-group btn-center mx-auto">
+    <form action="/ticketexp/findlistaticket" method="POST">
+      <input type="search" class="form-control" name="numeroticket" placeholder="Buscar x Ticket..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Num.Ticket
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/ticketexp/findlistainiciador" method="POST">
+      <input type="search" class="form-control" name="iniciador" placeholder="Buscar x NyApellido..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Iniciador
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/ticketexp/findlistaadrema" method="POST">
+      <input type="search" class="form-control" name="adrema" placeholder="Buscar x Adrema..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Adrema
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <a href="/expedientes/listadoticket/add" class="btn btn-success btn-block">Agregar Ticket!</a>
+  <a href="/expedientes/listadoticket" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+
+  <div class="form-group btn-center mx-auto">
+    {{!-- </br> --}}
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(61, 120, 153);text-shadow: 1px 1px 2px black">
+            {{!-- <td style="visibility:collapse;">ID</td> --}}
+            <td>Estado</td>
+            <td>N° Ticket</td>
+            <td>Iniciador</td>
+            <td>Ubicación</td>
+            <td>Destino Obra</td>
+            {{!-- <td>Email</td> --}}
+            <td>Adrema</td>
+            {{!-- <td>Direc-Obra</td> --}}            
+            <td>Opciones</td>
+            <td>Suplementario</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each expedticket}}
+          <tr style = "color: red; font-size: small"></tr>
+            {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+            <td style = "color: yellow; font-size: small">{{ estado }}</td>
+            <td>{{ numticket }}</td>
+            <td>{{ iniciador }}</td>
+            <td style = "font-size: small">{{ domicilio }}</td>
+            <td style = "font-size: small">{{ destinodeobra }}</td>
+            <td>{{ adrema }}</td>
+            <td>
+              <a class="dropdown-item" href="/expedientes/ticket/list/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">Datos del Ticket</a>
+              <a class="dropdown-item" href="/expedientes/ticket/ticketexpedconinformeinspeccion/{{_id}}"
+                style="color:rgb(24, 211, 33);font-weight: bold;text-shadow: 1px 1px 2px black;">Listar Ticket Exp</a>
+
+            </td>
+            <td>
+              <a class="dropdown-item" href="/expedientes/listadoticket/add/{{_id}}"
+                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar Infor.Exp.Ticket</a>
+              <a class="dropdown-item " href="/expedientes/ticket/edit/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">Editar Ticket Exp</a>
+              <form
+                onSubmit="return confirm('Recuerde que se borrará el expediente pero no sus informes. Desea Borrar?')"
+                style="" action="/expedientes/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{!-- {{else}} --}}

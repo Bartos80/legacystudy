@@ -1,0 +1,139 @@
+<div class="col-md-7 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>Editar Inspeccción</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/inspecciones/editnote/{{note._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Origen de Inspección
+                    <input type="text" name="origeninspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{note.origeninspeccion}}" style="color: #1d0ee7; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Num.Inspección
+                    <input type="text" name="numinspeccion" class="form-control" placeholder="Num.Inspección"
+                        value="{{note.numinspeccion}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Expediente
+                    <input type="text" name="expediente" class="form-control" placeholder="Expediente"
+                        value="{{note.expediente}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Adrema
+                    <input name="adrema" class="form-control" value="{{note.adrema}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha
+                    <input type="date" name="date" class="form-control" value="{{note.date}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Cargó la Inspección
+                    <input type="text" name="inspuser" class="form-control" placeholder="Cargó la Inspección"
+                        value="{{note.inspuser}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Nº Informe Inspección
+                    <input type="text" name="informeinspnum" class="form-control" placeholder="Nº Informe Inspección"
+                        value="{{note.informeinspnum}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Entrada Inspección
+                    <input type="date" name="fechaentradinspec" class="form-control"
+                        placeholder="Fecha Entrada Inspección" value="{{note.fechaentradinspec}}">
+                </div>
+                {{!-- <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Inspección Actual
+                    <input type="date" name="inspecfecha" class="form-control" placeholder="Fecha Inspección Actual"
+                        value="{{note.inspecfecha}}">
+                </div> --}}
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Inspector (N y A)
+                    <input type="text" name="inspector" class="form-control" placeholder="Inspector (N y A)"
+                        value="{{note.inspector}}">
+                </div>
+
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Número de Intimaciones
+                    <input type="text" name="intimacion" class="form-control" placeholder="Número de Intimaciones"
+                        value="{{note.intimacion}}" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Número de Infracciones
+                    <input type="text" name="infraccion" class="form-control" placeholder="Número de Infracciones"
+                        value="{{note.infraccion}}" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Observaciones
+                    <textarea type="text" name="observacion" class="form-control"
+                        placeholder="Observaciones">{{note.observacion}}</textarea>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Pase a Num.Destino
+                    <input type="text" name="paseanumdestino" class="form-control" placeholder="Pase a Num.Destino"
+                        value="{{note.paseanumdestino}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Pase a
+                    <input type="text" name="pasea" class="form-control" placeholder="Pase A" value="{{note.pasea}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Pase A
+                    <input type="date" name="fechapasea" class="form-control" placeholder="Fecha Pase A"
+                        value="{{note.fechapasea}}">
+                </div>
+                {{!-- <label style="color:brown; font-weight:bold">Fotos Inspección::</label> --}}
+                {{!-- <br />
+                <img style="border-radius:30px;" src="{{note.path}}" width="300" /> <br /><br /> --}}
+                <br />
+                <label style="font-weight:bold">Las Fotos no son Editables!</label>
+                <br />
+                <div>
+                    Foto 1:
+                    <br />
+                    <img style="border-radius:20px;" src="{{note.path}}" alt="_Imagen no Disponible" width="230"
+                        height="200" />
+                    <br />
+                    <br />
+                    Foto 2:
+                    <br />
+                    <img style="border-radius:20px;" src="{{note.pathdos}}" alt="_Imagen no Disponible" width="230"
+                        height="200" />
+                    <br />
+                    <br />
+                    Foto 3:
+                    <br />
+                    <img style="border-radius:20px;" src="{{note.pathtres}}" alt="_Imagen no Disponible" width="230"
+                        height="200" />
+                    <br />
+                    <br />
+                    Foto 4:
+                    <br />
+                    <img style="border-radius:20px;" src="{{note.pathcuatro}}" alt="_Imagen no Disponible" width="230"
+                        height="200" />
+                    <br />
+                </div>
+                <br /><br />
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Usuario que Cargó Inspección
+                    <input type="text" name="user" class="form-control" placeholder="Fecha Pase A" value="{{note.name}}"
+                        disabled>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>
+                </div>
+                <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/notes/listado"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
+                    {{!-- <button class="btn btn-primary btn-block" href="/notes">
+                        Volver
+                    </button> --}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

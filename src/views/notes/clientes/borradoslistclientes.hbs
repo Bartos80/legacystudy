@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="form-group btn-center mx-auto">
+    <form action="/clientes/findnombrecliente" method="POST">
+      <input type="search" class="form-control" name="namecliente" placeholder="Buscar x Nombre..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar x Nombre
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/clientes/findapellidocliente" method="POST">
+      <input type="search" class="form-control" name="lastnamecliente" placeholder="Buscar x NyApellido..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar x Apellido
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/clientes/findlistadni" method="POST">
+      <input type="search" class="form-control" name="dnicliente" placeholder="Buscar x DNI..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar DNI
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/clientes/findlistafechaentrada" method="POST">
+      <input type="search" class="form-control" name="date" placeholder="Buscar x Fecha Alta Cliente..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Fecha alta
+        </button>
+      </div>
+    </form>
+  </div>
+  <a href="/clientes/borradolistado" class="btn btn-warning btn-block btn-sm">
+    Recargar Listado
+  </a>
+  <a href="/clientes/listado" class="btn btn-success btn-block">
+    Ir lista Clientes!
+  </a>
+
+  <div class="form-group btn-center mx-auto">
+    <br />
+    <div class="form-group btn-center mx-center">
+      <h5 style="color:black; text-shadow: 2px 2px 15px #000000;">
+      LISTADO DE BORRADOS DE MESA DE CLIENTES</h5>      
+      
+    </div>
+    <div class="form-group btn-center mx-auto">      
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+            <td>Nombre</td>
+            <td>Apellido</td>
+            <td>D.N.I.</td>
+            <td>Eliminó</td>
+            <td>Borrado</td>
+            <td>Fecha Borrado</td>
+            <td>Opciones</td>
+            <td>Suplementario</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each clientes}}
+          <tr>
+            {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+            {{!-- <td>{{ sector }}</td> --}}
+            <td style="text-transform: lowercase;">{{ namecliente }}</td>
+            <td style="text-transform: lowercase;">{{ lastnamecliente }}</td>
+            <td>{{ dnicliente }}</td>
+            <td style="text-transform: lowercase;">{{ userborrado }}</td>
+            <td>{{ borrado }}</td>
+            <td>{{ fechaborrado }}</td>
+            <td>
+              <form onSubmit="return confirm('Desea Restaurar?')" style=""
+                action="/clientes/marcadeleterestaurar/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-success btn-block btn-sm" type="submit">
+                  Restaurar Cliente
+                </button>
+              </form>
+            </td>
+            <td>
+              {{!-- **** EL BORRADO DE ABAJO ES DEFINITIVO PARA ADMIN --}}
+              <form onSubmit="return confirm('Desea Borrar?')" style="" action="/clientes/delete/{{_id}}?_method=DELETE"
+                method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar Definitivo
+                </button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{!-- {{else}} --}}

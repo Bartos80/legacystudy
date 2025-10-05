@@ -1,0 +1,133 @@
+<script>
+    function volveratras() {
+        window.history.go(-1);
+        //window.history.back();
+    }
+    function imprimir() {
+        if (parseInt(navigator.appVersion) > 4)
+            window.print();
+    }
+</script>
+
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header">
+            <h3>Datos de Informe de Expediente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editinformexpediente/{{expedinspeccion._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                    ID Expediente:
+                    <input type="text" name="idexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.idexpediente}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Número de Expediente:
+                    <input type="text" name="numexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.numexpediente}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Número de Adrema:
+                    <input name="numadrema" class="form-control" value="{{expedinspeccion.numadrema}}"
+                        style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha de Entrada a Inspección:
+                    <input type="string" name="fechaentradainspeccion" class="form-control"
+                        placeholder="Sin Información" value="{{expedinspeccion.fechaentradainspeccion}}"
+                        style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha de Inspección e Inspector a Cargo:
+                    <input type="text" name="fechaeinspectorinspeccion" class="form-control"
+                        placeholder="Sin Información" value="{{expedinspeccion.fechaeinspectorinspeccion}}"
+                        style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Número de Intimación:
+                    <input type="text" name="numintimacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.numintimacion}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Intimación para Dar Cumplimiento a:
+                    <input type="text" name="darcumplimientoa" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.darcumplimientoa}}" style="color: green;" disabled></input>
+                </div>
+                <div class="form-group">
+                    Plazo a Cumplir para la Intimación:
+                    <input type="text" name="plazointimacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.plazointimacion}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Número de Infracción:
+                    <input type="text" name="numinfraccion" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.numinfraccion}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Causas para la Infracción:
+                    <input type="text" name="causas" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.causas}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Paralización:
+                    <input type="text" name="paralizacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.paralizacion}}" style="color: green;" disabled>
+                </div>
+
+                <div class="form-group">
+                    Causas para la Correnpondiente Paralización:
+                    <input type="text" name="causasparalizacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.causasparalizacion}}" style="color: green;" disabled>
+                </div>
+                {{!-- <div class="form-group">
+                    Informe General:
+                    <input type="text" name="informe" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.informe}}" style="color: green;" disabled>
+                </div> --}}
+                <div class="form-group">
+                    Informe General:
+                    {{!-- <input type="textarea" name="informe" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.informe}}" style="color: green;" disabled> --}}
+                    <textarea cols="70" rows="4" readonly>{{expedinspeccion.informe}}</textarea>
+                </div>
+                <div class="form-group">
+                    Destino Pase a:
+                    <textarea type="text" name="destinopase" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.destinopase}}" style="color: green;" disabled></textarea>
+                </div>
+                <div class="form-group">
+                    Fecha de Salida:
+                    <input type="string" name="fechasalida" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.fechasalida}}" style="color: green;" disabled>
+                </div>
+                {{!-- <div class="form-group">
+                    ID Usuario que Cargó Informe:
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.user}}" style="color: red;" disabled>
+                </div> --}}
+                <div class="form-group">
+                    Usuario. Cargó Infracción
+                    <input type="text" name="name" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.name}}" style="color: red;" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha y Hora de Carga
+                    <input type="datetime" name="date" class="form-control" placeholder="Sin Información"
+                        value="{{expedinspeccion.date}}" style="color: red;" disabled>
+                </div>
+
+                {{!-- IMPRIMIR PAGINA WEB ACTUAL --}}
+                {{!-- <a href="#" style="color:antiquewhite" onClick="imprimir();">Imprimir la página web</a> --}}
+
+                <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/listado"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado</p>
+                </div>
+
+                <a href="javascript:window.history.back();">&laquo; Volver Menu atrás</a>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</div>

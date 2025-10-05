@@ -1,0 +1,89 @@
+<div class="col-md-7 mx-auto" disabled>
+    <div class="card" style="font-style: italic;font-weight: bold;" disabled>
+        <div class="card-header" disabled>
+            <h3 disabled>Datos de Expediente</h3 disabled>
+        </div>
+        <div class="card-body" disabled>
+            <form action="/notes/editexpediente/{{expediente._id}}?_method=PUT" method="POST" disabled>
+                <input type="hidden" name="_method" value="PUT" disabled>
+                <div class="form-group">
+                    Juzgado:
+                    <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Juzgado"
+                        value="{{expediente.juzgado}}" disabled>
+                </div>
+                <div class="form-group">
+                    Secretaria:
+                    <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Secretaria"
+                        value="{{expediente.secretaria}}" disabled>
+                </div>
+                <div class="form-group">
+                    Expediente Nº:
+                    <input type="text" name="numexpediente" class="form-control" placeholder="Num.Expediente"
+                        value="{{expediente.numexpediente}}" disabled>
+                </div>
+                <div class="form-group">
+                    Tipo:
+                    <input type="text" id="tipo" name="tipo" class="form-control" placeholder="Tipo"
+                        value="{{expediente.tipo}}" disabled>
+                </div>
+                <div class="form-group">
+                    Ultima Notificación:
+                    <input type="text" id="ultimanotificacion" name="ultimanotificacion" class="form-control"
+                        placeholder="Ultima Notificación" value="{{expediente.ultimanotificacion}}" disabled>
+                </div>
+                <div class="form-group">
+                    Partes:
+                    <input type="text" id="partes" name="partes" class="form-control" placeholder="Partes"
+                        value="{{expediente.partes}}" disabled>
+                </div>
+                <div class="form-group">
+                    Estado:
+                    <input type="text" id="estado" name="estado" class="form-control" placeholder="Estado"
+                        value="{{expediente.estado}}" disabled>
+                </div>
+                <div class="form-group">
+                    Foto Expediente:
+                    <input type="file" name="inspectorinf" class="form-control" placeholder="Foto Expediente"
+                        value="{{expediente.fotoexpediente}}" disabled disabled>
+                </div>
+                <div class="form-group">
+                    Fecha inicio entrada:
+                    <input type="text" id="date" name="date" class="form-control" placeholder="Date"
+                        value="{{expediente.date}}" disabled>
+                </div>
+                <div class="form-group">
+                    user:
+                    <input type="text" name="detallegeneral" class="form-control" placeholder="user"
+                        value="{{expediente.name}}" disabled disabled>
+                </div>
+                <div class="form-group">
+                    Foto de Expediente:
+                    <input type="file" name="fotoexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.fotoexpediente}}" style="color: black; font-weight: bold;" disabled disabled>
+                </div>
+                {{!-- <img src="{{expediente.fotoinf}}" width="200" / disabled> <br / disabled><br / disabled> --}}
+                <div class="form-group">
+                    Fecha de inicio de entrada:
+                    <input type="text" name="fechainicioentrada" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.fechainicioentrada}}" style="color: black; font-weight: bold;" disabled disabled>
+                </div>
+
+                <div class="form-group">
+                    Usuario. Cargó Infracción
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.name}}" style="color: red;" disabled disabled>
+                </div>
+                <div class="form-group">
+                    Fecha y Hora de Carga
+                    <input type="datetime" name="dateinf" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.dateexp}}" style="color: red;" disabled disabled>
+                </div>
+                <br / disabled>
+                <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;" disabled>
+                    &laquo; Volver Atrás
+                </a disabled>
+                <br / disabled><br / disabled>
+            </form disabled>
+        </div>
+    </div>
+</div>

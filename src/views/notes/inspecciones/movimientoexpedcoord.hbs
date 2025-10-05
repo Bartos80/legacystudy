@@ -1,0 +1,366 @@
+<script>
+    //carga al iniciar la pagina
+    window.onload = function () {
+        //cargar_inspectores()
+    }
+
+    // funcion para Cargar inspectores al campo <select>
+    function cargar_inspectores() {
+
+        document.getElementById("codigoinspector").value = "Esperando... nuevo codigo inspector";
+        document.getElementById("inspector").value = "Esperando... nuevo Nombre inspector";
+        document.getElementById("codigoinspector").style.color = "grey";
+        document.getElementById("inspector").style.color = "grey";
+        document.getElementById("seleccioninspector").style.display = "block";
+        document.getElementById("botoninspector").style.display = "none";
+        //document.getElementById("grabar").disabled = true;  
+            
+
+        let codigoinspectoresarray = document.getElementById("inputcodigoinspector").value
+        let nombreinspectoresarray = document.getElementById("inputinspector").value
+
+        //let str = 'Leon,Caballo,Iguana,Lobo';
+        let arrcod = codigoinspectoresarray.split(',');
+        let arr = nombreinspectoresarray.split(',');
+
+        var array = arr//["Cantabria", "Asturias", "Galicia", "Andalucia", "Extremadura"];
+        //array = inspectoresname;
+        // Ordena el Array Alfabeticamente, es muy facil ;)):
+        array.sort();
+        addOptions("selectinspectorname", array);
+    }
+
+    // Rutina para agregar opciones a un <select>
+    function addOptions(domElement, array) {
+        var select = document.getElementsByName(domElement)[0];
+
+        for (value in array) {
+            var option = document.createElement("option");
+            option.text = array[value];
+            select.add(option);
+        }
+    }
+
+    function seleccionarinspector() {
+        //*resultado inspeccion para activar guardar
+        var selresultadoinspeccion = document.getElementById("selresultadoinspeccion");
+        var x = selresultadoinspeccion.selectedIndex
+        /* Para obtener el valor */
+        var cod = document.getElementById("selectinspectorname").value;
+        /* Para obtener el texto */
+        var combo = document.getElementById("selectinspectorname");
+        var selected = combo.options[combo.selectedIndex].text;
+
+        // convierto en array los valores //
+        let codigoinspectoresarray = document.getElementById("inputcodigoinspector").value
+        //let nombreinspectoresarray = document.getElementById("inputinspector").value        
+        let arrcod = codigoinspectoresarray.split(',');
+        //let arr = nombreinspectoresarray.split(',');   
+
+        var valor = combo.selectedIndex
+        if (valor == 0) {
+            document.getElementById("codigoinspector").value = "";
+            document.getElementById("inspector").value = "";    
+            //document.getElementById("codigoinspector").style.color = "grey";
+            //document.getElementById("inspector").style.color = "grey"; 
+            document.getElementById("grabar").disabled = true;   
+             
+        } else {
+            // cargar valores a input
+            if (arrcod[valor - 1] == undefined) {
+                document.getElementById("codigoinspector").value = "Sin.Código";
+            } else {
+                document.getElementById("codigoinspector").value = arrcod[valor - 1];
+            }           
+            
+            document.getElementById("inspector").value = selected;
+            document.getElementById("codigoinspector").style.color = "red";
+            document.getElementById("inspector").style.color = "red";
+            if (x == 0) {
+              document.getElementById("grabar").disabled = true;     
+            } else {
+              document.getElementById("grabar").disabled = false;   
+            }
+        }
+        ShowName('inspector');
+    }
+
+
+    function ShowName(name) {
+        var writtenName = ""
+        writtenName = document.getElementById(name).value;
+        document.getElementById(name).value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+
+    function ponerMayuscula(mayu) {
+        let ex = document.getElementById(mayu);
+        ex.value = ex.value.toUpperCase();
+        //let ex = document.getElementById("numexpediente");
+        //ex.value = ex.value.toUpperCase();
+        //let y = document.getElementById("adremaexp");
+        //y.value = y.value.toUpperCase();
+    }
+
+
+    function ponerminuscula(minus) {
+        let ex = document.getElementById(minus);
+        ex.value = ex.value.toLocaleLowerCase();
+        //let ex = document.getElementById("correofiduciariopropsocio");
+        //ex.value = ex.value.toLocaleLowerCase();
+    }
+
+    function EstadoCoordInspeccion() {
+        var selestadoinsp = document.getElementById("selestadoinsp");
+        var divres = document.getElementById("divresultadoinspeccion");
+        var fi = document.getElementById("fechaintimacion");
+        var hi = document.getElementById("horaintimacion");
+        var vi = document.getElementById("vencimientointimacion");
+        var fintinf = document.getElementById("intimvinculadainfraccion");
+        var finf = document.getElementById("fechainfraccion");
+        var hinf = document.getElementById("horainfraccion");
+        var di = document.getElementById("descripcionintimacion");
+        var dinf = document.getElementById("descripcioninfraccion");
+        var grabar = document.getElementById("grabar")
+        if (selestadoinsp.selectedIndex == 0) {
+            divres.style.display = "none";
+            fi.style.display = "none";
+            hi.style.display = "none";
+            vi.style.display = "none";
+            fintinf.style.display = "none";
+            finf.style.display = "none";
+            hinf.style.display = "none";
+            di.style.display = "none";
+            dinf.style.display = "none";
+            grabar.disabled = true;
+            document.getElementById("botoninspector").disabled = true;  
+        } else if (selestadoinsp.selectedIndex == 1) {
+            divres.style.display = "block";
+            grabar.disabled = false;
+            document.getElementById("botoninspector").disabled = false;
+            //document.getElementById("selresultadoinspeccion").disabled = true;
+            
+        }
+    }
+
+    function seleccionresinsp() {
+        var selresultadoinspeccion = document.getElementById("selresultadoinspeccion");
+        var fi = document.getElementById("fechaintimacion");
+        var hi = document.getElementById("horaintimacion")
+        var vi = document.getElementById("vencimientointimacion")
+        var fintinf = document.getElementById("intimvinculadainfraccion")
+        var finf = document.getElementById("fechainfraccion")
+        var hinf = document.getElementById("horainfraccion")
+        var di = document.getElementById("descripcionintimacion")
+        var dinf = document.getElementById("descripcioninfraccion")
+        var x = selresultadoinspeccion.selectedIndex
+        if (x == 0 || x == 1 || x == 2) {
+            fi.style.display = "none";
+            hi.style.display = "none";
+            vi.style.display = "none";
+            fintinf.style.display = "none";
+            finf.style.display = "none";
+            hinf.style.display = "none";
+            di.style.display = "none";
+            dinf.style.display = "none";
+            // require false para int e inf
+            fintinf.required = "false";
+            finf.required = "false";
+            hinf.required = "false";
+            dinf.required = "false";
+            fi.required = "false";
+            hi.required = "false";
+            vi.required = "false";
+            di.required = "false";
+        } else if (x == 3) {
+            fi.style.display = "block";
+            hi.style.display = "block";
+            vi.style.display = "block";
+            di.style.display = "block";
+            fintinf.style.display = "none";
+            finf.style.display = "none";
+            hinf.style.display = "none";
+            dinf.style.display = "none";
+            // requerir input de intimacion
+            fi.attributes.required = "required";
+            hi.attributes.required = "required";
+            vi.attributes.required = "required";
+            di.attributes.required = "required";
+        } else if (x == 4) {
+            fintinf.style.display = "block";
+            finf.style.display = "block";
+            hinf.style.display = "block";
+            dinf.style.display = "block";
+            fi.style.display = "none";
+            hi.style.display = "none";
+            vi.style.display = "none";
+            di.style.display = "none";
+            // requiere infraccion
+            fintinf.required = "true";
+            finf.required = "true";
+            hinf.required = "true";
+            dinf.required = "true";
+        }
+    }
+
+</script>
+
+<div class="col-md-6 mx-auto">
+    <div class="card">
+        <div class="car-header mx-auto">
+            <br />
+            <h5 style="color:blue; text-decoration:underline; font-weight: bold;">
+                Cambiar Estado Coordinación Inspección
+            </h5>
+        </div>
+        <div class="card-body">
+            <form action="/notes/newexpedcoordinresult/" method="POST">
+                
+                <div class="form-group">
+                    Expediente Nº:
+                    <input style="color: green" onkeyup="ponerMayuscula('numexpediente')" id="numexpediente" type="text"
+                        name="numexpediente" class="form-control" placeholder="Expediente Nº"
+                        value="{{expedcoordinado.numexpediente}}" readonly>
+                </div>
+                <div class="form-group">
+                    Estado Coord.Inspección:
+                    <select name="estado" id="selestadoinsp" onclick="EstadoCoordInspeccion()">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Realizado">Realizado</option>
+                    </select>
+                </div>
+                <div id="divresultadoinspeccion" style="display:none" class="form-group">
+                    <p>Resultado Inspección:</p>
+                    <select style="color:red;" name="resultadoinspeccion" id="selresultadoinspeccion"
+                        onclick="seleccionresinsp()">
+                        <option value="No se pudo Verificar">No se pudo Verificar</option>
+                        <option value="No se pudo Inspeccionar">No se pudo Inspeccionar</option>
+                        <option value="Se Realizo informe">Realizó informe</option>
+                        <option value="Se Intimó">Se Intimó</option>
+                        <option value="Se Infraccionó">Se Infraccionó</option>
+                    </select>
+                </div>
+                <div style="color:red; display:none;" id="fechaintimacion" class="form-group">
+                    Fecha Intimación:
+                    <input type="date" name="fechaintimacion" class="form-control"></input>
+                </div>
+                <div id="horaintimacion" style="color:red; display:none;" class="form-group">
+                    Hora Intimación:
+                    <input type="time" name="horaintimacion" class="form-control"
+                        placeholder="Fecha Hora Inspección"></input>
+                </div>
+                <div id="vencimientointimacion" style="color:red; display:none;" class="form-group">
+                    Vencimiento Intimación:
+                    <input type="date" name="vencimientointimacion" class="form-control"
+                        placeholder="Fecha Hora Inspección"></input>
+                </div>
+                <div id="descripcionintimacion" style="color:red; display:none;" class="form-group">
+                    Causas/Descripción Intimación:
+                    <textarea name="descripcionintimacion" class="form-control"
+                        placeholder="No Posee Descripción"></textarea>
+                </div>
+                <div id="intimvinculadainfraccion" style="color:red; display:none;" class="form-group">
+                    Número Intimación vinculada a esta Infracción:
+                    <input type="text" name="" class="form-control"
+                        placeholder="Intimación Vinculada a esta Infacción"></input>
+                </div>
+                <div id="fechainfraccion" style="color:red; display:none;" class="form-group">
+                    Fecha Infraccionó:
+                    <input type="date" name="fechainfraccion" class="form-control"
+                        placeholder="Fecha Hora Inspección"></input>
+                </div>
+                <div id="horainfraccion" style="color:red; display:none;" class="form-group">
+                    Hora Infraccionó:
+                    <input type="time" name="horainfraccion" class="form-control"
+                        placeholder="Fecha Hora Inspección"></input>
+                </div>
+                <div id="descripcioninfraccion" style="color:red; display:none;" class="form-group">
+                    Causas/Descripción Infracción:
+                    <textarea name="descripcioninfraccion" class="form-control"
+                        placeholder="No Posee Descripción"></textarea>
+                </div>
+                <div id="seleccioninspector" style="display: none" class="form-group">
+                    <br />
+                    <select name="selectinspectorname" id="selectinspectorname" onclick="seleccionarinspector()">
+                        <option>Seleccione Inspector...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    Código Inspector:
+                    <input style="color: black;" type="text" id="codigoinspector"
+                        name="codigoinspector" class="form-control" placeholder="Código Inspector"
+                        value="{{expedcoordinado.codigoinspector}}" readonly/>                        
+                    {{!-- Se usa para convertir en array los datos de codigo y de inspector --}}
+                    <input style="display: none" type="text" id="inputcodigoinspector"
+                        name="inputinspectorescodigo" class="form-control"
+                        value="{{inspectorescodigo}}"/>
+                    <input style="display: none" type="text" id="inputinspector" name="inputinspector"
+                        class="form-control" value="{{inspectoresname}}" />
+                </div>
+                <div class="form-group">
+                    Inspector (NyA):
+                    <input style="color: black;" type="text" id="inspector"
+                        name="inspector" class="form-control" placeholder="Inspector (NyA)"
+                        value="{{expedcoordinado.inspector}}" readonly/>
+                </div>
+
+                <button id="botoninspector" class='btn btn-primary' name="botoninspector" type="button"
+                    onclick="cargar_inspectores()" disabled> Cambiar Inspector ->
+                    <span class="fa fa-user" aria-hidden="true"></span>
+                </button>
+                <p></p>
+                <div class="form-group">
+                    Iniciador (NyA):
+                    <input style="color: green;" onkeyup="ShowName('iniciadornomyape')" type="text"
+                        id="iniciadornomyape" name="iniciadornomyape" class="form-control" placeholder="Iniciador (NyA)"
+                        value="{{expedcoordinado.iniciadornomyape}}" />
+                </div>
+                <div class="form-group">
+                    Domicilio:
+                    <input style="color: green" onkeyup="ShowName('domicilio')" type="text" id="domicilio"
+                        name="domicilio" class="form-control" placeholder="Domicilio"
+                        value="{{expedcoordinado.domicilio}}" readonly />
+                </div>
+                <div class="form-group">
+                    Adrema Nº:
+                    <input style="color: green" onkeyup="ponerMayuscula('adremaexp')" id="adremaexp" name="adremaexp"
+                        class="form-control" placeholder="Nº Adrema" value="{{expedcoordinado.adremaexp}}"
+                        readonly></input>
+                </div>
+                <div class="form-group">
+                    Fecha Inspección:
+                    <input type="text" name="fechainicioentrada" class="form-control" placeholder="Fecha inicio entrada"
+                        value="{{expedcoordinado.fechainspeccion}}" readonly></input>
+                </div>
+                <div class="form-group">
+                    Hora Inspección:
+                    <input type="text" name="horainspeccion" class="form-control" placeholder="Fecha Hora Inspección"
+                        value="{{expedcoordinado.horainspeccion}}" readonly></input>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <button id="grabar" class="btn btn-primary btn-block" type="submit" disabled>
+                        Grabar
+                    </button>
+                </div>
+                <div class="form-group">
+                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                        &laquo; Volver Atrás
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

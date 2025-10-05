@@ -1,0 +1,91 @@
+<script>
+    function ponerminuscula() {
+        let ex = document.getElementById("email");
+        ex.value = ex.value.toLowerCase();
+        //let y = document.getElementById("adrema");
+        //y.value = y.value.toLowerCase();
+    }
+
+    function ShowName() {
+        var writtenName = document.getElementById('name').value;
+        document.getElementById('name').value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+
+    function cargar() {
+        var provincias = ["Cantabria", "Asturias", "Galicia", "Andalucia", "Extremadura"]; //Tu array de provincias
+        var select = document.getElementById("provincias"); //Seleccionamos el select
+
+        for (var i = 0; i < provincias.length; i++) {
+            var option = document.createElement("option"); //Creamos la opcion
+            option.innerHTML = provincias[i]; //Metemos el texto en la opción
+            select.appendChild(option); //Metemos la opción en el select
+        }
+    }
+    cargar();
+</script>
+
+{{!-- <h1> REGISTER </h1> --}}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="color:red; text-shadow: 1px 1px 2px black">Registro de Clientes</h4>
+                <div class="card-body">
+                    <form action="/clientes/newcliente" method="POST">
+                        <div class="form-group">
+                            <input onkeyup="ShowName();" type="text" class="form-control" id="nyacliente" name="nyacliente"
+                                placeholder="Nombre y Apellido" value="{{nyacliente}}">
+                        </div>                        
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="dnicliente" name="dnicliente"
+                                placeholder="Doc. Nac.Identidad" value="{{dnicliente}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="domiciliocliente" name="domiciliocliente"
+                                placeholder="Domicilio Cliente" value="{{domiciliocliente}}">
+                        </div>
+                        <div class="form-group">
+                            <input onkeyup="ponerminuscula()" id="telefonocliente" type="text" class="form-control"
+                                name="telefonocliente" placeholder="Telefono/Celular" value="{{telefonocliente}}">
+                        </div>
+                        <div class="form-group">
+                            <input onkeyup="ponerminuscula()" id="emailcliente" type="text" class="form-control" name="emailcliente"
+                                placeholder="Correo/Email" value="{{emailcliente}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="localidadcliente" placeholder="localidadcliente"
+                                value="{{localidadcliente}}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="observacionescliente" placeholder="Observaciones"
+                                value="{{observacionescliente}}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">
+                                Registrar
+                            </button>
+                            <br />
+                        </div>
+                        <div>
+                            <p style="color:red; font-style:oblique; font-weight: bold;"><a href="/usuarios"><i
+                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Cancelar</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,166 @@
+<script>
+    function seleccionarPermisoEdificacion() {
+        var selecpermisoedificacion = document.getElementById('selecpermisoedificacion');
+        var labelplanoregistrado = document.getElementById("labelplanoregistrado")
+        var permisoedificacionnumero = document.getElementById("permisoedificacionnumero");
+        var labelfechapermisoedificacion = document.getElementById("labelfechapermisoedificacion");
+        var fechapermisoedificacion = document.getElementById("fechapermisoedificacion");
+        if ((selecpermisoedificacion.selectedIndex == 0)) {
+            permisoedificacionnumero.required = false;
+            fechapermisoedificacion.required = false;
+            labelplanoregistrado.style.display = "none";
+            permisoedificacionnumero.style.display = "none";
+            labelfechapermisoedificacion.style.display = "none";
+            fechapermisoedificacion.style.display = "none";
+        } else if ((selecpermisoedificacion.selectedIndex == 1)) {
+            permisoedificacionnumero.required = true;
+            fechapermisoedificacion.required = true;
+            labelplanoregistrado.style.display = "block";
+            permisoedificacionnumero.style.display = "block";
+            labelfechapermisoedificacion.style.display = "block";
+            fechapermisoedificacion.style.display = "block";
+        }
+    }
+
+    function ShowName(name) {
+        var writtenName = ""
+        writtenName = document.getElementById(name).value;
+        document.getElementById(name).value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+
+    function ponerMayuscula(mayu) {
+        let ex = document.getElementById(mayu);
+        ex.value = ex.value.toUpperCase();
+        //let ex = document.getElementById("numexpediente");
+        //ex.value = ex.value.toUpperCase();
+        //let y = document.getElementById("adremaexp");
+        //y.value = y.value.toUpperCase();
+    }
+
+
+    function ponerminuscula(minus) {
+        let ex = document.getElementById(minus);
+        ex.value = ex.value.toLocaleLowerCase();
+        //let ex = document.getElementById("correofiduciariopropsocio");
+        //ex.value = ex.value.toLocaleLowerCase();
+    }
+
+    function seleccionarPermisoDemolicion() {
+        var selecpermisodemolicion = document.getElementById('selecpermisodemolicion');
+        var labelplanovisado = document.getElementById("labelplanovisado")
+        var permisodemolicionnumero = document.getElementById("permisodemolicionnumero");
+        var labelfechapermisodemolicion = document.getElementById("labelfechapermisodemolicion");
+        var fechapermisodemolicion = document.getElementById("fechapermisodemolicion");
+        if ((selecpermisodemolicion.selectedIndex == 0)) {
+            permisodemolicionnumero.required = false;
+            fechapermisodemolicion.required = false;
+            labelplanovisado.style.display = "none";
+            labelfechapermisodemolicion.style.display = "none";
+            permisodemolicionnumero.style.display = "none";
+            fechapermisodemolicion.style.display = "none";
+        } else if ((selecpermisodemolicion.selectedIndex == 1)) {
+            permisodemolicionnumero.required = true;
+            fechapermisodemolicion.required = true;
+            labelplanovisado.style.display = "block";
+            permisodemolicionnumero.style.display = "block";
+            labelfechapermisodemolicion.style.display = "block";
+            fechapermisodemolicion.style.display = "block";
+        }
+    }
+</script>
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 style="color:red; text-shadow: 0 0 3px #FF0000;">Editar Expediente Coordinado</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/expedcoordin/{{expedcoordinado._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="card-body">
+                    <div class="form-group">
+                        Expediente Nº:
+                        <input type="text" name="numexpediente" class="form-control" placeholder="Num.Expediente"
+                            value="{{expedcoordinado.numexpediente}}">
+                    </div>
+                    <div class="form-group">
+                        Extado Coord.Inspección:
+                        <select name="estado" id="estado" disabled>
+                            <option style="color:red"  value={{expedcoordinado.estado}}>{{expedcoordinado.estado}}</option>
+                            <option style="color:green"  value="Pendiente">Pendiente</option>
+                            <option style="color:green"  value="Realizado">Realizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Código Inspector (NyA):
+                        <input type="text" name="codigoinspector" class="form-control" placeholder="Código Inspector"
+                            value="{{expedcoordinado.codigoinspector}}">
+                    </div>
+                    <div class="form-group">
+                        Inspector (NyA):
+                        <input type="text" onkeyup="ShowName('inspector')" id="inspector" name="inspector"
+                            class="form-control" placeholder="Inspector" value="{{expedcoordinado.inspector}}">
+                    </div>
+                    <div class="form-group">
+                        Iniciador (NyA):
+                        <input type="text" onkeyup="ShowName('iniciadornomyape')" id="iniciadornomyape"
+                            name="iniciadornomyape" class="form-control" placeholder="Iniciador"
+                            value="{{expedcoordinado.iniciadornomyape}}">
+                    </div>
+                    <div class="form-group">
+                        Domicilio:
+                        <input type="text" name="domicilio" class="form-control" placeholder="Domicilio Iniciador"
+                            value="{{expedcoordinado.domicilio}}">
+                    </div>
+                    <div class="form-group">
+                        Adrema:
+                        <input type="text" name="adremaexp" class="form-control" placeholder="Adrema"
+                            value="{{expedcoordinado.adremaexp}}">
+                    </div>
+                    <div class="form-group">
+                    Resultado Inspección:
+                    <select name="resultadoinspeccion" id="resultadoinspeccion">
+                        <option style="color:gray" value={{expedcoordinado.resultadoinspeccion}}>{{expedcoordinado.resultadoinspeccion}}</option>
+                        <option style="color:green" value="Se Realizo informe">Realizo informe</option>
+                        <option style="color:green" value="Se Intimó">Intimó</option>
+                        <option style="color:green" value="Se Infraccionó">Infraccionó</option>
+                        <option style="color:green" value="No se pudo Verificar">No se pudo Verificar</option>
+                        <option style="color:green" value="No se pudo Inspeccionar">No se pudo Inspeccionar</option>
+                    </select>
+                </div>  
+                    <div class="form-group">
+                        user:
+                        <input type="text" name="detallegeneral" class="form-control" placeholder="user"
+                            value="{{expedcoordinado.name}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block" type="submit">
+                            Grabar
+                        </button>
+                    </div>
+                    {{!-- <div class="form-group">
+                        <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes"><i
+                                    class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
+                    </div> --}}
+                    <br />
+                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                        &laquo; Volver Atrás
+                    </a>
+                    <br /><br />
+            </form>
+        </div>
+    </div>
+
+</div>

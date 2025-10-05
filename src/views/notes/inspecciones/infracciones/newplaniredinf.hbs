@@ -1,0 +1,147 @@
+<div class="col-md-6 mx-auto">
+    <div class="card">
+        <div class="car-header mx-auto">
+            <br/>
+            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Nuevo Registro Actuaciones de Infracción {{{User.name}}}</h3>
+        </div>
+        <div class="card-body">
+            <p style="color:red">(*) Obligatorio</p>
+            <form action="/notes/newinfracciones" method="POST"  enctype="multipart/form-data">  
+            <div class="form-group">  
+                    (*) Acta Infraccion Nº:                 
+                    <input type="text" name="actainfnum" class="form-control" 
+                    placeholder="Acta Infraccion Nº" required autofocus>                    
+                </div>              
+                <div class="form-group">  
+                    (*) Fecha de Infraccion:                 
+                    <input type="date" name="fechainfraccion" class="form-control" 
+                    placeholder="Fecha de Infraccion"  required autofocus>                    
+                </div>
+                <div class="form-group">
+                    (*) Hora de Infracción:
+                    <input type="time" name="horainfraccion" class="form-control"
+                    placeholder="Hora de Infracción"  required autofocus></input>
+                </div>
+                <div class="form-group">
+                    (*) Zona:
+                    <input type="zona" name="zona" class="form-control"
+                    placeholder="Zona Infracción"  required autofocus></input>
+                </div>
+                <div class="form-group" >  
+                    Nº de Expediente:                  
+                    <input type="text" name="numexpedienteinf" class="form-control"
+                    placeholder="Nº de Expediente" ></input>
+                </div>
+                <div class="form-group">
+                    Adrema:
+                    <input name="adremainf" class="form-control"
+                    placeholder="Nº Adrema" ></input>
+                </div>
+                <div class="form-group">
+                    (*) Propietario (AyN):
+                    <input name="apellidonombrepropietarioinf" class="form-control"
+                    placeholder="Propietario (AyN)"  required autofocus></input>
+                </div>
+                <div class="form-group">
+                    (*) Domicilio Propietario:
+                    <input name="domiciliopropietarioinf" class="form-control"
+                    placeholder="Domicilio Propietario"  required autofocus></input>
+                </div>
+                <div class="form-group">
+                    Documento Nac. Identidad Prop:
+                    <input maxlength="9" name="dnipropietarioinf" class="form-control"
+                    placeholder="D.N.I. (Colocar sin puntos)" ></input>
+                </div>
+                <div class="form-group">
+                    Cuil/Cuit Propietario:
+                    <input name="cuilpropietarioinf" class="form-control"
+                    placeholder="Cuil/Cuit Propietario" type="text"></input>
+                </div> 
+                <div class="form-group">
+                    (*) Lugar de Constitución:
+                    <input name="lugardeconstitucioninf" class="form-control"
+                    placeholder="Lugar de Constitución" type="text" required autofocus></input>
+                </div> 
+                <div class="form-group">
+                    (*) Causas:
+                    <input name="causasinf" class="form-control"
+                    placeholder="Causas" required autofocus></input>
+                </div>                 
+                <div class="form-group">
+                    Ordenanza Número:
+                    <input name="ordenanzanum" class="form-control"
+                    placeholder="Ordenanza Número:"></input>
+                </div>  
+                <div class="form-group">
+                    Notificado Infracción:
+                    <input name="notificadoinf" class="form-control"
+                    placeholder="Notificado Infracción"></input>
+                </div>
+                <div class="form-group">
+                    Inciso Número:
+                    <input name="incisonum" class="form-control"
+                    placeholder="Inciso Número"></input>
+                </div>                                 
+                <div class="form-group">
+                    (*) Observación:
+                    <textarea style="resize:none;" name="observacion" rows="2" cols="40"  class="form-control"
+                    placeholder="Observación" autofocus></textarea>
+                </div>
+                <div class="form-group">
+                    Testigo (AyN):
+                    <input name="apellidonombretestigoinf" class="form-control"
+                    placeholder="Testigo (AyN)"></input>
+                </div>
+                <div class="form-group">
+                    (*) Inspector (AyN):
+                    <input type="text" name="inspectorinf" class="form-control"
+                    placeholder="Inspector (AyN)" required autofocus></input>
+                </div>   
+                <div class="form-group">
+                    (*) Código Inspector:
+                    <input type="text" name="inspectorcod" class="form-control"
+                    placeholder="Código Inspector" required autofocus></input>
+                </div>   
+                <div class="form-group">
+                    Detalle General:
+                    <input type="text" name="detallegeneral" class="form-control"
+                    placeholder="Detalle General"></input>
+                </div>   
+                <div class="form-group">
+                    Informe de inspeccion Nº:
+                    <input type="text" name="informeinspecnum" class="form-control"
+                    placeholder="Informe de inspeccion Nº"></input>
+                </div>   
+                <div class="form-group">
+                    Informe de Inspección - Observaciones:
+                    <input type="text" name="inforinspecobsevaciones" class="form-control"
+                    placeholder="Informe de Inspección - Observaciones"></input>
+                </div>   
+                {{!-- <div class="form-group">
+                    foto Infracción:
+                    <input type="file" src="fotoinf" 
+                    name="Fotos Infracción"
+                    width="40" height="40" disabled></input>
+                </div>                --}}
+                <label style="font-weight:bold">Seleccione Fotos Infracción (Máximo 8):</label>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile02"
+                            accept=".jpg,.png" multiple>
+                        <label class="custom-file-label" for="inputGroupFile02"
+                            aria-describedby="inputGroupFileAddon02">Selecciones Foto</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>                    
+                </div>
+                <div class="form-group">
+                    <p style="color:blue; font-style:oblique; font-weight: bold;"><a href="/infracciones"><i class="fas fa-list" style='font-size:24px;color:black'></i></a> Volver</p> 
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

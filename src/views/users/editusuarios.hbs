@@ -1,0 +1,136 @@
+<script>
+
+    // Carga al inicio pero solo si hay un body
+    //function myOnLoad() {
+    //    cargar_provincias()
+    //}
+
+    //carga al iniciar la pagina
+    window.onload = function () {
+        cargar_Roles()
+        //document.getElementById('botonfecha').click();
+    }
+    // funcion para Cargar Provincias al campo <select>
+    function cargar_Roles() {
+
+        var todoslosroles = ["Administrador", "Abogado", "Administrativo",  "Secretaria/o",
+            "Visitante"];
+        //const rolusuariosborrara = usuarios.rolusuario.toString();
+        var roltraido = document.getElementById('mostrarrolusuario').value;
+        var roles = todoslosroles.filter(rol => rol != roltraido);
+
+        // Ordena el Array Alfabeticamente, es muy facil ;)):
+        roles.sort();
+        addOptions("rolusuario", roles);
+    }
+    // Rutina para agregar opciones a un <select>
+    function addOptions(domElement, roles) {
+        var select = document.getElementsByName(domElement)[0];
+        for (value in roles) {
+            var option = document.createElement("option");
+            option.text = roles[value];
+            select.add(option);
+        }
+    }
+
+    function ponerminuscula() {
+        let ex = document.getElementById("email");
+        ex.value = ex.value.toLowerCase();
+        //let y = document.getElementById("adrema");
+        //y.value = y.value.toLowerCase();
+    }
+
+    function ShowName() {
+        var writtenName = document.getElementById('name').value;
+        document.getElementById('name').value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+</script>
+
+{{!-- <h1> REGISTER </h1> --}}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="color:red; text-shadow: 1px 1px 2px black">Edición de Usuarios</h4>
+                <div class="card-body">
+                    <form action="/users/editusuarios/{{usuarios._id}}?_method=PUT" method="POST">                        
+                        <div class="form-group">
+                            Rol Actual en Sistema:
+                            <input type="text" class="form-control" id="mostrarrolusuario" name="mostrarrolusuario"
+                                value="{{usuarios.rolusuario}}" readonly>
+                                <p></p>
+                            <p>Elige Nuevo Rol de Usuario:</p>
+                            <select name="rolusuario">
+                                <option>{{usuarios.rolusuario}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Nombre y Apellido
+                            <input onkeyup="ShowName();" type="text" class="form-control" id="name" name="name"
+                                placeholder="Nombre" value="{{usuarios.name}}">
+                        </div>
+                        <div class="form-group">
+                            Doc. Nac.Identidad
+                            <input type="number" class="form-control" id="dni" name="dni"
+                                placeholder="Doc. Nac.Identidad" value="{{usuarios.dni}}">
+                        </div>
+                        <div class="form-group">
+                            Código Usuario
+                            <input type="text" class="form-control" id="codigoinspector" name="codigoinspector"
+                                placeholder="Código Inspector" value="{{usuarios.codigoinspector}}">
+                        </div>
+                        <div class="form-group">
+                            Función
+                            <input type="text" class="form-control" id="funcion" name="funcion" placeholder="Función"
+                                value="{{usuarios.funcion}}">
+                        </div>
+                        <div class="form-group">
+                            Telefono/Celular
+                            <input onkeyup="ponerminuscula()" id="celular" type="celular" class="form-control" name="celular"
+                                placeholder="Telefono/Celular" value="{{usuarios.email}}">
+                        </div>
+                        <div class="form-group">
+                            Correo/Email
+                            <input onkeyup="ponerminuscula()" id="email" type="email" class="form-control" name="email"
+                                placeholder="Correo/Email" value="{{usuarios.email}}">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Contraseña" disabled>
+                            <br />
+                            <label style="color:red; font-weight: bold;">Si Desea Cambiar la Contraseña</label>
+                            <label style="color:red;font-weight: bold;">Elimine al Usuario y Creelo de Nuevo</label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">
+                                Guardar Cambios
+                            </button>
+                            <br />
+                            {{!-- <a class="btn btn-danger btn-sm" href="/users/signin" role="button">Volver al
+                                Login</a> --}}
+                        </div>
+                        <div>
+                            <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                                &laquo; Volver Atrás
+                            </a>
+                            {{!-- <p style="color:red; font-style:oblique; font-weight: bold;"><a href="/usuarios"><i
+                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Cancelar</p> --}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

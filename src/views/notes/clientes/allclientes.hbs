@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="form-group btn-center mx-auto">
+        <form action="/clientes/find" method="POST">
+            <input  type="search" class="form-control" name="numexpediente" placeholder="Buscar x Expediente..." autofocus/>
+            <div class="form-group">
+                        <button class="btn btn-warning btn-block btn-sm" type="submit">
+                            Buscar Expediente
+                        </button>                        
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/clientes/findadrema" method="POST">
+            <input  type="search" class="form-control" name="adremaexp" placeholder="Buscar x Adrema..." autofocus/>
+            <div class="form-group">
+                        <button class="btn btn-warning btn-block btn-sm" type="submit">
+                            Buscar Adrema
+                        </button>                        
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/clientes/findiniciador" method="POST">
+            <input  type="search" class="form-control" name="iniciadornomyape" placeholder="Buscar x Iniciador..." autofocus/>
+            <div class="form-group">
+                        <button class="btn btn-warning btn-block btn-sm" type="submit">
+                            Buscar Iniciador
+                        </button>
+                        
+            </div>
+        </form>
+    </div>
+    <a href="/clientes/add" class="btn btn-success btn-block">Agregar Cliente!</a>
+    <br />
+    {{#each clientes}}
+    <div class="text-dark col-md-4">
+        <br />
+        <div class="card">
+            <div class="card-body">
+                </p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Nombre:</p>
+                <p>{{ namecliente }}</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Apellido:</p>
+                <p>{{ lastnamecliente }}</p>
+                {{!-- <p>{{ date }}</p>--}}
+                <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">(D.N.I.):</p>
+                <p>{{ dnicliente }}</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Tel/Celular:</p>
+                <p>{{ telefonocliente }}</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/list/{{_id}}"><i
+                            class="fas fa-list" style='font-size:24px;color:blue'></i></a> Info Completa</p>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="mx-auto">
+        <br /> <br />
+        <div class="card mx-auto">
+            <div class="card-body">
+                <p class"lead" style="color:red; font-weight: bold;"> No existen Clientes Aun...</p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

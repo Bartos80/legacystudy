@@ -1,0 +1,118 @@
+<div class="row"> 
+  <div class="form-group btn-center mx-auto">
+    <form action="/mesaentrada/findlistajuzgado" method="POST">
+      <input type="search" class="form-control" name="juzgado" placeholder="Buscar x Juzgado..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Juzgado
+        </button>
+      </div>
+    </form>
+  </div> 
+  <div class="form-group btn-center mx-auto">
+    <form action="/mesaentrada/findlistaexpediente" method="POST">
+      <input type="search" class="form-control" name="numexpediente" placeholder="Buscar x Expediente..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Expediente
+        </button>
+      </div>
+    </form>
+  </div> 
+  <div class="form-group btn-center mx-auto">
+    <form action="/mesaentrada/findlistainiciador" method="POST">
+      <input type="search" class="form-control" name="nomyape" placeholder="Buscar x NyApellido..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Cliente
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/mesaentrada/findlistadni" method="POST">
+      <input type="search" class="form-control" name="dni" placeholder="Buscar x DNI..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar DNI
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/mesaentrada/findlistafechaentrada" method="POST">
+      <input type="search" class="form-control" name="fechaingreso" placeholder="Buscar x Fecha..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Fecha
+        </button>
+      </div>
+    </form>
+  </div>  
+
+  <a href="/mesaentradas/add" class="btn btn-success btn-block">Agregar Turno!</a>
+  <a href="/mesaentrada/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+  {{!-- <br /> --}}
+  <div class="form-group btn-center mx-auto">
+    {{!-- <br /> --}}
+    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE MESA DE ENTRADA</h5> --}}
+    <br />
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+            {{!-- <td style="visibility:collapse;">ID</td> --}}
+            <td>AbogadoResp</td>
+            <td>Cliente.NyA</td>
+            <td>D.N.I.</td>
+            <td>Expediente</td>
+            <td>Juzgado</td>
+            <td>Fecha/Turno</td>
+            <td>Hora/Turno</td>
+            <td>Opciones</td>
+            <td>Suplementario</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each mesaentradas}}
+          <tr>
+            {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+            <td>{{ nomyapeabogado }}</td>
+            <td style="text-transform: lowercase;">{{ nomyape }}</td>
+            <td>{{ dni }}</td>
+            <td>{{ numexpediente }}</td>
+            <td>{{ juzgado }}</td>
+            <td style="color:yellow;">{{ fechaingreso }}</td>
+            <td>{{ horaingreso }}</td>
+            <td>
+              <a class="dropdown-item" href="/mesaentrada/add/{{_id}}"
+                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar</a>
+              <a class="dropdown-item" href="/mesaentrada/list/{{_id}}"
+                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info</a>
+            </td>
+            <td>
+              <a class="dropdown-item" href="/mesaentrada/edit/{{_id}}" style="color:rgb(165, 196, 28)">Editar</a>
+              <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
+                action="/mesaentrada/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form>
+              {{!-- **** EL BORRADO DE ABAJO ES DEFINITIVO PARA ADMIN --}}
+              {{!-- <form onSubmit="return confirm('Desea Borrar?')" style=""
+                action="/mesaentrada/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form> --}}
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{!-- {{else}} --}}

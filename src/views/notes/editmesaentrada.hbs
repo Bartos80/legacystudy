@@ -1,0 +1,145 @@
+<script>
+
+    // Carga al inicio pero solo si hay un body
+    //function myOnLoad() {
+    //    cargar_provincias()
+    //}
+
+    //carga al iniciar la pagina
+    window.onload = function () {        
+        cargar_Sectores()
+        //document.getElementById('botonfecha').click();
+    }
+    // funcion para Cargar Provincias al campo <select>
+    function cargar_Sectores() {
+        var todoslossectores = ["Inspección Obras", "Obras Particulares", "Visado", "Sub Secretaría"];             
+        //const rolusuariosborrara = usuarios.rolusuario.toString();
+        var sectortraido = document.getElementById("sectortraido").value;
+        //elimina con el filter el sector traido del array
+        var sectores = todoslossectores.filter(e => e != sectortraido);
+        // Ordena el Array Alfabeticamente, es muy facil ;)):
+        sectores.sort();
+        addOptions("sector", sectores);
+    }
+    // Rutina para agregar opciones a un <select>
+    function addOptions(domElement, sectores) {
+        var select = document.getElementsByName(domElement)[0];
+        for (value in sectores) {
+            var option = document.createElement("option");
+            option.text = sectores[value];
+            select.add(option);
+        }
+    }
+
+    function ponerminuscula() {
+        let ex = document.getElementById("email");
+        ex.value = ex.value.toLowerCase();
+        //let y = document.getElementById("adrema");
+        //y.value = y.value.toLowerCase();
+    }
+
+    function ShowName(elegido) {
+        var writtenName = document.getElementById(elegido).value;
+        document.getElementById(elegido).value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+</script>
+
+<div class="col-md-7 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>Editar Turno</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editmesaentrada/{{mesaentrada._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">                
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Abogado Responsable:
+                    <input type="text" id="nomyapeabogado" name="nomyapeabogado" class="form-control" placeholder="Num.Inspección"
+                        value="{{mesaentrada.nomyapeabogado}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Turno:
+                    <input type="text" name="fechaingreso" class="form-control" placeholder="Expediente"
+                        value="{{mesaentrada.fechaingreso}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Hora Turno:
+                    <input type="text" name="horaingreso" class="form-control" value="{{mesaentrada.horaingreso}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Número de Expediente:
+                    <input type="numexpediente" name="numexpediente" class="form-control"
+                        value="{{mesaentrada.numexpediente}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Juzgado:
+                    <input type="text" name="juzgado" class="form-control"
+                        value="{{mesaentrada.juzgado}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Nombre y Apellido:
+                    <input onkeyup="ShowName('nomyape')" type="text" id="nomyape" name="nomyape" class="form-control" placeholder="Nombre y Apellido"
+                        value="{{mesaentrada.nomyape}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    D.N.I.
+                    <input type="text" name="dni" class="form-control" placeholder="Documento Nacional Identidad"
+                        value="{{mesaentrada.dni}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Contacto:
+                    <input type="text" name="contacto" class="form-control" placeholder="Contacto"
+                        value="{{mesaentrada.contacto}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Observaciones:
+                    <input type="text" name="observaciones" class="form-control" placeholder="Observaciones"
+                        value="{{mesaentrada.observaciones}}">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Turno Original
+                    <input type="text" name="dateturno" class="form-control" placeholder="Turno fecha Real"
+                        value="{{mesaentrada.date}}" disabled>
+                </div>
+                <br /><br />
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Usuario que Cargó Inspección
+                    <input type="text" name="user" class="form-control" placeholder="Fecha Pase A"
+                        value="{{mesaentrada.name}}" disabled>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>
+                </div>
+                <br />
+                <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                    &laquo; Volver Atrás
+                </a>
+                <br /><br />
+                {{!-- <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Tarjetas</p>
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada/listado"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado</p> --}}
+                    {{!-- <button class="btn btn-primary btn-block" href="/mesaentradas">
+                        Volver
+                    </button> --}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

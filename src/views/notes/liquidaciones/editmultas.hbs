@@ -1,0 +1,316 @@
+<script>
+
+    window.onload = function () {
+        //var montototal = document.getElementById('montototal').value;
+        //var total = parseFloat(montototal);
+        //document.getElementById('montototalvalorreal').value = total.toLocaleString('es-ES');
+        //var montototal = document.getElementById('montototalhidden').value;
+        var montototalvalorreal = document.getElementById('montototal').value;
+        var idmontototalvalorreal = 'montototalvalorreal';
+        //var idtasautilizada = 'tcactual';
+        //calculocondecimales(montototal, idmontototal)
+        calculocondecimales(montototalvalorreal, idmontototalvalorreal)
+    };
+
+    function calculocondecimales(valor, identificacion) {
+
+        var id = identificacion.toString();
+        var pricestring = valor
+        var price = pricestring//.toString();
+        //var pricearray = ["1434555555", "14345555.5", "14345555.55", "14345555.555", "14345555.0000", "14345555.505"];
+        //var price = pricearray[5];         
+        var punto = price.includes(".")
+        var montototalcondecimales = parseFloat(price);
+        var montototalcondecimalesstring = "";
+        var centavos = 0;
+        var solocentavos = 0;
+        var solodoscentavos = 0;
+        var longitudcentavos = 0;
+        var solocentavosstring = 0;
+        var centavos1 = 0;
+
+        if (punto === false) { /// aca define si es con decimal o entero  
+            montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+            montototalcondecimalesstring = montototalcondecimales + ",00"
+            console.log("no tiene .00");
+            console.log("monto total con decimales", montototalcondecimalesstring);
+        } else {
+            centavos = price.split('.');
+            console.log("tiene centavos", centavos)
+            longitudcentavos = centavos[1].length
+            console.log("longitud centavos", longitudcentavos)
+            if (longitudcentavos > 1) {
+                solodoscentavos = centavos[1].split("");
+                console.log("entro a longitud > de 1: ", solodoscentavos)
+                if (solodoscentavos[1] === "0" || solodoscentavos[1] === "") {
+                    //buscar cero en centavos 20 o 30 o 40  
+                    var cortarsolodoscentavos = solodoscentavos.toString();
+                    var ceroensegundocentavo = cortarsolodoscentavos.split("");
+                    solodoscentavos = ceroensegundocentavo[0] + "0"
+                } else {
+                    if (solodoscentavos[1] >= 1 || solodoscentavos[1] <= 9) {
+                        montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+                        montototalcondecimalesstring = montototalcondecimales + "";
+                        console.log("monto total con decimales", montototalcondecimalesstring);
+                        console.log("split array centavos completos", solodoscentavos)
+                    } else {
+                        montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+                        montototalcondecimalesstring = montototalcondecimales + ",00";
+                        console.log("monto total con decimales", montototalcondecimalesstring);
+                        console.log("split array centavos completos", solodoscentavos)
+                    }
+                }
+            } else {
+                solodoscentavos = centavos[1] + "0"
+                console.log("entro a longitud < de 1: ", solodoscentavos)
+            }
+        }
+        if (solodoscentavos === "00") {
+            montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+            montototalcondecimalesstring = montototalcondecimales + ",00";
+            console.log("monto total con decimales", montototalcondecimalesstring);
+            console.log("split array centavos completos", solodoscentavos)
+        }
+        if (solodoscentavos > 9 && solodoscentavos < 99) {
+            console.log("entro a 9 y mas de 99", solodoscentavos)
+            solocentavosstring = solodoscentavos.toString();
+            console.log("solo centavos string", solocentavosstring)
+            centavos1 = solocentavosstring.split('');
+            console.log("split", centavos1)
+            if (centavos1[1] === "0") { // aca entra cuando hay un cero ej:50
+                console.log("entro a 0", centavos1)
+                solocentavos = centavos1.join('')
+                var pruebaentero = parseFloat(centavos[0] + "." + solocentavos)
+                console.log("uniendo entero y centavo: (variable pruebaentero)" + pruebaentero)
+                var reparado = parseFloat(pruebaentero)
+                //reparado = parseFloat(reparado); 
+                reparado = reparado.toLocaleString("es-ES")
+                var reparadostring = reparado.toString();
+                console.log("monto total con decimales con 0", reparado + "0");
+                montototalcondecimalesstring = reparadostring + "0"
+            } else {
+                console.log("NO entro a 0", centavos1)
+                montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+                montototalcondecimalesstring = montototalcondecimales + "";
+                pruebaentero = parseFloat(centavos[0])
+                solocentavos = centavos1.join('')
+                console.log("uniendo entero y centavo: " + solocentavos)
+                reparado = parseFloat(pruebaentero)
+                //reparado = parseFloat(reparado); 
+                reparado = reparado.toLocaleString("es-ES")
+                var reparadostring = reparado.toString();
+                console.log("monto total con decimales sin cero Reparado", reparado + "," + solocentavos);
+                montototalcondecimalesstring = reparadostring + "," + solocentavos
+                //console.log("monto total con decimales oo sin cero",montototalcondecimalesstring);             	
+            }
+        } else if (solocentavos > 0 && solocentavos < 1) {
+
+            montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+            montototalcondecimalesstring = montototalcondecimales;// + "0";
+            console.log("monto total con decimales", montototalcondecimalesstring);
+
+        }
+        //else if (solocentavos >= 0 && solocentavos < 10) {            
+        //if (solocentavos.length < 2) {
+        // montototalcondecimales = montototalcondecimales.toLocaleString('es-ES');
+        //montototalcondecimalesstring = montototalcondecimales + "0";
+        //}
+        //console.log("monto total con decimales", montototalcondecimalesstring);
+        //};
+        document.getElementById(id).value = montototalcondecimalesstring;
+        //var multasmontototal = montototalcondecimalesstring;  
+    };
+
+    function agregarSeparadorMiles(numero) {
+        var montototalvalorreal = document.getElementById('montototal').value;;
+        var idmontototalvalorreal = 'montototalvalorreal';
+        calculocondecimales(montototalvalorreal, idmontototalvalorreal)
+
+        //var idtasautilizada = 'tcactual';
+        //calculocondecimales(montototal, idmontototal)
+
+        //let montototal = document.getElementById(numero).value
+        //var total = parseFloat(montototal)
+        //document.getElementById('montototalvalorreal').value = total.toLocaleString('es-ES');
+        //document.getElementById('montototal').value = total.toLocaleString('es-ES');        
+    }
+
+    function ponermayuscula(mayus) {
+        let ex = document.getElementById(mayus);
+        ex.value = ex.value.toUpperCase();
+    }
+
+    function ShowName(valor) {
+        var writtenName = document.getElementById(valor).value;
+        document.getElementById(valor).value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+
+</script>
+
+
+<div class="col-md-7 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                Editar Liquidacion Propietario (Multas/Tasas)
+            </h3>
+        </div>
+        <div class="card-body">
+            <form action="/multas/editmultas/{{multas._id}}?_method=PUT" method="POST">
+
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha:
+                    <input type="date" name="fecha" class="form-control" placeholder="Sin Información"
+                        value="{{multas.fecha}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Expediente:
+                    <input type="text" name="expediente" class="form-control" placeholder="Sin Información"
+                        value="{{multas.expediente}}" style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Adrema:
+                    <input type="text" name="adrema" class="form-control" placeholder="Sin Información"
+                        value="{{multas.adrema}}" style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Ubicación:
+                    <input onkeyup="ShowName('ubicacion')" type="text" id="ubicacion" name="ubicacion"
+                        class="form-control" placeholder="Sin Información" value="{{multas.ubicacion}}"
+                        style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Nombre y Apellido:
+                    <input onkeyup="ShowName('propietario')" type="text" id="propietario" name="propietario"
+                        class="form-control" placeholder="Nombre y Apellido" value="{{multas.propietario}}"
+                        style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Numº Acta:
+                    <input onkeyup="ponermayuscula('numacta')" type="text" id="numacta" name="numacta"
+                        class="form-control" placeholder="No Especificado" value="{{ multas.numacta }}"
+                        style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Acta:
+                    <input onkeyup="ponermayuscula('acta')" type="text" id="acta" name="acta" class="form-control"
+                        placeholder="Sin Información" value="{{multas.acta}}" style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Formula Utilizada:
+                    <input type="text" name="formulamulta" class="form-control" placeholder="Sin Información"
+                        value="{{multas.formulamulta}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Observaciones/Posible variación fórmula:
+                    <input type="text" name="observaciones" class="form-control" placeholder="Sin Información"
+                        value="{{ multas.observaciones }}" style="color: black; font-weight: bold;" readonly>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Tasa Utilizada:
+                    <input type="text" name="tcactual" class="form-control" placeholder="Sin Información"
+                        value="{{ multas.tcactual }}" style="color: black; font-weight: bold;" readonly>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Con Sanción/ Sin Sanción:
+                    <input type="text" name="sancionprof" class="form-control" placeholder="Sin Información"
+                        value="{{ multas.sancionprof }}" style="color: black; font-weight: bold;" readonly>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Porcentaje Sanción:
+                    <input type="text" name="sancionprorc" class="form-control" placeholder="Sin Información"
+                        value="{{ multas.sancionprorc }}" style="color: black; font-weight: bold;">
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Apercibimiento Profesional:
+                    <input type="text" name="apercibimientoprofesional" class="form-control"
+                        placeholder="Sin Información" value="{{ multas.apercibimientoprofesional }}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Reiteraciones:
+                    <input type="text" name="reiteracion" class="form-control" placeholder="Sin Información"
+                        value="{{ multas.reiteracion }}" style="color: black; font-weight: bold;" readonly>
+                </div>
+
+                <div class="form-group">
+                    <h5 style="color:brown; font-style:oblique; font-weight: bold;">Monto Total Cobrado:</h5>
+                    <input step="0.01" min="0"
+                        style="text-align: center; color:black; border: 0; width: 140px;border-radius: 8px; background-color: grey"
+                        id="montototalvalorreal" name="montototalvalorreal" readonly>
+                    <p style="font-style:Verdana ; color:grey">(en Nuevo monto,el punto es para decimal!)</p>
+                    <input onkeyup="agregarSeparadorMiles('montototal')" style="color: red; font-weight: bold;"
+                        type="number" step="0.01" id="montototal" name="montototal" class="form-control"
+                        value="{{multas.montototal}}" required />
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Infracción/Infracción y Paralización:
+                    <input type="text" name="infraccionoparalizacion" class="form-control" placeholder="Sin Información"
+                        value="{{multas.infraccionoparalizacion}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Impreso:
+                    <input type="text" name="impreso" class="form-control" placeholder="Sin Información"
+                        value="{{multas.impreso}}" style="color: rgb(255, 0, 0); font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Impresion:
+                    <input type="text" name="fechaimpreso" id="fechaimpreso" class="form-control"
+                        placeholder="Sin Información" value="{{multas.fechaimpreso}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Re-Impreso:
+                    <input type="text" name="reimpreso" class="form-control" placeholder="Sin Información"
+                        value="{{multas.reimpreso}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Veces Re-Impreso:
+                    <input type="text" name="reimpreso" class="form-control" placeholder="Sin Información"
+                        value="{{multas.vecesreimpreso}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Re-Impresion:
+                    <input type="text" name="fechareimpreso" id="fechareimpreso" class="form-control"
+                        placeholder="Sin Información" value="{{multas.fechareimpreso}}"
+                        style="color: grey; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Datos Exactos Creación Multa:
+                    <input type="text" id="date" name="date" class="form-control" placeholder="Sin Información"
+                        value="{{multas.date}}" style="color: grey; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Cargó Tasas/Multa:
+                    <input type="text" name="name" class="form-control" placeholder="Sin Información"
+                        value="{{multas.name}}" style="color: grey; font-weight: bold;" disabled>
+                </div>
+                <br />
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>
+                </div>
+            </form>
+            <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                &laquo; Volver Atrás
+            </a>
+            <br /><br />
+        </div>
+    </div>
+</div>

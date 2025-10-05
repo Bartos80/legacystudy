@@ -1,0 +1,58 @@
+<div class="col-md-5 mx-auto">
+    {{#each users}}
+    <div class="card" style="font-style: italic;font-weight: bold;">        
+        <div class="card-header mx-auto">
+            <p></p>            
+            <div class="card-body">
+                <h4 style="color: rgb(26, 51, 189); font-weight: bold;">- Usuario -</h4>
+                <form>
+                    {{!-- <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        _ID:
+                        <input type="text" name="_id" class="form-control" placeholder="Sin Información" value="{{_id}}"
+                            style="color: grey; font-weight: bold;" disabled>
+                    </div> --}}
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Nombres y Apellidos:
+                        <input type="text" name="name" class="form-control" placeholder="No Especificado"
+                            value="{{ name }}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Código Usuario:
+                        <input type="text" name="codigousuario" class="form-control" placeholder="Sin Información"
+                            value="{{codigousuario}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Función:
+                        <input type="text" name="funcion" class="form-control" placeholder="Sin Información"
+                            value="{{funcion}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Telefono / Celular:
+                        <input type="text" name="celular" class="form-control" placeholder="Sin Información"
+                            value="{{ celular }}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Correo Electrónico (E-Mail):
+                        <input type="text" name="email" class="form-control" placeholder="Sin Información"
+                            value="{{ email }}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Rol del Usuario:
+                        <input type="text" name="rolusuario" class="form-control" placeholder="Sin Información"
+                            value="{{rolusuario}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
+                        Fecha Creación del Usuario:
+                        <input type="text" name="date" class="form-control" placeholder="Sin Información"
+                            value="{{date}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                                &laquo; Volver Atrás
+                    </a>
+                    {{!-- <a href="/" class="btn btn-success btn-block">Volver!</a> --}}
+            </div>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+</div>

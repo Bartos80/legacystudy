@@ -1,0 +1,196 @@
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header mx-auto">
+            <h3>Datos de Inspeccción</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Origen de Inspección
+                    <input type="text" name="origeninspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{note.origeninspeccion}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Num.Inspección
+                    <input type="text" name="numinspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{note.numinspeccion}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Expediente Nº
+                    <input type="text" name="expediente" class="form-control" placeholder="Sin Información"
+                        value="{{note.expediente}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Oficio Nº
+                    <input type="text" name="oficio" class="form-control" placeholder="Sin Información"
+                        value="{{note.oficio}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Acta Nº
+                    <input type="text" name="acta" class="form-control" placeholder="Sin Información"
+                        value="{{note.acta}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Adrema
+                    <input name="adrema" class="form-control" style="color: black; font-weight: bold;"
+                        value="{{note.adrema}}" disabled> </input>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha
+                    <input type="date" name="date" class="form-control" placeholder="Sin Información"
+                        value="{{note.date}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Cargó la Inspección
+                    <input type="text" name="inspuser" class="form-control" placeholder="Sin Información"
+                        value="{{note.inspuser}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Nº Informe Inspección
+                    <input type="text" name="informeinspnum" class="form-control" placeholder="Sin Información"
+                        value="{{note.informeinspnum}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Entrada Inspección
+                    <input type="date" name="fechaentradinspec" class="form-control" placeholder="Sin Información"
+                        value="{{note.fechaentradinspec}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                {{!-- <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Inspección Actual
+                    <input type="text" name="inspecfecha" class="form-control" placeholder="Sin Información"
+                        value="{{note.inspecfecha}}" style="color: black; font-weight: bold;" disabled>
+                </div> --}}
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Inspector (N y A)
+                    <input type="text" name="inspector" class="form-control" placeholder="Sin Información"
+                        value="{{note.inspector}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Número de Intimaciones
+                    <input type="text" name="intimacion" class="form-control" placeholder="Sin Información"
+                        value="{{note.intimacion}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Número de Infracciones
+                    <input type="text" name="infraccion" class="form-control" placeholder="Sin Información"
+                        value="{{note.infraccion}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Observaciones
+                    <textarea type="text" name="observacion" class="form-control" placeholder="Sin Información"
+                        style="color: black; font-weight: bold;" disabled>{{note.observacion}}</textarea>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Pase a Num.Destino
+                    <input type="text" name="paseanumdestino" class="form-control" placeholder="Sin Información"
+                        value="{{note.paseanumdestino}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Pase a
+                    <input type="text" name="pasea" class="form-control" placeholder="Sin Información"
+                        value="{{note.pasea}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Fecha Pase A
+                    <input type="date" name="fechapasea" class="form-control" placeholder="Sin Información"
+                        value="{{note.fechapasea}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <label style="color:brown; font-weight:bold">Fotos Inspección::</label>
+                <br />
+                {{!-- <img style="border-radius:30px;" src="{{note.path}}" width="400" /> <br /><br /> --}}
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    ID Usuario. Cargó Inspección
+                    <input type="text" name="fechapasea" class="form-control" placeholder="Sin Información"
+                        value="{{note.user}}" style="color: #e90e0e" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha y Hora de Carga
+                    <input type="datetime" name="fechapasea" class="form-control" placeholder="Sin Información"
+                        value="{{note.dateinsp}}" style="color: red;" disabled>
+                </div>
+              <div class="form-group">
+                        <label style="font-weight:bold">Fotos 1:</label>
+                        <br />
+                        {{!-- <img style="border-radius:30px;" src="{{note.path}}" alt="_Imagen No Cargada"
+                            width="400" /> <br /><br /> --}}
+                        {{!-- <a href="{{note.path}}">Ver Foto en Grande</a> --}}
+                        <a href="{{note.path}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.path}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 2:</label>
+                        <br />
+                        <a href="{{note.pathdos}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathdos}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 3:</label>
+                        <br />
+                        <a href="{{note.pathtres}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathtres}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+                    </div>
+                    <div  id="myDIV" class="form-group">
+                        <label style="font-weight:bold">Foto 4:</label>
+                        <br />
+                        <a href="{{note.pathcuatro}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathcuatro}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 5:</label>
+                        <br />
+                        <a href="{{note.pathcinco}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathcinco}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 6:</label>
+                        <br />
+                        <a href="{{note.pathseis}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathseis}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 7:</label>
+                        <br />
+                        <a href="{{note.pathsiete}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathsiete}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 8:</label>
+                        <br />
+                        <a href="{{note.pathocho}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{note.pathocho}}" alt="_Imagen No Cargada"
+                                width="250" height="300">
+                        </a>
+
+                    </div>
+                <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/notes/edit/{{note._id}}"><i
+                            class="fas fa-edit" style='font-size:24px;color:rgb(98, 98, 100)'></i></a> Editar </p>
+                <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/notes/listado"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
+                    {{!-- <button class="btn btn-primary btn-block" href="/notes">
+                        Volver
+                    </button> --}}
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

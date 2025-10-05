@@ -1,0 +1,117 @@
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header">
+            <h3>Datos de Informe del Ticket de Expediente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editinformeticket/{{expedticketentrainsp._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                    ID Expediente:
+                    <input type="text" name="idexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.idexpediente}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Número de Expediente:
+                    <input type="text" name="numexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.numexpediente}}" style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Número de Adrema:
+                    <input name="numadrema" class="form-control" value="{{expedticketentrainsp.numadrema}}"
+                        style="color: green;" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha de Entrada a Inspección:
+                    <input type="string" name="fechaentradainspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.fechaentradainspeccion}}" style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Fecha de Inspección e Inspector a Cargo:
+                    <input type="text" name="fechaeinspectorinspeccion" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.fechaeinspectorinspeccion}}" style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Número de Intimación:
+                    <input type="text" name="numintimacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.numintimacion}}" style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Intimación para Dar Cumplimiento a:
+                    <input type="text" name="darcumplimientoa" class="form-control"
+                        placeholder="Sin Información" value="{{expedticketentrainsp.darcumplimientoa}}"
+                        style="color: green;" ></input>
+                </div>
+                <div class="form-group">
+                    Plazo a Cumplir para la Intimación:
+                    <input type="text" name="plazointimacion" class="form-control"
+                        placeholder="Sin Información" value="{{expedticketentrainsp.plazointimacion}}"
+                        style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Número de Infracción:
+                    <input type="text" name="numinfraccion" class="form-control"
+                        placeholder="Sin Información" value="{{expedticketentrainsp.numinfraccion}}"
+                        style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Causas para la Infracción:
+                    <input type="text" name="causas" class="form-control"
+                        placeholder="Sin Información" value="{{expedticketentrainsp.causas}}"
+                        style="color: green;" >
+                </div>                
+                <div class="form-group">
+                    Paralización: (Si/No)
+                    <input type="text" name="paralizacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.paralizacion}}" style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Causas para la Correnpondiente Paralización:
+                    <input type="text" name="causasparalizacion" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.causasparalizacion}}" style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Informe General:
+                    <input type="text" name="informe" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.informe}}" style="color: green;" >
+                </div>
+                <div class="form-group">
+                    Destino Pase a:
+                    <textarea type="text" name="destinopase" class="form-control"
+                        placeholder="Sin Información" value="{{expedticketentrainsp.destinopase}}"
+                        style="color: green;" ></textarea>
+                </div>
+                <div class="form-group">
+                    Fecha de Salida:
+                    <input type="string" name="fechasalida" class="form-control"
+                        placeholder="Sin Información" value="{{expedticketentrainsp.fechasalida}}"
+                        style="color: green;" >
+                </div>
+                {{!-- <div class="form-group">
+                    ID Usuario  que Cargó Informe:
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.user}}" style="color: red;" >
+                </div> --}}
+                <div class="form-group">
+                    Usuario. Cargó Infracción
+                    <input type="text" name="name" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.name}}" style="color: red;" >
+                </div>
+                <div class="form-group">
+                    Fecha y Hora de Carga
+                    <input type="datetime" name="date" class="form-control" placeholder="Sin Información"
+                        value="{{expedticketentrainsp.date}}" style="color: red;" >
+                </div>  
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>
+                </div>               
+                <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/listadoticket"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado de Tickets</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

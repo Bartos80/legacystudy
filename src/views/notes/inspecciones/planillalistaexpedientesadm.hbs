@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/findjuzgado" method="POST">
+      <input type="search" class="form-control" name="juzgado" placeholder="Buscar Juzgado..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Juzgado
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/findsecretaria" method="POST">
+      <input type="search" class="form-control" name="adremaexp" placeholder="Buscar Secretaria..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Secretaría
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/find" method="POST">
+      <input type="search" class="form-control" name="numexpediente" placeholder="Buscar Expediente..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Expediente
+        </button>
+      </div>
+    </form>
+  </div>  
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/findultimanotificacion" method="POST">
+      <input type="search" class="form-control" name="ultimanotificacion" placeholder="Buscar Ultima Notif..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Ult.Notificación
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <a href="/expedientes/add" class="btn btn-success btn-block">Agregar Expediente!</a>
+  <a href="/expedientes/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+
+  {{!-- <br /> --}}
+  <div class="form-group btn-center mx-auto">
+    <br />
+    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE MESA DE ENTRADA</h5> --}}
+    {{!-- <br /><br /> --}}
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(221, 157, 18);;text-shadow: 1px 1px 2px black">
+            <td>Juzgado</td>
+            <td>secretaria</td>            
+            <td>Nº Expediente</td>
+            <td>Tipo</td>
+            <td>Estado</td>            
+            <td>UltimaNotif</td>            
+            <td>Opciones</td>
+            <td>Extras</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each expedientes}}
+          <tr>
+            {{!-- <td>{{ _id }}</td> --}}            
+            <td style="text-transform: lowercase;">{{ secretaria }}</td>
+            <td>{{ juzgado }}</td>            
+            <td>{{ numexpediente }}</td>  
+            <td style="text-transform: lowercase;">{{ tipo }}</td>           
+            <td style="text-transform: lowercase;color:yellow;">{{ estado }}</td>
+            <td style="text-transform: lowercase;color:green; font-weight: bold;">{{ ultimanotificacion }}</td>            
+            <td>              
+              <a class="dropdown-item" href="/expedientes/list/{{_id}}"
+                style="color:rgb(24, 211, 33);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Info Expediente
+              </a>                     
+            </td>
+            <td>              
+              <a class="dropdown-item " href="/expedientes/edit/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Editar Exped.
+              </a>              
+              <form onSubmit="return confirm('Desea enviar Papelera?')" style=""
+                action="/expedientes/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{{!-- {{else}} --}}

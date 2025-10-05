@@ -1,0 +1,113 @@
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header">
+            <h3>Datos del Tickets de Expedientes</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editexpedticket/{{expedticket._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                    Nº expedticket:
+                    <input type="text" name="numexpedticket" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.numticket}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Estado:
+                    <input type="text" name="estado" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.estado}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Iniciador (N y A):
+                    <input name="iniciadornomyape" class="form-control" value="{{expedticket.iniciador}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Domicilio Iniciador:
+                    <input type="text" name="domicilio" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.domicilio}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Adrema:
+                    <input type="text" name="adremaexp" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.adrema}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Fiduciario, propietario o socio:
+                    <input type="text" name="fiduciariopropsocio" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.fiduciariopropsocio}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Domicilio Fiduciario, propietario o socio:
+                    <input type="text" name="direcfiduciariopropsocio" class="form-control"
+                        placeholder="Sin Información" value="{{expedticket.direcfiduciariopropsocio}}"
+                        style="color: black; font-weight: bold;" disabled></input>
+                </div>
+                <div class="form-group">
+                    Email Fiduciario, propietario o socio:
+                    <input type="text" name="correofiduciariopropsocio" class="form-control"
+                        placeholder="Sin Información" value="{{expedticket.correofiduciariopropsocio}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Director de obra o perito visor:
+                    <input type="text" name="directorobraoperitovisor" class="form-control"
+                        placeholder="Sin Información" value="{{expedticket.directorobraoperitovisor}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Destino de Obra:
+                    <input type="text" name="destinodeobra" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.destinodeobra}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+
+                <div class="form-group">
+                    Superficie de Terreno:
+                    <input type="text" name="superficieterreno" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.superficieterreno}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Superficie a Construir:
+                    <input type="text" name="superficieaconstruir" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.superficieaconstruir}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    superficie subsuelo, planta baja:
+                    <input type="text" name="superficiesubsueloplantabaja" class="form-control"
+                        placeholder="Sin Información" value="{{expedticket.superficiesubsueloplantabaja}}"
+                        style="color: black; font-weight: bold;" disabled></input>
+                </div>
+                <div class="form-group">
+                    Superficie primerpiso y más pisos:
+                    <input type="text" name="superficieprimerpisoymaspisos" class="form-control"
+                        placeholder="Sin Información" value="{{expedticket.superficieprimerpisoymaspisos}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Observación:
+                    <input type="text" name="observaciones" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.observaciones}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Permiso de obra o acta de infracción:
+                    <input type="text" name="permisobraoactainfrac" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.permisobraoactainfrac}}" style="color: black; font-weight: bold;"
+                        disabled>
+                </div>
+                <div class="form-group">
+                    ID Usuario. Cargó Infracción
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.user}}" style="color: red;" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha y Hora de Carga
+                    <input type="datetime" name="dateinf" class="form-control" placeholder="Sin Información"
+                        value="{{expedticket.dateexp}}" style="color: red;" disabled>
+                </div>
+                <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/listadoticket"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

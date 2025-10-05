@@ -1,0 +1,504 @@
+<div class="container">
+    <div class="row">
+        {{!-- <br /><br /> --}}
+        <div class="form-group btn-center mx-auto">
+            <form action="/estadisticas/findlistainiciador" method="POST">
+                <input type="search" class="form-control" name="iniciador" placeholder="Buscar x NyApellido..."
+                    autofocus />
+                <div class="form-group">
+                    <button class="btn btn-warning btn-block btn-sm" type="submit">
+                        Buscar Iniciador
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="form-group btn-center mx-auto">
+            <form action="/estadisticas/findlistadni" method="POST">
+                <input type="search" class="form-control" name="dni" placeholder="Buscar x DNI..." />
+                <div class="form-group">
+                    <button class="btn btn-warning btn-block btn-sm" type="submit">
+                        Buscar DNI
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="form-group btn-center mx-auto">
+            <form action="/estadisticas/findlistafechaentrada" method="POST">
+                <input type="search" class="form-control" name="fechaingresodus"
+                    placeholder="Buscar x Fecha Ingreso..." />
+                <div class="form-group">
+                    <button class="btn btn-warning btn-block btn-sm" type="submit">
+                        Buscar Fecha Ingreso
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="form-group btn-center mx-auto">
+            <form action="/estadisticas/findlistafechasalida" method="POST">
+                <input type="search" class="form-control" name="fechaegresodus" placeholder="Buscar x Fecha Egreso..."
+                    autofocus />
+                <div class="form-group">
+                    <button class="btn btn-warning btn-block btn-sm" type="submit">
+                        Buscar Fecha Egreso
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="form-group btn-center mx-auto">
+            <form action="/estadisticas/findlistaexpediente" method="POST">
+                <input type="search" class="form-control" name="expediente" placeholder="Buscar x Expediente..."
+                    autofocus />
+                <div class="form-group">
+                    <button class="btn btn-warning btn-block btn-sm" type="submit">
+                        Buscar Expediente
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <a href="/estadisticas/add" class="btn btn-success btn-block">Agregar Estadistica!</a>
+        <a href="/estadisticas/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+
+        <br />
+        <div class="form-group btn-center mx-auto">
+            <center>
+
+                <blockquote>
+                    <br />
+                    <h4 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;font-style:oblique">
+                        Seguimiento de los EXPEDIENTES de OBRA que fueron contabilizados físicamente <br>
+                        en esta Dependencia el día <label style="width: 140px; color:green">00/00/0000</label>
+                        (RELEVAMIENTO)
+                    </h4>
+                    <p>---------------------------------------------------------------</p>
+                </blockquote>
+
+                <label for="nameu" style="color:black; font-weight: bold;">Retenidos:</label>
+                <input type="text" name="nameu" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="named" style="color:black; font-weight: bold;">De todos las Zonas:</label>
+                <input type="text" name="named" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="namet" style="color:black; font-weight: bold;">Realizados:</label>
+                <input type="text" name="namet" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="namec" style="color:black; font-weight: bold;">pendientes:</label>
+                <input type="text" name="namec" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+
+                <blockquote>
+                    <p>---------------------------------------------------------------</p>
+                </blockquote>
+
+                <label for="nameu" style="color:black; font-weight: bold;">P/Inspección:</label>
+                <input type="text" id="nameu" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <input type="text" id="nameu" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="named" style="color:black; font-weight: bold;">Zona 1,2,3,4:</label>
+                <input type="text" id="named" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="namet" style="color:black; font-weight: bold;">Zona Operativa:</label>
+                <input type="text" id="namet" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="namec" style="color:black; font-weight: bold;">pendientes:</label>
+                <input type="text" id="namec" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+
+                <blockquote>
+                    <p>---------------------------------------------------------------</p>
+                </blockquote>
+
+                <label for="nameu" style="color:black; font-weight: bold;">P/Inspección:</label>
+                <input type="text" id="nameu" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <input type="text" id="nameu" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="named" style="color:black; font-weight: bold;">Zona 1,2,3,4:</label>
+                <input type="text" id="named" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="namet" style="color:black; font-weight: bold;">Zona Operativa:</label>
+                <input type="text" id="namet" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <label for="namec" style="color:black; font-weight: bold;">pendientes:</label>
+                <input type="text" id="namec" style="width: 120px; background-color:#3e5353; " placeholder="0000.00"
+                    readonly />
+                <blockquote>
+                    <p>---------------------------------------------------------------</p>
+                    <h4 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;font-style:oblique">
+                        Detalle de los pendientes de salida ordenados por el año y el Área
+                    </h4>
+                    <input type="text" id="" placeholder="0000" style="width: 120px; background-color:#3e5353; "
+                        readonly />
+                    <input type="text" id="" placeholder="0000" style="width: 120px; background-color:#3e5353; "
+                        readonly />
+                    <input type="text" id="" placeholder="0000" style="width: 120px; background-color:#3e5353; "
+                        readonly />
+                </blockquote>
+            </center>
+        </div>
+        <table class="table table-dark table-hover">
+            <tr style="background-color: rgb(71, 62, 150);text-shadow: 1px 1px 2px black">
+                <td colspan="2" style="background: rgba(128, 255, 0, 0.3); border: 1px solid rgba(100, 200, 0, 0.3);">
+                    Retenidos
+                </td>
+                <td colspan="2">de Zonas 1-2-3-4</td>
+                <td style="background: rgba(128, 255, 0, 0.3); border: 1px solid rgba(100, 200, 0, 0.3);">de zonas
+                    operativas</td>
+                <td style="background: rgba(128, 255, 0, 0.3);"></td>
+            </tr>
+            <tbody style="background: rgba(126, 124, 122, 0.3); border: 1px solid rgba(200, 100, 0, 0.3);">
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2012</th>
+                    <td>22</td>
+                    <th style="background: rgb(211, 147, 9);">2016</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>21</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2013</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2018</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2014</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2020</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2015</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2021</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2016</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2022</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2017</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2023</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2018</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2024</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2019</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2025</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+                <tr>
+                    <th style="background: rgba(214, 113, 11, 0.3);">2020</th>
+                    <td>16</td>
+                    <th style="background: rgb(211, 147, 9);">2026</th>
+                    <td style="background: rgb(117, 105, 77);">10</td>
+                    <td>5</td>
+                    <td style="background: rgba(39, 39, 38, 0.3);">7</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+                    {{!-- <td style="visibility:collapse;">ID</td> --}}
+                    <td>-</td>
+                    <td>Entrada</td>
+                    <td>pendientes</td>
+                    <td>Entrada</td>
+                    <td>pendientes</td>
+                    <td>Entrada</td>
+                    <td>pendientes</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-active">
+                    <th style="background: rgba(204, 207, 11, 0.3);">Enero</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(214, 113, 11, 0.3);">Febrero</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(204, 207, 11, 0.3);">Marzo</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(214, 113, 11, 0.3);">Abril</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(204, 207, 11, 0.3);">Mayo</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(214, 113, 11, 0.3);">Junio</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(204, 207, 11, 0.3);">Julio</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(214, 113, 11, 0.3);">Agosto</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(204, 207, 11, 0.3);">Septiembre</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(214, 113, 11, 0.3);">Octubre</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(204, 207, 11, 0.3);">Noviembre</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+                <tr class="table-active">
+                    <th style="background: rgba(214, 113, 11, 0.3);">Diciembre</th>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                    <td>0000</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-success table-striped">
+
+            <colgroup>
+
+                <colgroup span="2" style="background: rgba(32, 32, 31, 0.3); border: 1px solid rgba(100, 200, 0, 0.3);">
+
+                    <colgroup span="2"
+                        style="background: rgba(27, 27, 27, 0.3); border: 1px solid rgba(200, 100, 0, 0.3);">
+
+                    <tr class="table-active">
+
+                        <th></th>
+                        <th colspan="2">Entrada</th>
+                        <th colspan="2">pendientes</th>
+
+                    </tr>
+
+                <tr>
+
+                    <th></th>
+                    <th>Primera prueba</th>
+                    <th>Segunda prueba</th>
+                    <th>Primera prueba</th>
+                    <th>Segunda prueba</th>
+
+                </tr>
+
+            <tr>
+
+                <th>Día 1</th>
+                <td>25 km</td>
+                <td>38 km</td>
+                <td>28 km</td>
+                <td>37 km</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Día 2</th>
+                <td>22 km</td>
+                <td>35 km</td>
+                <td>30 km</td>
+                <td>35 km</td>
+
+            </tr>
+
+        </table>
+        <br />
+        <h4 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;font-style:oblique">
+            Expedientes Entrados antes del Relevamiento (Sin Salida) Entrada
+            <br />
+            Retenidos quedan 00 de 00
+        </h4>
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr style="background-color: rgb(211, 214, 22);text-shadow: 1px 1px 2px black">
+                    {{!-- <td style="visibility:collapse;">ID</td> --}}
+                    <td>Cantidad x fecha</td>
+                    <td>N° Expediente</td>
+                    <td>Nombre/Apellido</td>
+                    <td>Dirección</td>
+                    <td>Opciones</td>
+                    <td>Suplementario</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each expedientesretenidos}}
+                <tr>
+                    {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+                    <td>{{ estadisticanum }}</td>
+                    <td>{{ numexpediente }}</td>
+                    <td>{{ iniciadornomyape }}</td>
+                    <td style="text-transform: lowercase;">{{ domicilio }}</td>
+                    <td>
+                        <a class="dropdown-item" href="/estadisticas/list/{{_id}}"
+                            style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">
+                            Info
+                        </a>
+                        <a class="dropdown-item" href="/expedientes/list/{{_id}}"
+                            style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">
+                            Info Expediente
+                        </a>
+                    </td>
+                    <td>
+                        <a class="dropdown-item" href="/estadisticas/edit/{{_id}}" style="color:rgb(165, 196, 28)">
+                            Editar
+                        </a>
+                        <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
+                            action="/estadisticas/marcadelete/{{_id}}?_method=PUT" method="POST">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button class="btn btn-danger btn-block btn-sm" type="submit">
+                                Borrar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <br />              
+        <h4 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;font-style:oblique">
+            Expedientes Entrados antes del Relevamiento (Sin Salida) P/Inspección
+            <br />
+            Para Inspección quedan 00 de 00
+        </h4>
+        <br />
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+                    {{!-- <td style="visibility:collapse;">ID</td> --}}
+                    <td>Cantidad x fecha</td>
+                    <td>N° Expediente</td>
+                    <td>Nombre/Apellido</td>
+                    <td>Dirección</td>
+                    <td>Opciones</td>
+                    <td>Suplementario</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each expedientesentradas}}
+                <tr>
+                    {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+                    <td>{{ estadisticanum }}</td>
+                    <td>{{ numexpediente }}</td>
+                    <td>{{ iniciadornomyape }}</td>
+                    <td style="text-transform: lowercase;">{{ domicilio }}</td>
+                    <td>
+                        <a class="dropdown-item" href="/estadisticas/list/{{_id}}"
+                            style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">
+                            Info
+                        </a>
+                    </td>
+                    <td>
+                        <a class="dropdown-item" href="/estadisticas/edit/{{_id}}" style="color:rgb(165, 196, 28)">
+                            Editar
+                        </a>
+                        <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
+                            action="/estadisticas/marcadelete/{{_id}}?_method=PUT" method="POST">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button class="btn btn-danger btn-block btn-sm" type="submit">
+                                Borrar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+            &laquo; Volver Atrás
+        </a>
+    </div>
+
+</div>

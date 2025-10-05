@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findnumestadistica" method="POST">
+            <input type="search" class="form-control" name="estadisticanum" placeholder="Buscar x Nº Estadistica..."
+                autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar Nº Estadistica
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="form-group btn-center mx-auto">
+        <form action="/notes/findfechaestadistica" method="POST">
+            <input type="date" class="form-control" name="fechaestadistica" placeholder="Buscar x Fecha..." autofocus />
+            <div class="form-group">
+                <button class="btn btn-warning btn-block btn-sm" type="submit">
+                    Buscar Fecha Estadistica
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <br /><br />
+    <a href="/estadisticas/add" class="btn btn-success btn-block">Crear nueva Estadística!</a>
+    <br /><br />
+    {{#each estadisticas}}
+    <div class="text-dark col-md-3">
+        <br />
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Estadistica
+                    Nº:</h5>
+                <p class="text-secondary display-5 card-title d-flex justify-content-between align-items-center">
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ estadisticanum }}
+                    {{!-- <a href="/notes/edit/{{_id}}"><i class="fas fa-edit"
+                            style='font-size:24px;color:blue'></i></a></p> --}}
+                </p>
+                {{!-- <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Fecha:</p>
+                <p>{{ estadisticanum }}</p> --}}
+                <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Fecha
+                    Estadistica:</p>
+                <input style="color:rgb(34, 32, 32);font-weight: bold;" type="date" value="{{fechaestadistica}}"
+                    disabled></input>
+                {{!-- <p>{{fechaestadistica}}</p> --}}
+                {{!-- <p>{{ fechaestadistica }}</p> --}}
+                {{!-- <p>{{ date }}</p>--}}
+                <p style="color:brown; font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">Hora
+                    Estadistica:</p>
+                <p style="color:rgb(0, 0, 0); font-weight: bold;">{{ horaestadistica }}</p>
+                <br />
+
+                {{!-- <p style="color:brown; font-style:oblique; font-weight: bold;"><a><i class="fas fa-edit"
+                            style='font-size:24px;color:rgb(98, 98, 100)'></i></a> Editar </p>
+                href="/notes/edit/{{_id}}" --}}
+                {{!-- {{#if (name=="Admin")} --}}
+                <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/estadisticas/edit/{{_id}}"><i
+                            class="fas fa-edit" style='font-size:24px;color:rgb(98, 98, 100)'></i></a> Editar </p>
+
+                <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/estadisticas/list/{{_id}}"><i
+                            class="fas fa-list" style='font-size:24px;color:blue'></i></a> Info Completa</p>
+                
+                <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
+                    action="/estadisticas/marcadelete/{{_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <button class="btn btn-danger btn-block btn-sm" type="submit">
+                        Borrar
+                    </button>
+                </form>
+
+                {{!-- {{/if}} --}}
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="mx-auto">
+        <br /> <br />
+        <div class="card mx-auto">
+            <div class="card-body">
+                <p class"lead" style="color:red; font-weight: bold;"> No existen Estadística Aun...</p>
+                {{!-- <a href="/notes/add" class="btn btn-success btn-block">Cargar Inspección!</a> --}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

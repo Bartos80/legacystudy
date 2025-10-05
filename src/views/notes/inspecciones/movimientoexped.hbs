@@ -1,0 +1,122 @@
+<script>
+    function seleccionarPermisoEdificacion() {
+        var selecpermisoedificacion = document.getElementById('selecpermisoedificacion');
+        var labelplanoregistrado = document.getElementById("labelplanoregistrado")
+        var permisoedificacionnumero = document.getElementById("permisoedificacionnumero");
+        var labelfechapermisoedificacion = document.getElementById("labelfechapermisoedificacion");
+        var fechapermisoedificacion = document.getElementById("fechapermisoedificacion");
+        if ((selecpermisoedificacion.selectedIndex == 0)) {
+            permisoedificacionnumero.required = false;
+            fechapermisoedificacion.required = false;
+            labelplanoregistrado.style.display = "none";
+            permisoedificacionnumero.style.display = "none";
+            labelfechapermisoedificacion.style.display = "none";
+            fechapermisoedificacion.style.display = "none";
+        } else if ((selecpermisoedificacion.selectedIndex == 1)) {
+            permisoedificacionnumero.required = true;
+            fechapermisoedificacion.required = true;
+            labelplanoregistrado.style.display = "block";
+            permisoedificacionnumero.style.display = "block";
+            labelfechapermisoedificacion.style.display = "block";
+            fechapermisoedificacion.style.display = "block";          
+        }
+    }
+    function seleccionarPermisoDemolicion() {
+        var selecpermisodemolicion = document.getElementById('selecpermisodemolicion');
+        var labelplanovisado = document.getElementById("labelplanovisado")
+        var permisodemolicionnumero = document.getElementById("permisodemolicionnumero");
+        var labelfechapermisodemolicion = document.getElementById("labelfechapermisodemolicion");
+        var fechapermisodemolicion = document.getElementById("fechapermisodemolicion");
+        if ((selecpermisodemolicion.selectedIndex == 0)) {
+            permisodemolicionnumero.required = false;
+            fechapermisodemolicion.required = false;
+            labelplanovisado.style.display = "none";
+            labelfechapermisodemolicion.style.display = "none";
+            permisodemolicionnumero.style.display = "none";
+            fechapermisodemolicion.style.display = "none";
+        } else if ((selecpermisodemolicion.selectedIndex == 1)) {
+            permisodemolicionnumero.required = true;
+            fechapermisodemolicion.required = true;
+            labelplanovisado.style.display = "block";
+            permisodemolicionnumero.style.display = "block";
+            labelfechapermisodemolicion.style.display = "block";
+            fechapermisodemolicion.style.display = "block";          
+        }
+    }
+</script>
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 style="color:red; text-shadow: 0 0 3px #FF0000;">Movimiento de Expediente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/newestadoexpediente?_method=PUT" method="POST">            
+                <input type="hidden" name="_method" value="PUT">
+                <div class="card-body">
+                    {{!-- <form action="/notes/editinfraccion/{{expediente._id}}?_method=PUT" method="POST"> --}}
+                        {{!-- <input type="hidden" name="_method" value="PUT"> --}}  
+                        <div class="form-group">
+                            Estado:
+                            <input style="color:red" type="text" class="form-control" placeholder="Estado"
+                                value="{{expedientes.estado}}" disabled>
+                        </div> 
+                        <div class="form-group">
+                            Nuevo Estado:
+                            <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;">Cambiar el Estado?
+                        <select name="estado">
+                            <option value="{{expedientes.estado}}" >{{expedientes.estado}}</option>                            
+                            <option value="ENT">Entrada</option>
+                            <option value="SAL">Salida</option>
+                            <option value="p/Insp">p/Inspección</option> 
+                            <option value="m/e/R">m/e/R</option>                                                       
+                        </select>
+                    </p>
+                </div>
+                        </div> 
+                        <div class="form-group">
+                            Motivo de la Entrada/Salida/Etc:
+                            <label>{{expedientes.motivoentsal}}</label>
+                            <input style="color:red, visibility: hidden" type="text" name="motivoentsal" class="form-control" placeholder="Motivo E/S/Etc"
+                                value="{{expedientes.motivoentsal}}">
+                        </div>                     
+                        <div class="form-group">
+                            Expediente Nº:
+                            <input style="color:red" type="text" name="numexpediente" class="form-control" placeholder="Num.Expediente"
+                                value="{{expedientes.numexpediente}}" >
+                        </div>
+                        <div class="form-group">
+                            Iniciador (NyA):
+                            <input style="color:red" type="text" name="iniciadornomyape" class="form-control" placeholder="Iniciador"
+                                value="{{expedientes.iniciadornomyape}}" >
+                        </div>
+                        <div class="form-group">
+                            Domicilio Iniciador:
+                            <input style="color:red" type="text" name="domicilio" class="form-control" placeholder="Domicilio Iniciador"
+                                value="{{expedientes.domicilio}}" >
+                        </div>
+                        <div class="form-group">
+                            Adrema:
+                            <input style="color:red" type="text" name="adremaexp" class="form-control" placeholder="Adrema"
+                                value="{{expedientes.adremaexp}}" >
+                        </div>                        
+                        <div class="form-group">
+                            Observación:
+                            <input style="color:red" type="text" name="observaciones" class="form-control" placeholder="Observación"
+                                value="{{expedientes.observaciones}}" >
+                        </div>                       
+                        
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">
+                                Grabar
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/listado"><i
+                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado Expedientes</p>
+                        </div>
+                    </form>
+                </div>
+        </div>
+
+    </div>

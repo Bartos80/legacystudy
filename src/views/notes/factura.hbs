@@ -1,0 +1,164 @@
+<script>
+
+    window.onload = function () {
+        document.getElementById('botonfecha').click();
+    }
+    function fecha() {
+        var meses = [
+            "Enero", "Febrero", "Marzo",
+            "Abril", "Mayo", "Junio", "Julio",
+            "Agosto", "Septiembre", "Octubre",
+            "Noviembre", "Diciembre"
+        ]
+        var date = new Date();
+        var dia = date.getDate();
+        var mes = date.getMonth();
+        var yyy = date.getFullYear();
+        var fecha = 'Corrientes, ' + dia + ' de ' + meses[mes] + ' de ' + yyy;
+        document.getElementById("fechahoy").value = fecha;
+        document.getElementById("botonfecha").hidden = true;
+    }
+
+    function desabilitar() {
+        //document.getElementById("verfactura").hidden = true;
+        document.getElementById("divocultarformbutton").hidden = true;
+    }
+
+    function recargar() {
+        javascript: location.reload()
+    }
+    function actualizar() {
+        location.reload(true)
+    }
+    //Función para actualizar cada 3 segundos(3000 milisegundos)
+    setInterval("actualizar()", 3000);
+
+</script>
+
+<div class="row">
+
+    <div class="form-group btn-center mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <div style="color:black" class="form-group">
+                    <div style="display: flex; justify-content: center">
+                        <img style="align=center;" width="250" height="95"
+                            src="https://ciudaddecorrientes.gov.ar/sites/default/themes/ciudaddecorrientes/logo.png" />
+                        <img style="align: right" width="100"
+                            src="https://ciudaddecorrientes.gov.ar/sites/default/files/escudo_municipalidad_nuevo-01_2.png" />
+                    </div>
+                    <div style="display: grid; justify-content: center; font-family: Garamond; text-align: center;">
+                        <h5 style="">MUNICIPALIDAD DE LA CUIDAD DE CORRIENTES</h5>
+                    </div>
+                    <div style=" text-align: center;display: grid; justify-content: center;font-family: Garamond">
+                        <h5>SECRETARIA DE DESARROLLO URBANO</h5>
+                    </div>
+                    <div style=" text-align: center;display: grid; justify-content: center;font-family: Garamond">
+                        <h5>SUBSECRETARIA DE FISCALIZACIÓN</h5>
+                    </div>
+                    <div style=" text-align: center;display: grid; justify-content: center;font-family: Garamond">
+                        <h5>DIRECCIÓN GENERAL DE OBRAS PARTICULARES</h5>
+                    </div>
+                    <h5
+                        style="display: grid; justify-content: center;font-family: Garamond; text-align: center; font-weight:bold;">
+                        ”1983/2023 40 Años de Democracia”</h5>
+                </div>
+                <div class="card" style="">
+                    <button id="botonfecha" onclick="fecha()">poner fecha</button>
+                    <input size=33 id="fechahoy" style=" text-align: right" disabled></input>
+                    
+                    <h3 style=" text-align: center;border: 1px solid; margin: 20px">LIQUIDACIONES DE INFRACCIONES</h3>
+                    </br></br>
+                    <div style="font-family: Arial, Helvetica, sans-serif; text-align:left;">
+                        <h4 style=" text-align:left;">A la Administración del tribunal de faltas:</h4>
+                        <h5>S_______/________D:</h5>
+                        <p style="font-family: Arial, Helvetica, sans-serif; font-weight:bold; text-align: center;">Se
+                            remiten las actas
+                            de
+                            infracción, las cuales
+                            fueron labradas por la Dirección Gral. de
+                            Inspeccion
+                            de Obras.</p>
+                    </div>
+                    <p style="font-family: Arial, Helvetica, sans-serif; text-align: center;">Corresponde la Aplicación
+                        de la Ordenanza
+                        5689/12</p>
+                    <h5 style="font-family: Arial, Helvetica, sans-serif; text-align: center;">Art.1.6.5. MULTAS AL
+                        PROPIETARIO</h5>
+                </div>
+                <div id="divocultarformbutton">
+                    <table class="table table-striped" style="font-family: Serif;">
+                        <thead class="table-light">
+                            <tr style="background-color: rgb(117, 114, 117)">
+                                {{!-- <td>Fecha</td> --}}
+                                <td>Acta</td>
+                                <td>Propietario</td>
+                                <td>Ubicación</td>
+                                <td>Inciso</td>
+                                <td>Sancion Prof</td>
+                                <td>% Sancion</td>
+                                <td>Reiteraciones</td>
+                                <td>Monto Total</td>
+                                <td>Infracción/Paralización</td>
+                            </tr>
+                        </thead>
+                        {{#each multas}}
+                        <tbody>
+                            {{!-- {{#each multas}} --}}
+                            <tr>
+                                {{!-- <td>{{ fecha }}</td> --}}
+                                <td>{{ numacta }}</td>
+                                <td>{{ propietario }}</td>
+                                <td>{{ ubicacion }}</td>
+                                <td>{{ inciso }}</td>
+                                <td>{{ sancionprof }}</td>
+                                <td>{{ sancionprorc }}</td>
+                                <td>{{ reiteracion }}</td>
+                                <td>{{ montototal }}</td>
+                                <td>{{infraccionoparalizacion}}</td>
+                            </tr>
+                            {{else}}
+                            <script>
+                                desabilitar()
+                            </script>
+                            <div class="mx-auto">
+                                <br /> <br />
+                                <div class="card mx-auto">
+                                    <div class="card-body">
+                                        <p class"lead" style="color:red; font-weight: bold;"> No existen Multas para
+                                            Imprimir...
+                                            Cargue y Regrese...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                    <form action="/descargarfactura" method="GET" target="_blank" > {{!-- onSubmit="return confirm('Volver a Multas
+                        No-Impresas?')" --}}
+                        <input type="hidden" name="_method" value="GET">
+                        <button class="btn btn-success btn-block btn-sm;" type="submit">
+                            Descargar/Imprimir Factura
+                        </button>
+                    </form>
+                    <p></p>
+                    <form action="/multas/impresas" method="GET"> {{!-- onSubmit="return confirm('Volver a Multas
+                        No-Impresas?')" --}}
+                        <input type="hidden" name="_method" value="GET">
+                        <button class="btn btn-warning btn-block btn-sm" type="submit">
+                            Volver a Multas No-Impresas
+                        </button>
+                    </form>
+                </div>
+                <p></p>
+                <form onSubmit="return confirm('Volver a Todas las Multas?')" action="/multas" method="GET">
+                    <input type="hidden" name="_method" value="GET">
+                    <button class="btn btn-danger btn-block btn-sm" type="submit">
+                        Volver a Multas a Propietarios
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

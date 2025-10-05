@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="form-group btn-center mx-auto">
+        <br />
+        <div style="padding: 0%; width: 100%; display: flex; justify-content: center;">
+            <div class="form-group btn-center mx-auto">
+                <h6 style="color:black;text-decoration-line: underline;">Número Expediente</h6>
+                <h5 style="color:yellow; font-size: medium">{{ expedcoordinado.numexpediente }}</h5>
+            </div>
+            <p>-----</p>
+            <div class="form-group btn-center mx-auto">
+                <h6 style="color:black;text-decoration-line: underline;">Número de Adrema</h6>
+                <h5 style="color:yellow; font-size: medium">{{ expedcoordinado.adremaexp }}</h5>
+            </div>
+            <p>-----</p>
+            <div class="form-group btn-center mx-auto">
+                <h6 style="color:black;text-decoration-line: underline;">Iniciador de Expediente</h6>
+                <h5 style="color:yellow; font-size: medium">{{ expedcoordinado.iniciadornomyape }}</h5>
+            </div>
+            <p>-----</p>
+            <div class="form-group btn-center mx-auto">
+                <h6 style="color:black;text-decoration-line: underline;">Dirección N°:</h6>
+                <h5 style="color:yellow; font-size: medium">{{ expedcoordinado.domicilio }}</h5>
+            </div>
+        </div>
+        <br />
+        <h5 style="color:rgb(0, 0, 0); text-shadow: 2px 2px 4px #000000;">
+            Lista Movimientos de Expedientes Coordinados</h5>
+        <br />
+        <div class="form-group btn-center mx-auto">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr id="cabezeralistado"
+                        style="background-color: rgb(221, 157, 18);;text-shadow: 1px 1px 2px black">
+                        <td>Cod-Insp</td>
+                        <td>Inspector</td>
+                        <td>Resultado</td>                        
+                        <td style="color:white;font-weight: bold;text-shadow: 1px 1px 2px black;">FechaIntimación</td>
+                        <td style="color:white;font-weight: bold;text-shadow: 1px 1px 2px black;">FechaInfracción</td>
+                        <td>Información</td>
+                        <td style="color:red;">Opciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {{#each expedcoordresultado}}
+                        {{!-- <td contenteditable="true">{{ _id }}</td> --}}
+                        <td>{{codigoinspector}}</td>
+                        <td style="text-transform: capitalize;">{{inspector}}</td>
+                        <td>{{ resultadoinspeccion }}</td>
+                        <td style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">{{
+                            fechaintimacion}}</td>
+                        <td style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">{{
+                            fechainfraccion}}</td>
+                        <td>
+                            <form action="/expedcoordin/intimacionesvencidas/list/{{_id}}?_method=GET" method="GET">
+                                <input type="hidden" name="_method" value="PUT">
+                                <button class="btn btn-outline-success btn-block btn-sm" type="submit">
+                                    Info Completa
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form onSubmit="return confirm('Desea Desestimar Intimación?')" style=""
+                                action="/expedcoordinmov/marcadesestimar/{{_id}}?_method=PUT" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
+                                <button class="btn btn-outline-warning btn-block btn-sm" type="submit">
+                                    Desestimar
+                                </button>
+                            </form>
+                            <form onSubmit="return confirm('Desea enviar Papelera?')" style=""
+                                action="/expedcoordinmov/marcadelete/{{_id}}?_method=PUT" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
+                                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                                    Borrar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <script>
+                        document.getElementById('cabezeralistado').style.display = "none";
+                    </script>
+                    <div class="mx-auto">
+                        <div class="card mx-auto">
+                            <div class="card-body">
+                                <p style="color:red; font-weight: bold;"> No se Encontraron Movimientos
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div class="form-group">
+                <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                    &laquo; Volver Atrás
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

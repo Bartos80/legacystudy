@@ -1,0 +1,38 @@
+<div class="row">
+    <br /><br />
+    <div class="btn-block" style="color: rgb(22, 214, 48);text-shadow: 2px 2px 10px black">
+        <button class="btn btn-warning btn-block btn-sm" disabled>
+            Sector de Vinculación de Bases de Datos con el Campo Borrado=*NO*
+        </button>
+    </div>
+    <br /><br />
+    <form class="btn-block" onSubmit="return confirm('Marcar Borrado en *No* en Todos los Datos MesaEntrada?')" style=""
+        action="/mesaentrada/listadoborradosenno?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <button id="recuperartodos" class="btn btn-outline-danger btn-block btn-sm" type="submit">
+            Agregar Borrado y Marcar en No los Campos de Mesa de Entrada
+        </button>
+    </form>
+    <form class="btn-block" onSubmit="return confirm('Marcar Borrado en *No* en Todos los Datos Expedientes?')" style=""
+        action="/expedientes/listadoborradosenno?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <button id="recuperartodosenno" class="btn btn-outline-danger btn-block btn-sm" type="submit">
+            Agregar Borrado y Marcar en No los Campos de Expedientes
+        </button>
+    </form>
+    <form class="btn-block" onSubmit="return confirm('Marcar Borrado en *No* en Todos los Datos Liquidaciones?')"
+        style="" action="/multas/listadoborradosenno?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <button id="recuperartodosprof" class="btn btn-outline-danger btn-block btn-sm" type="submit">
+            Agregar Borrado y Marcar en No los Campos de Liquidaciones
+        </button>
+    </form>
+    <form class="btn-block" onSubmit="return confirm('Marcar Borrado en *No* en Todos los Datos Liquidaciones?')"
+        style="" action="/usosuelo/listadoborradosenno?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <button id="recuperartodosprof" class="btn btn-outline-danger btn-block btn-sm" type="submit">
+            Agregar Borrado y Marcar en No los Campos de Dir. Uso de Suelo
+        </button>
+    </form>
+
+</div>

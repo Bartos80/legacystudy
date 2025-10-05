@@ -1,0 +1,258 @@
+<div class="col-md-7 mx-auto">
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header">
+            <h3>Datos de Expediente</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editexpediente/{{expediente._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                    Borrado:
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.borrado}}" style="color: grey; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                    Fecha Borrado:
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.fechaborrado}}" style="color: grey; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                    Usuario que realizo el borrado:
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.userborrado}}" style="color: grey; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Nº Expediente:
+                    <input type="text" name="numexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.numexpediente}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Estado:
+                    <input type="text" name="estado" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.estado}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Iniciador (N y A):
+                    <input name="iniciadornomyape" class="form-control" value="{{expediente.iniciadornomyape}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Domicilio Iniciador:
+                    <input type="text" name="domicilio" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.domicilio}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Adrema:
+                    <input type="text" name="adremaexp" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.adremaexp}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Fiduciario, propietario o socio:
+                    <input type="text" name="fiduciariopropsocio" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.fiduciariopropsocio}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Domicilio Fiduciario, propietario o socio:
+                    <input type="text" name="direcfiduciariopropsocio" class="form-control"
+                        placeholder="Sin Información" value="{{expediente.direcfiduciariopropsocio}}"
+                        style="color: black; font-weight: bold;" disabled></input>
+                </div>
+                <div class="form-group">
+                    Email Fiduciario, propietario o socio:
+                    <input type="text" name="correofiduciariopropsocio" class="form-control"
+                        placeholder="Sin Información" value="{{expediente.correofiduciariopropsocio}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Director de obra o perito visor:
+                    <input type="text" name="directorobraoperitovisor" class="form-control"
+                        placeholder="Sin Información" value="{{expediente.directorobraoperitovisor}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Destino de Obra:
+                    <input type="text" name="destinodeobra" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.destinodeobra}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+
+                <div class="form-group">
+                    Superficie de Terreno:
+                    <input type="text" name="superficieterreno" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.superficieterreno}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Superficie a Construir:
+                    <input type="text" name="superficieaconstruir" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.superficieaconstruir}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Superficie a Demoler:
+                    <input type="text" name="superficieademoler" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.superficieademoler}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    superficie subsuelo, planta baja:
+                    <input type="text" name="superficiesubsueloplantabaja" class="form-control"
+                        placeholder="Sin Información" value="{{expediente.superficiesubsueloplantabaja}}"
+                        style="color: black; font-weight: bold;" disabled></input>
+                </div>
+                <div class="form-group">
+                    Superficie primerpiso y más pisos:
+                    <input type="text" name="superficieprimerpisoymaspisos" class="form-control"
+                        placeholder="Sin Información" value="{{expediente.superficieprimerpisoymaspisos}}"
+                        style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Título del Plano:
+                    <input type="text" name="observaciones" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.observaciones}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    Permiso de obra o acta de infracción:
+                    <input type="text" name="permisobraoactainfrac" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.permisobraoactainfrac}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                <div class="form-group">
+                    <label style="color:black" for="incisos">
+                        Permiso de Edificación:</label>
+                    <input style="color:black;font-weight: bold;" type="text" id="permisoedificacionnumero"
+                        name="permisoedificacionnumero" class="form-control" placeholder="Permiso de Edificación N°"
+                        value="{{expediente.selecpermisoedificacion}}" disabled>
+                </div>
+                <div style="color:black;font-weight: bold;" id="labelplanoregistrado" class="form-group"
+                    style="font-weight:bold;">
+                    Plano Registrado:
+                </div>
+                <div class="form-group">
+                    <input style="color:black;font-weight: bold;" type="text" id="permisoedificacionnumero"
+                        name="permisoedificacionnumero" class="form-control" placeholder="Permiso de Edificación N°"
+                        value="{{expediente.permisoedificacionnumero}}" disabled>
+                </div>
+                <div class="form-group">
+                    <label style="color:black;font-weight: bold;" id="labelfechapermisoedificacion">Fecha Permiso de
+                        Edificación:</label>
+                    <input style="color:black;font-weight: bold;" type="text" id="fechapermisoedificacion"
+                        name="fechapermisoedificacion" class="form-control" placeholder="Observación"
+                        value="{{expediente.fechapermisoedificacion}}">
+                </div>
+                <div class="form-group">
+                    <label style="color:black" for="incisos">
+                        Permiso de Demolición:</label>
+                    <input style="color:black;font-weight: bold;" type="text" id="permisodemolicionnumero"
+                        name="permisodemolicionnumero" class="form-control" placeholder="Permiso de Demolición N°"
+                        value="{{expediente.selecpermisodemolicion}}" disabled>
+                </div>
+                <div class="form-group">
+                    <label style="color:black;font-weight: bold;" id="labelplanovisado" style="font-weight:bold;"> Plano
+                        Visado:</label>
+                </div>
+                <div class="form-group">
+                    <input style="color:black;font-weight: bold;" type="text" id="permisodemolicionnumero"
+                        name="permisodemolicionnumero" class="form-control" placeholder="Permiso de Demolición N°"
+                        value="{{expediente.permisodemolicionnumero}}" disabled>
+                </div>
+                <div class="form-group">
+                    <label style="color:black;font-weight: bold;" id="labelfechapermisodemolicion">Fecha Permiso de
+                        Demolición:</label>
+                    <input style="color:black;font-weight: bold;" type="text" id="fechapermisodemolicion"
+                        name="fechapermisodemolicion" class="form-control" placeholder="Observación"
+                        value="{{expediente.fechapermisodemolicion}}" disabled>
+                </div>
+                <div class="form-group">
+                    Foto de Expediente:
+                    <input type="file" name="fotoexpediente" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.fotoexpediente}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                {{!-- <img src="{{expediente.fotoinf}}" width="200" /> <br /><br /> --}}
+                <div class="form-group">
+                    Fecha de inicio de entrada:
+                    <input type="text" name="fechainicioentrada" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.fechainicioentrada}}" style="color: black; font-weight: bold;" disabled>
+                </div>
+                {{!-- <div class="form-group">
+                    <label style="font-weight:bold">Fotos 1:</label>
+                    <br />
+                    {{!-- <img style="border-radius:30px;" src="{{expediente.path}}" alt="_Imagen No Cargada"
+                        width="400" /> <br /><br /> --}}
+                    {{!-- <a href="{{expediente.path}}">Ver Foto en Grande</a>
+                    <a href="{{expediente.path}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.path}}" alt="_Imagen No Cargada" width="250"
+                            height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 2:</label>
+                    <br />
+                    <a href="{{expediente.pathdos}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathdos}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 3:</label>
+                    <br />
+                    <a href="{{expediente.pathtres}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathtres}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div id="myDIV" class="form-group">
+                    <label style="font-weight:bold">Foto 4:</label>
+                    <br />
+                    <a href="{{expediente.pathcuatro}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathcuatro}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 5:</label>
+                    <br />
+                    <a href="{{expediente.pathcinco}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathcinco}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 6:</label>
+                    <br />
+                    <a href="{{expediente.pathseis}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathseis}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 7:</label>
+                    <br />
+                    <a href="{{expediente.pathsiete}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathsiete}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+
+                </div>
+                <div class="form-group">
+                    <label style="font-weight:bold">Foto 8:</label>
+                    <br />
+                    <a href="{{expediente.pathocho}}" target="_blank">
+                        <img style="border-radius:30px;" src="{{expediente.pathocho}}" alt="_Imagen No Cargada"
+                            width="250" height="300">
+                    </a>
+                </div> --}}
+
+                <div class="form-group">
+                    ID Usuario. Cargó Infracción
+                    <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.user}}" style="color: red;" disabled>
+                </div>
+                <div class="form-group">
+                    Fecha y Hora de Carga
+                    <input type="datetime" name="dateinf" class="form-control" placeholder="Sin Información"
+                        value="{{expediente.dateexp}}" style="color: red;" disabled>
+                </div>                
+                <div class="form-group">
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes/borradolistado"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado Expedientes Borrados</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

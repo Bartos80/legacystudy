@@ -1,0 +1,130 @@
+<script>
+    //carga al iniciar la pagina
+    window.onload = function () {           
+        
+    }
+
+    function ShowName(name) {
+        var writtenName = ""
+        writtenName = document.getElementById(name).value;
+        document.getElementById(name).value = formatToString(writtenName);
+    }
+
+    function formatToString(writtenName) {
+        var tmp = writtenName.split(" ");
+        var fullName;
+        tmp.forEach(element => {
+            if (fullName) {
+                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            } else {
+                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+            }
+        })
+        return fullName;
+    }
+
+    function ponerMayuscula(mayu) {
+        let ex = document.getElementById(mayu);
+        ex.value = ex.value.toUpperCase();
+        //let ex = document.getElementById("numexpediente");
+        //ex.value = ex.value.toUpperCase();
+        //let y = document.getElementById("adremaexp");
+        //y.value = y.value.toUpperCase();
+    }
+
+    function ponerminuscula(minus) {
+        let ex = document.getElementById(minus);
+        ex.value = ex.value.toLocaleLowerCase();
+        //let ex = document.getElementById("correofiduciariopropsocio");
+        //ex.value = ex.value.toLocaleLowerCase();
+    }
+</script>
+
+<div class="col-md-6 mx-auto">
+    <div class="card">
+        <div class="car-header mx-auto">
+            <br />
+            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Nueva Coordinación de Inspección</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/newexpedcoordin" method="POST">
+                {{!-- <div class="form-group">
+                    Extado Coord.Inspección:
+                    <select name="estado" id="estado">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Realizado">Realizado</option>                        
+                    </select>
+                </div> --}}
+                <div class="form-group">
+                    Expediente Nº:
+                    <input onkeyup="ponerMayuscula('numexpediente')" id="numexpediente" type="text" name="numexpediente"
+                        class="form-control" placeholder="Expediente Nº" required autofocus>
+                </div>
+                {{!-- <div class="form-group">
+                    Código Inspector:
+                    <input onkeyup="ShowName('codigoinspector')" type="text" id="codigoinspector"
+                        name="codigoinspector" class="form-control" placeholder="Código Inspector" required />
+                </div> --}}
+                <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                    Código Inspector:
+                    <input type="text" class="form-control" id="codigoinspector" name="codigoinspector"
+                           value="{{inspectores.codigoinspector}}" style="color: green; font-weight: bold;" readonly/>                    
+                </div>
+                <div class="form-group">
+                    Inspector (NyA):
+                    <input style="display: none;" type="text" class="form-control"  id="inspector" name="inspector" 
+                            value="{{inspectores.name}}" readonly />
+                    <input style="text-shadow: 1px 1px 2px grey; color:red; text-transform: lowercase;" type="text" value="{{inspectores.name}}" class="form-control"  id="inspectortemp" readonly />
+                </div>
+                <div class="form-group">
+                    Iniciador (NyA):
+                    <input onkeyup="ShowName('iniciadornomyape')" type="text" id="iniciadornomyape"
+                        name="iniciadornomyape" class="form-control" placeholder="Iniciador (NyA)" required />
+                </div>
+                <div class="form-group">
+                    Domicilio:
+                    <input onkeyup="ShowName('domicilio')" type="text" id="domicilio" name="domicilio"
+                        class="form-control" placeholder="Domicilio" required />
+                </div>
+                <div class="form-group">
+                    Adrema Nº:
+                    <input onkeyup="ponerMayuscula('adremaexp')" id="adremaexp" name="adremaexp" class="form-control"
+                        placeholder="Nº Adrema"></input>
+                </div>
+                <div class="form-group">
+                    Fecha Inspección:
+                    <input type="date" name="fechainspeccion" class="form-control" placeholder="Fecha inicio entrada"
+                        required autofocus></input>
+                </div>
+                <div class="form-group">
+                    Hora Inspección:
+                    <input type="time" name="horainspeccion" class="form-control" placeholder="Fecha Hora Inspección"
+                        required autofocus></input>
+                </div>
+                <p></p>
+                {{!-- <div class="form-group">
+                    Resultado Inspección:
+                    <select name="resultadoinspeccion" id="resultadoinspeccion">
+                        <option value="">-</option>
+                        <option value="Se Realizo informe">Realizo informe</option>
+                        <option value="Se Intimó">Intimó</option>
+                        <option value="Se Infraccionó">Infraccionó</option>
+                        <option value="No se pudo Verificar">No se pudo Verificar</option>
+                        <option value="No se pudo Inspeccionar">No se pudo Inspeccionar</option>
+                    </select>
+                </div> --}}
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Save
+                    </button>
+                </div>
+                <div class="form-group">
+                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                        &laquo; Volver Atrás
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

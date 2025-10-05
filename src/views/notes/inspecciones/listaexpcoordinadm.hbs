@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/findestado" method="POST">
+      <input type="search" class="form-control" name="estado" placeholder="Buscar x Estado..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Estado
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/find" method="POST">
+      <input type="search" class="form-control" name="numexpediente" placeholder="Buscar x Expediente..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Expediente
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/findadrema" method="POST">
+      <input type="search" class="form-control" name="adremaexp" placeholder="Buscar x Adrema..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Adrema
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/expedientes/coordinados/findiniciador" method="POST">
+      <input type="search" class="form-control" name="iniciadornomyape" placeholder="Buscar x Iniciador..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Iniciador
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <a href="/expedientes/coordinados/inspectolres/list" class="btn btn-success btn-block">Agregar Coordinación!</a>
+  <a id="incimacionesvencidas" href="/expedientes/coordinados/intimacionesvencidas" class="btn btn-danger btn-block">Intimaciones Vencidas</a>
+  <a href="/expedientes/coordinados" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado Completo</a>
+
+  {{!-- <br /> --}}
+  <div class="form-group btn-center mx-auto">
+    <br />
+    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE MESA DE ENTRADA</h5> --}}
+    {{!-- <br /><br /> --}}
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr id="cabezeralistado" style="background-color: rgb(134, 108, 40);;text-shadow: 1px 1px 2px black">
+            <td>Estado Inspección</td>
+            <td>Nº Expediente</td>
+            <td>Nº Adrema</td>
+            <td>Código Inspector</td>
+            <td>Iniciador (N y A)</td>
+            <td>Domicilio Iniciador</td>
+            <td>Movimientos</td>
+            <td>Opciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each expedcoordinado}}
+          <tr>
+            {{!-- <td>{{ _id }}</td> --}}
+            <td style="color:yellow;">{{ estado }}</td>
+            <td>{{ numexpediente }}</td>
+            <td>{{ adremaexp }}</td>
+            <td>{{codigoinspector}}</td>
+            <td style="text-transform: capitalize;">{{ iniciadornomyape }}</td>
+            <td style="text-transform: capitalize;">{{ domicilio }}</td>           
+            <td>
+              <a class="dropdown-item" href="/movimientoexpedientecoord/add/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Agregar Resultados
+              </a>
+              <a class="dropdown-item" href="/expedientes/coordinados/listresultado/{{_id}}"
+                style="color:rgb(24, 211, 33);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Listado Movimimiento
+              </a>
+            </td>
+            <td>
+              {{!-- <a class="dropdown-item" href="/informeinspeccion/add/{{_id}}"
+                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Agregar Informe
+              </a> --}}
+              <a class="dropdown-item " href="/expedcoordin/edit/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Edit Coordinación
+              </a>
+              <a class="dropdown-item" href="/expedientes/coordinados/list/{{_id}}"
+                style="color:rgb(24, 211, 33);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                Info Coordinación
+              </a>
+              <form onSubmit="return confirm('Desea enviar Papelera?')" style=""
+                action="/expedcoordin/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form>
+            </td>
+          </tr>
+          </tr>
+          {{else}}
+          <script>
+            document.getElementById('cabezeralistado').style.display = "none";
+            document.getElementById('incimacionesvencidas').style.display = "none";
+          </script>
+          <div class="mx-auto">
+            <div class="card mx-auto">
+              <div class="card-body">
+                <p style="color:red; font-weight: bold;"> No se Encontraron Movimientos
+                </p>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

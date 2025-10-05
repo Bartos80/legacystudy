@@ -1,0 +1,83 @@
+<div class="row">
+    <a href="/mesaentrada/" class="btn btn-success btn-block">Volver a todos los Turnos!</a>
+    <br /><br />
+    {{#each mesaentradas}}
+    <div class="text-dark col-md-3">
+        <br />
+        <div class="card">
+
+            <a href="/mesaentrada/add/{{_id}}" class="btn btn btn-warning btn-block">Nuevo Turno</a>
+            {{!-- <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada/add/{{_id}}"><i
+                        class="fas fa-edit" style='font-size:24px;color:rgb(98, 98, 100)'></i></a> NUEVO TURNO </p> --}}
+
+
+            <div class="card-body">
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Sector Involucrado:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ sector }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Turno Nº:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ numturno }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Fecha Ingreso:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ fechaingreso }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Hora Ingreso:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ horaingreso }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Numº Expediente:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ numexpediente }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Nombre y Apellido:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ nomyape }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Documento Nacional Identidad:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ dni }}
+                </p>
+                <p style="color:rgb(15, 14, 14); font-style:oblique; font-weight: bold;"
+                    class="text-dark display-5 card-title d-flex justify-content-between align-items-center">
+                    Contacto:</p>
+                <p style="color:brown; font-style:oblique; font-weight: bold;">{{ contacto }}
+                </p>
+                <br />
+                <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada/edit/{{_id}}"><i
+                            class="fas fa-edit" style='font-size:24px;color:rgb(98, 98, 100)'></i></a> Editar </p>
+
+                <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada/list/{{_id}}"><i
+                            class="fas fa-list" style='font-size:24px;color:blue'></i></a> Info Suplementaria</p>
+
+                {{!-- <form style="box-shadow: 3px 4px;" action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger btn-block btn-sm" type="submit">
+                        Borrar
+                    </button>
+                </form> --}}
+                {{!-- {{/if}} --}}
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="mx-auto">
+        <br /> <br />
+        <div class="card mx-auto">
+            <div class="card-body">
+                <p class"lead" style="color:red; font-weight: bold;"> No existe el Dato Buscado...</p>
+                {{!-- <a href="/notes/add" class="btn btn-success btn-block">Cargar Inspección!</a> --}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

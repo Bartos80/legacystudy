@@ -1,0 +1,200 @@
+<script>
+    // Función actualizar
+    function actualizar() {        
+        location.reload(true)
+    }
+
+    function selecdatoestadisticoo() {
+        var selecciono = document.getElementById('datoestadisticoo');
+        var xo = document.getElementById("armareimprimirestadisticao")
+        var po = document.getElementById("propietarioo")
+        var ao = document.getElementById("adremao")
+        var nao = document.getElementById("numactao")
+        var fdo = document.getElementById("desdeo")
+        var fao = document.getElementById("hastao")
+        //var mtc = document.getElementById("montototalcobrado")        
+        if (selecciono.selectedIndex == 0) {
+            xo.disabled = true;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "text";
+            fao.type = "text";
+        }
+        else if (selecciono.selectedIndex == 1) {
+            xo.disabled = false;
+            po.disabled = false;
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            po.type = "search";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "text";
+            fao.type = "text";
+            po.required = true;
+            ao.required = false;
+            nao.required = false;
+            fdo.required = false;
+            fao.required = false;
+        } else if (selecciono.selectedIndex == 2) {
+            xo.disabled = false;
+            po.disabled = true;
+            ao.disabled = false;
+            nao.disabled = true;
+            fdo.disabled = true;
+            fao.disabled = true;
+            po.type = "text";
+            ao.type = "search";
+            nao.type = "text";
+            fdo.type = "text";
+            fao.type = "text";
+            po.required = false;
+            ao.required = true;
+            nao.required = false;
+            fdo.required = false;
+            fao.required = false;
+        } else if (selecciono.selectedIndex == 3) {
+            xo.disabled = false;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = false;
+            fdo.disabled = true;
+            fao.disabled = true;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "search";
+            fdo.type = "text";
+            fao.type = "text";
+            po.required = false;
+            ao.required = false;
+            nao.required = true;
+            fdo.required = false;
+            fao.required = false;
+        } else if (selecciono.selectedIndex == 4) {
+            xo.disabled = false;
+            po.disabled = true;
+            ao.disabled = true;
+            nao.disabled = true;
+            fdo.disabled = false;
+            fao.disabled = false;
+            po.type = "text";
+            ao.type = "text";
+            nao.type = "text";
+            fdo.type = "date";
+            fao.type = "date";
+            po.required = false;
+            ao.required = false;
+            nao.required = false;
+            fdo.required = true;
+            fao.required = true;
+        }
+    }
+</script>
+
+<div class="row">
+    <div class="form-group btn-center mx-auto">
+        <div style="color: rgb(172, 214, 22);text-shadow: 1px 1px 2px black">
+            <h5>Sección Liquidaciones - IMPRESION DE ESTADISTICAS (Liquidador/Administrador)</h5>
+        </div>
+        <form action="/multas/descargarmultaestadistica" method="POST"  onsubmit="setTimeout('document[0].forms.reset()', 0)">
+            <label style="font-weight: bold; color:rgb(252, 93, 2)" for="datoestadisticoo">Selección:</label>
+            <select name="datoestadisticoo" id="datoestadisticoo" onclick="selecdatoestadisticoo()">
+                <option value=0>Elija Filtro de Estadistica</option>
+                <option value=1>por Propietario</option>
+                <option value=2>por Adrema</option>
+                <option value=3>por N° Acta</option>
+                <option value=4>por Fechas</option>
+            </select>
+            <br />
+            <input class="pl-3" type="text" id="propietarioo" name="propietarioo" placeholder="Propietario..." disabled/>
+            <input class="pl-3" type="text" id="adremao" name="adremao" placeholder="Adrema..."  disabled/>
+            <input class="pl-3" type="text" id="numactao" name="numactao" placeholder="Acta..."  disabled/>
+            <input class="pl-3" type="text" id="desdeo" name="desdeo" placeholder="Desde..."  disabled/>
+            <input class="pl-3" type="text" id="hastao" name="hastao" placeholder="Hasta..."  disabled/>
+            <p></p>
+            <div class="form-group">
+                <button id="armareimprimirestadisticao" class="btn btn-warning btn-block btn-sm" type="submit" disabled>
+                    Armar e Imprimir Estadistica...
+                </button>
+            </div>
+        </form>
+        <div class="form-group">
+            <a id="volverlistadoo" href="/multas/estadisticas" class="btn btn-outline-warning btn-block btn-sm">Volver
+                Listado Estadisticas</a>
+        </div>
+    </div>
+    <a href="/multas/estadisticas" class="btn btn-dark btn-block btn-sm">Recargar Todo el Listado</a>
+    <br /><br />
+    <div class="form-group btn-center mx-auto">
+        <br />
+        <div class="form-group btn-center mx-auto">
+            <table class="table table-striped table-dark table-bordered">
+                <thead>
+                    <tr id="tdtable" style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+                        {{!-- <td>_ID</td> --}}
+                        <td>Fecha</td>
+                        <td>Propietario</td>
+                        <td>Ubicación</td>
+                        <td>Formula</td>
+                        <td>N° Acta</td>
+                        <td>Monto Total</td>
+                        <td>Impreso</td>
+                        <td>+Datos</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each multas}}
+                    <tr>
+                        {{!-- <td>
+                            <input onclick="agregarimpresion()" type="checkbox" href="/multas/list/{{_id}}" id='_id'
+                                value=''
+                                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black"></input>
+                        </td> --}}
+                        <td>{{ fecha }}</td>
+                        <td>{{ propietario }}</td>
+                        <td>{{ ubicacion }}</td>
+                        <td>{{ formulamulta }}</td>
+                        <td>{{ numacta }}</td>
+                        <td>{{ montototal }}</td>
+                        <td>{{ impreso}}</td>
+                        <td>
+                            <a class="dropdown-item" href="/multas/list/{{_id}}"
+                                style="color:rgb(123, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black"
+                                target="_blank">Info</a>
+                        </td>
+                        {{!-- <td>
+                            <a class="dropdown-item" href="/multas/reimprimirfactura/{{_id}}"
+                                style="color:rgb(123, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black">ReImprimir</a>
+                        </td> --}}
+
+                    </tr>
+                    {{else}}
+                    <div class="mx-auto">
+                        <br /> <br />
+                        <div class="card mx-auto">
+                            <div class="card-body">
+                                <p class"lead" style="color:red; font-weight: bold;"> No existen Datos por Mostrar...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{/each}}
+                </tbody>
+                <div id="msg"></div>
+            </table>
+            <div id="montototalcobrado">
+                <h4 style="color:rgb(55, 22, 202); font-weight: bold;">
+                    Datos de todos las Liquidaciones hechas desde su inicio
+                    <h4 />                    
+            </div>                     
+        </div>
+    </div>
+</div>

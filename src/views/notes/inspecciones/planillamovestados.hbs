@@ -1,0 +1,115 @@
+<script>
+  function desabilitar() {
+    //document.getElementById("verfactura").hidden = true;
+    //document.getElementById("descargarfactura").hidden = true;
+    document.getElementById("tabla").hidden = true;
+  }
+</script>
+
+<div class="row">
+  <div class="form-group btn-center mx-auto" style="color: rgb(22, 214, 48);text-shadow: 2px 2px 10px black">
+    <h3 style="color:rgb(14, 13, 13)">Movimientos de Estados de Expedientes</h3>
+  </div>
+  {{!-- <a href="/expedientes/listadoticket/add/{{expedentrsalida._id}}" class="btn btn-success btn-block">Agregar
+    Informe!</a> --}}
+  {{!-- <a href="" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a> --}}
+  {{!-- <br /> --}}
+  <div class="form-group btn-center mx-auto">
+
+    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
+      LISTADO DE MESA DE ENTRADA</h5> --}}
+    {{!-- <br /><br /> --}}
+    <br />
+    <div style="padding: 0%; width: 100%; display: flex; justify-content: center;">
+      <div class="form-group btn-center mx-auto">
+        <h6 style="color:black;text-decoration-line: underline;">Ultimo Estado Exp:</h6>
+        <h5 style="color:yellow; font-size: medium">{{ expediente.estado }}</h5>
+      </div>
+      <div class="form-group btn-center mx-auto">
+        <h6 style="color:black;text-decoration-line: underline;">Número Expediente</h6>
+        <h5 style="color:yellow; font-size: medium">{{ expediente.numexpediente }}</h5>
+      </div>
+      <div class="form-group btn-center mx-auto">
+        <h6 style="color:black;text-decoration-line: underline;">Iniciador de Expediente</h6>
+        <h5 style="color:yellow; font-size: medium">{{ expediente.iniciadornomyape }}</h5>
+      </div>
+      <div class="form-group btn-center mx-auto">
+        <h6 style="color:black;text-decoration-line: underline;">Número de Adrema</h6>
+        <h5 style="color:yellow; font-size: medium">{{ expediente.adremaexp }}</h5>
+      </div>
+    </div>
+
+    <div class="form-group btn-center mx-auto">
+      <table id="tabla" class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(38, 18, 221);;text-shadow: 1px 1px 2px black">
+            <td>Estado</td>
+            {{!-- <td>numadrema</td> --}}
+            <td>motivoentsal</td>
+            <td>fechaentsal</td>
+            <td>domicilio</td>
+            {{!-- <td>+Opciones</td> --}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each expedentrsalida}}
+          <tr>
+            {{!-- <td>{{ _id }}</td> --}}
+            <td>{{ estado }}</td>
+            {{!-- <td>{{ numadrema }}</td> --}}
+            <td>{{ motivoentsal }}</td>
+            <td>{{ fechaentsal }}</td>
+            <td>{{ domicilio }}</td>
+            {{!-- <td> --}}
+              {{!-- <a class="dropdown-item" href="/informeinspeccion/add/{{_id}}"
+                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar Informe</a>
+              --}}
+              {{!-- <a class="dropdown-item" href="/informexpedentrsalidas/list/{{_id}}"
+                style="color:rgb(24, 27, 211);font-weight: bold;text-shadow: 1px 1px 2px black;">
+                +Info
+              </a>
+              <a class="dropdown-item " href="/informexpedentrsalidas/edit/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">Editar</a>
+              <form onSubmit="return confirm('Desea Borrar Informe?')"
+                action="/expedinspeccion/ticket/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form> --}}
+            {{!-- </td> --}}
+            </td>
+            {{!-- <td> --}}
+              {{!-- <a class="dropdown-item " href="/expedentrsalidas/info/{{_id}}"
+                style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">+ Info</a>
+              {{!-- <form style="" action="/expedentrsalidas/delete/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Borrar
+                </button>
+              </form> --}}
+              {{!-- </td> --}}
+          </tr>
+          {{else}}
+          <div class="mx-auto">
+            <br /> <br />
+            <div class="card mx-auto">
+              <div class="card-body">
+                <p class"lead" style="color:red; font-weight: bold;"> Expediente No posee Movimientos de Estado
+                </p>
+              </div>
+            </div>
+          </div>
+          <script>
+            desabilitar()
+          </script>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+      <p style="color:rgb(0, 0, 0); font-style:oblique; font-weight: bold;"><a href="/expedientes/listado"><i
+            class="fas fa-list" style='font-size:24px;color:rgb(255, 0, 0)'></i></a> Volver Listado Expedientes</p>
+    </div>
+  </div>
+  {{!-- {{else}} --}}

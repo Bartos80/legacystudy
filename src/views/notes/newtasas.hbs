@@ -1,0 +1,97 @@
+<script>
+    function ffechaactual() {
+        var tipo = document.getElementById('fechaactual');
+        var eye = document.getElementById('botonfecha');
+        if (tipo.type == "date") {
+            tipo.type = "date";
+            eye.class = "btn btn-primary"
+            const fecha = new Date();
+            const dia = fecha.getDate();
+            var mes = 0
+            const calcmes = fecha.getMonth() + 1
+            if (calcmes < 10) {
+                mes = "0" + calcmes + "-"
+            } else {
+                mes = calcmes + "-"
+            }
+            if (dia > 0 && dia < 10) {
+                var diastring = "0" + dia
+            } else {
+                var diastring = dia
+            }
+            const ano = fecha.getFullYear() + "-"
+            const fullyear = ano + mes + diastring
+            tipo.value = fullyear;
+        } else {
+            //tipo.disabled = false;
+            tipo.type = "date";
+            eye.class = "btn btn-secondary"
+        }
+    }
+    
+</script>
+
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        <div class="car-header mx-auto">
+            <br />
+            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">
+                Nueva Tasa
+            </h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/newtasas" method="POST">
+                <div class="form-group">
+                    Monto de Tasa Actual:
+                    <input type="number" name="tasaconstruccion" placeholder="0" minlength="0" maxlength="99" step="1"
+                        pattern="^[0-9]+" required autofocus>
+                </div>
+                <div class="form-group">
+                    <p>Elige Tipo Tasa:
+                        <select name="tipotasa">
+                            <option selected>T.C.</option>
+                            <option>SCPp</option>
+                            <option>SE</option>
+                            <option>SIDEAP</option>
+                            <option>SIDEAP Pu</option>
+                            <option>SI</option>
+                            <option>NCF</option>
+                            <option>S.C.</option>
+                            <option>NCF</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="form-group">
+                    Fecha (Actual):
+                </div>
+                <div class="input-group-append">
+                    <input style="font-weight: bold; color:black" type="date" id="fechaactual" name="fechaactual"
+                        class="form-control" required>
+                    <button id="botonfecha" class='btn btn-primary' name="botonfecha" type="button"
+                        onclick="ffechaactual()">
+                        <span class="fa fa-calendar icon"></span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    Observaciones:
+                    <input type="text" style="font-weight: bold; color:green" minlength="0" maxlength="50" value=""
+                        name="observaciones" class="form-control" placeholder="Observaciones"></input>
+                </div>
+                <div class="form-group">
+                    Usuario Actual:
+                    <input style="color:rgb(128, 131, 128)" value="{{user}}" name="user" class="form-control"
+                        placeholder="No Definido" disabled></input>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Grabar
+                    </button>
+                </div>
+                <div>
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/tasas"><i
+                                class="fas fa-list" style='font-size:24px;color:blue'></i></a>Volver Listado</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+<script type="text/javascript">
+
+    function startTime() {
+
+        today = new Date();
+        h = today.getHours();
+        m = today.getMinutes();
+        s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById(‘reloj’).innerHTML = h +»:»+m +»:»+s;
+        t = setTimeout(‘startTime()’, 500);
+    }
+
+    function checkTime(i) {
+        if (i < 10) { i =»0″ + i; } return i;
+    }
+    window.onload = function () {
+        startTime();
+    }
+
+</script>
+
+
+<div class="col-md-7 mx-auto">
+    {{!-- <div id=»reloj» style=»font-family: ‘DS-Digital’; width: 450px; background-color: black;font-size:100px;color:
+        green ; text-align: center «></div> --}}
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header mx-auto">
+            <h4 style="color: #3d0ee7; font-weight: bold;"
+                class="text-dark card-title d-flex justify-content-between align-items-center">Información Suplementaria
+                Mesa de Entrada
+            </h4>
+            <div class="card-body">
+                <form>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Usuario que realizo el borrado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.userborrado}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Borrado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.borrado}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Fecha Borrado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.fechaborrado}}" style="color: grey; font-weight: bold;" disabled>
+                    </div>                    
+                    {{!-- <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        N° Identificacion ID Mesa Entrada:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada._id}}" style="color: grey; font-weight: bold;" disabled>
+                    </div> --}}
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Turno Entregado Nº:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.numturno}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Sector Visitado:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.sector}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Nombre y Apellido:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{ mesaentrada.nomyape }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Documento Nac. de Identidad:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{ mesaentrada.dni }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Contacto:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{ mesaentrada.contacto }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Numº Expediente:
+                        <input type="text" name="user" class="form-control" placeholder="No Especificado"
+                            value="{{ mesaentrada.numexpediente }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Fecha del Turno:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.fechaingreso}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Hora del Turno:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.horaingreso}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Observaciones:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{ mesaentrada.observaciones }}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        ID Cargo Turno:
+                        <input type="text" name="user" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.user}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Nombre Cargo Turno:
+                        <input type="text" name="name" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.name}}" style="color: black; font-weight: bold;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Datos Exactos Creación Horarios de Turno:
+                        <input type="text" name="dateturno" class="form-control" placeholder="Sin Información"
+                            value="{{mesaentrada.dateturno}}" style="color: black; font-weight: bold;" disabled>
+                    </div>                    
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a
+                            href="/mesaentrada/borradolistado"><i class="fas fa-list"
+                                style='font-size:24px;color:blue'></i></a> Volver Listado</p>
+                    {{!-- <button class="btn btn-primary btn-block" href="/notes">
+                        Volver
+                    </button> --}}
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

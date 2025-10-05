@@ -1,0 +1,86 @@
+<div class="col-md-7 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>Editar Estadistica</h3>
+        </div>
+        <div class="card-body">
+            <form action="/notes/editestadistica/{{estadistica._id}}?_method=PUT" method="POST"
+                enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="card-body ">
+                    <div class="form-group">
+                        Estadistica Nº:
+                        <input style="font-weight:bold" style="border-radius:20px;" type="text" name="estadisticanum"
+                            class="form-control" placeholder="No Posee Info" value="{{estadistica.estadisticanum}}">
+                    </div>
+                    <div class="form-group">
+                        Fecha Estadistica:
+                        <input style="font-weight:bold" type="date" name="fechaestadistica" class="form-control"
+                            placeholder="No Posee Info" value="{{estadistica.fechaestadistica}}">
+                    </div>
+                    <div class="form-group">
+                        Iniciador Nombre y Apellido:
+                        <input style="font-weight:bold" type="text" name="horaestadistica" class="form-control"
+                            placeholder="No Posee Info" value="{{estadistica.iniciadornomyape}}">
+                    </div>
+                    <div class="form-group">
+                        Direccion:
+                        <input style="font-weight:bold" type="text" name="domicilio" class="form-control"
+                            placeholder="No Posee Info" value="{{estadistica.domicilio}}">
+                    </div>
+                    <br />
+                    <label style="font-weight:bold">Las Fotos no son Editables!</label>
+                    <div>
+                        Foto 1:
+                        <br />
+                        <img style="border-radius:20px;" src="{{estadistica.path}}" alt="_Imagen no Disponible"
+                            width="230" height="200" />
+                        <br />
+                        <br />
+                        Foto 2:
+                        <br />
+                        <img style="border-radius:20px;" src="{{estadistica.pathdos}}" alt="_Imagen no Disponible"
+                            width="230" height="200" />
+                        <br />
+                        <br />
+                        Foto 3:
+                        <br />
+                        <img style="border-radius:20px;" src="{{estadistica.pathtres}}" alt="_Imagen no Disponible"
+                            width="230" height="200" />
+                        <br />
+                        <br />
+                        Foto 4:
+                        <br />
+                        <img style="border-radius:20px;" src="{{estadistica.pathcuatro}}" alt="_Imagen no Disponible"
+                            width="230" height="200" />
+                        <br />
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+                        Usuario. Cargó Estadistica
+                        <input type="text" name="name" class="form-control" placeholder="name"
+                            value="{{estadistica.name}}" disabled>
+                    </div>
+                    <div class="form-group"><s></s>
+                        <button class="btn btn-primary btn-block" type="submit">
+                            Grabar
+                        </button>
+                    </div>
+                    <br />
+                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
+                        &laquo; Volver Atrás
+                    </a>
+                    <br /><br />
+                    {{!-- <div class="form-group">
+                        <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/estadisticas"><i
+                                    class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
+                        <button class="btn btn-primary btn-block" href="/notes">
+                            Volver
+                        </button>
+                    </div> --}}
+
+            </form>
+        </div>
+    </div>
+</div>
