@@ -9,11 +9,11 @@ const router = express.Router()
 const fs = require('fs').promises
 const { isAuthenticated } = require('../helpers/auth')
 
+
 // *ZONA PDF* //
 const pdf = require("html-pdf");
 const User = require('../models/User');
 var pdfoptionsA4 = { format: 'A4' };
-
 
 // tengo que requerir los modelos para que mongoose me cree las tablas
 const Mesaentrada = require('../models/mesaentrada')
@@ -177,7 +177,6 @@ router.post('/mesaentrada/descargarestadisticamesa', isAuthenticated, async (req
     contenidoHtml = contenidoHtml.replace("{{contop}}", contop);
     contenidoHtml = contenidoHtml.replace("{{contvis}}", contvis);
     contenidoHtml = contenidoHtml.replace("{{contsub}}", contsub);
-
     //contenidoHtml = contenidoHtml.replace("{{multas}}");    
     pdf.create(contenidoHtml, pdfoptionsA4).toStream((error, stream) => {
         if (error) {
