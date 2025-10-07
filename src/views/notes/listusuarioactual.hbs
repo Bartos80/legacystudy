@@ -1,53 +1,54 @@
-<div class="col-md-5 mx-auto">
-    {{#each users}}
-    <div class="card" style="font-style: italic;font-weight: bold;">
-        <div class="card-header mx-auto">
-            <p></p>
-            <h4 style="color: rgb(26, 51, 189); font-weight: bold;">- Usuario Actual Activo -</h4>
-            <div class="card-body">
-                <form>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        _ID:
-                        <input type="text" name="_id" class="form-control" placeholder="Sin Información" value="{{_id}}"
-                            style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        Nombres y Apellidos:
-                        <input type="text" name="name" class="form-control" placeholder="No Especificado"
-                            value="{{ name }}" style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        Código Usuario:
-                        <input type="text" name="codigousuario" class="form-control" placeholder="Sin Información"
-                            value="{{codigousuario}}" style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        Función:
-                        <input type="text" name="funcion" class="form-control" placeholder="Sin Información"
-                            value="{{funcion}}" style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        Correo Electrónico (E-Mail):
-                        <input type="text" name="email" class="form-control" placeholder="Sin Información"
-                            value="{{ email }}" style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        Rol del Usuario:
-                        <input type="text" name="rolusuario" class="form-control" placeholder="Sin Información"
-                            value="{{rolusuario}}" style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <div class="form-group" style="color:rgb(233, 137, 11); font-style:oblique; font-weight: bold;">
-                        Fecha Creación del Usuario:
-                        <input type="text" name="date" class="form-control" placeholder="Sin Información"
-                            value="{{date}}" style="color: grey; font-weight: bold;" disabled>
-                    </div>
-                    <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
-                        &laquo; Volver Atrás
-                    </a>
-                    {{!-- <a href="/" class="btn btn-success btn-block">Volver!</a> --}}
-            </div>
-            </form>
-        </div>
+<div class="container my-5">
+  {{#each users}}
+    <div class="card shadow-lg mx-auto" style="max-width: 600px;">
+      <div class="card-header text-center bg-primary text-white">
+        <h4 class="mb-0">👤 Usuario Actual Activo</h4>
+      </div>
+
+      <div class="card-body bg-light">
+        <form>
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">ID:</label>
+            <input type="text" class="form-control" value="{{_id}}" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">Nombres y Apellidos:</label>
+            <input type="text" class="form-control" value="{{name}}" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">Código Usuario:</label>
+            <input type="text" class="form-control" value="{{codigousuario}}" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">Función:</label>
+            <input type="text" class="form-control" value="{{funcion}}" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">Correo Electrónico (E-Mail):</label>
+            <input type="email" class="form-control" value="{{email}}" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">Rol del Usuario:</label>
+            <input type="text" class="form-control" value="{{rolusuario}}" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold text-secondary">Fecha de Creación:</label>
+            <input type="text" class="form-control" value="{{date}}" disabled>
+          </div>
+
+          <div class="text-center mt-4">
+            <a href="javascript:window.history.back();" class="btn btn-outline-primary">
+              &laquo; Volver Atrás
+            </a>
+          </div>
+        </form>
+      </div>
     </div>
-    {{/each}}
+  {{/each}}
 </div>

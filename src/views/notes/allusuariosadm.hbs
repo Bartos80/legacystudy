@@ -11,85 +11,58 @@
     }
 </script>
 
-<div class="row">
-    <br /><br />
-    <div style="color: rgb(185, 214, 22);text-shadow: 1px 1px 2px black">
-        <h5>Sección de Usuarios - ADMINISTRADOR</h5>
+<div class="container my-5">
+  <div class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center mb-4 gap-2">
+    <h5 class="text-primary fw-bold text-uppercase m-0">
+      👥 Sección de Usuarios - Administrador
+    </h5>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+      <a href="/users/signup" class="btn btn-success btn-sm mr-4">+ Nuevo Usuario</a>
+      <a href="/usuarios" class="btn btn-outline-dark btn-sm">↻ Recargar Listado</a>
     </div>
-    <br /><br />
-    <a href="/users/11vvsOpmo90W" class="btn btn-success btn-block  btn-sm">Cargar Nuevo Usuario!</a>
-    <a href="/usuarios" class="btn btn-dark btn-block btn-sm">Recargar Todo el Listado</a>
-    <br /><br />
-    <div class="form-group btn-center mx-auto">
-        <br />
-        <div class="form-group btn-center mx-auto">
-            <table class="table table-striped table-dark table-bordered">
-                <thead>
-                    <tr id="tdtable" style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
-                        {{!-- <td>_ID</td> --}}
-                        <td>Nombre</td>
-                        <td>D.N.I.</td>
-                        <td>Cod.Inspector</td>
-                        <td>Función</td>
-                        <td>Rol-Usuario</td>
-                        <td>Opciones</td>
-                        {{!-- <td>Impresión</td> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each usuarios}}
-                    <tr>
-                        {{!-- <td>
-                            <input onclick="agregarimpresion()" type="checkbox" href="/multas/list/{{_id}}" id='_id'
-                                value=''
-                                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black"></input>
-                        </td> --}}
-                        <td>{{ name }}</td>
-                        <td>{{ dni }}</td>
-                        <td>{{ codigoinspector }}</td>
-                        <td>{{ funcion }}</td>
-                        <td>{{rolusuario}}</td>
-                        <td>                            
-                            <a class="dropdown-item" href="/usuario/list/{{_id}}"
-                                style="color:rgb(226, 241, 9);font-weight: bold;text-shadow: 1px 1px 2px black;">+Info</a>
-                            <a class="dropdown-item" href="/usuario/edit/{{_id}}"
-                                style="color:rgb(165, 196, 28)">Editar</a>
-                            <form onSubmit="return confirm('Desea Borrar Definitivamente al Usuario?')"
-                                action="/usuarios/delete/{{_id}}?_method=DELETE" method="POST">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button class="btn btn-danger btn-block btn-sm" type="submit">
-                                    Borrar
-                                </button>
-                            </form>
-                        </td>
-                        {{!-- <td>
-                            <a class="dropdown-item" href="/multas/reimprimirfactura/{{_id}}"
-                                style="color:rgb(123, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black">ReImprimir</a>
-                        </td> --}}
-                    </tr>
-                    {{else}}
-                    <div class="mx-auto">
-                        <br /> <br />
-                        <div class="card mx-auto">
-                            <div class="card-body">
-                                <p class"lead" style="color:red; font-weight: bold;"> No existen Datos por Mostrar...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+  </div>
 
-                    {{/each}}
-                </tbody>
-                <div id="msg"></div>
-            </table>
-            {{!-- <form onSubmit="return confirm('Desea Imprimir?')" action="/multas/imprimir/{{_id}}?_method=POST"
-                method="POST">
-                <input type="hidden" name="_method" value="POST">
-                <button class="btn btn-warning btn-block btn-sm" type="submit">
-                    Imprimir Agregados
-                </button>
-            </form> --}}
-            {{!-- <button onclick="agregarimpresion()" class="btn btn-warning">Imprimir Agregados</button> --}}
-        </div>
+  {{#if usuarios.length}}
+    <div class="table-responsive rounded shadow-sm border">
+      <table class="table table-hover table-bordered align-middle text-nowrap">
+        <thead class="table-primary text-dark text-center">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">D.N.I.</th>
+            {{!-- <th scope="col">Cód. Inspector</th> --}}
+            <th scope="col">Función</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each usuarios}}
+            <tr>
+              <td class="text-capitalize">{{ name }}</td>
+              <td>{{ dni }}</td>
+              {{!-- <td>{{ codigoinspector }}</td> --}}
+              <td class="text-capitalize">{{ funcion }}</td>
+              <td>
+                <span class="badge bg-secondary text-uppercase">{{ rolusuario }}</span>
+              </td>
+              <td>
+                <div class="d-flex justify-content-center flex-wrap gap-1">
+                  <a href="/usuario/list/{{_id}}" class="btn btn-outline-info btn-sm">+ Info</a>
+                  <a href="/usuario/edit/{{_id}}" class="btn btn-outline-warning btn-sm">Editar</a>
+                  <form action="/usuarios/delete/{{_id}}?_method=DELETE" method="POST"
+                    onsubmit="return confirm('¿Desea borrar definitivamente al usuario?')">
+                    <button class="btn btn-outline-danger btn-sm" type="submit">Borrar</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
     </div>
+  {{else}}
+    <div class="alert alert-warning text-center mt-5" role="alert">
+      🚫 No existen datos por mostrar.
+    </div>
+  {{/if}}
 </div>

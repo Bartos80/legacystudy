@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="form-group btn-center mx-auto">
+    <form action="/Abogados/findnombreAbogado" method="POST">
+      <input type="search" class="form-control" name="nameAbogado" placeholder="Buscar x Nombre..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar x Nombre
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/Abogados/findapellidoAbogado" method="POST">
+      <input type="search" class="form-control" name="lastnameAbogado" placeholder="Buscar x NyApellido..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar x Apellido
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/Abogados/findlistadni" method="POST">
+      <input type="search" class="form-control" name="dniAbogado" placeholder="Buscar x DNI..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar DNI
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="form-group btn-center mx-auto">
+    <form action="/Abogados/findlistafechaentrada" method="POST">
+      <input type="search" class="form-control" name="date" placeholder="Buscar x Fecha Alta Abogado..." autofocus />
+      <div class="form-group">
+        <button class="btn btn-warning btn-block btn-sm" type="submit">
+          Buscar Fecha alta
+        </button>
+      </div>
+    </form>
+  </div>
+  <br /><br />
+  <div style="color: rgb(2, 2, 2);text-shadow: 2px 2px 15px black">
+    <h5>Sección de Listado de Abogados</h5>
+  </div>
+  <a href="/Abogados/add" class="btn btn-success btn-block">Agregar Abogado!</a>
+  <a href="/Abogados/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+
+  <div class="form-group btn-center mx-auto">
+    <br />
+    <div class="form-group btn-center mx-auto">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
+            <td>Nombre/Apellido</td>
+            <td>Matricula</td>
+            <td>Tel/Cel</td>
+            <td>Email/Correo</td>
+            <td>Localidad</td>
+            <td>Opciones</td>
+            <td>Suplementario</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each abogados}}
+          <tr>
+            {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
+            {{!-- <td>{{ sector }}</td> --}}
+            <td style="text-transform: lowercase;">{{ nyaabogado }}</td>
+            <td>{{ matriculaabogado }}</td>
+            <td style="text-transform: lowercase;">{{ celularabogado }}</td>
+            <td style="color:yellow;">{{ emailabogado }}</td>
+            <td>{{ localidadabogado }}</td>
+            
+            <td>
+              <a class="dropdown-item" href="/Abogados/add/{{_id}}"
+                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar Exped</a>
+              <a class="dropdown-item" href="/Abogados/list/{{_id}}"
+                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info Abogado</a>
+            </td>
+
+            <td>
+              <a class="dropdown-item" href="/Abogados/edit/{{_id}}" style="color:rgb(165, 196, 28)">Editar Abogado</a>
+              <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
+                action="/Abogados/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Papelera
+                </button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>

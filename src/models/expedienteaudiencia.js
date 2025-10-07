@@ -5,9 +5,9 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 // Hacer el Campo autoincremental - Primary Key
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-ExpedienteSchema = new Schema({
+AudienciaSchema = new Schema({
   // Campo Autoincremental
-    idexpediente: { 
+    idaudiencia: { 
         type: Number, // El tipo debe ser Number
         unique: true  // Debe ser único
     },
@@ -26,7 +26,7 @@ ExpedienteSchema = new Schema({
     required: false,
     default: "Sin Datos",
   },
-  numexpediente: {
+  numAudiencia: {
     type: String,
     require: false,
     default: "No Posee Información",
@@ -36,22 +36,12 @@ ExpedienteSchema = new Schema({
     require: false,
     default: "No Posee Información",
   },
-  ultimanotificacion: {
-    type: String,
-    require: false,
-    default: "No Posee Información",
-  },
-  partes: {
-    type: String,
-    require: false,
-    default: "No Posee Información",
-  },
   estado: {
     type: String,
     require: false,
     default: "No Posee Información",
   },
-  fotoexpediente: {
+  fotoAudiencia: {
     type: String,
     require: false,
     default:
@@ -67,7 +57,7 @@ ExpedienteSchema = new Schema({
     require: false,
     default: "Sin Información",
   },
-  dateexp: {
+  dateaudiencia: {
     type: Date,
     default: Date.now,
   },
@@ -81,63 +71,14 @@ ExpedienteSchema = new Schema({
   path: {
     type: String,
     // default: "/img/Imagen-no-disponible.png"
-  },
-  filenamedos: {
-    type: String,
-  },
-  pathdos: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  },
-  filenametres: {
-    type: String,
-  },
-  pathtres: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  },
-  filenamecuatro: {
-    type: String,
-  },
-  pathcuatro: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  },
-  filenamecinco: {
-    type: String,
-  },
-  pathcinco: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  },
-  filenameseis: {
-    type: String,
-  },
-  pathseis: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  },
-  filenamesiete: {
-    type: String,
-  },
-  pathsiete: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  },
-  filenameocho: {
-    type: String,
-  },
-  pathocho: {
-    type: String,
-    // default: "/img/Imagen-no-disponible.png"
-  }
+  }  
 });
 
-ExpedienteSchema.plugin(AutoIncrement, {
-    inc_field: 'idexpediente', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+AudienciaSchema.plugin(AutoIncrement, {
+    inc_field: 'idaudiencia', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
     start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
     reference_fields: [],   // Opcional: Campos para crear secuencias independientes
-    id: 'expediente_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
+    id: 'Audiencia_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
-module.exports = mongoose.model("Expediente", ExpedienteSchema);
+module.exports = mongoose.model("Audiencia", AudienciaSchema);

@@ -1,0 +1,139 @@
+<script type="text/javascript">
+
+    function startTime() {
+
+        today = new Date();
+        h = today.getHours();
+        m = today.getMinutes();
+        s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById(‘reloj’).innerHTML = h +»:»+m +»:»+s;
+        t = setTimeout(‘startTime()’, 500);
+    }
+
+    function checkTime(i) {
+        if (i < 10) { i =»0″ + i; } return i;
+    }
+    window.onload = function () {
+        startTime();
+    }
+
+</script>
+
+
+<div class="col-md-7 mx-auto">
+    {{!-- <div id=»reloj» style=»font-family: ‘DS-Digital’; width: 450px; background-color: black;font-size:100px;color:
+        green ; text-align: center «></div> --}}
+    <div class="card" style="font-style: italic;font-weight: bold;">
+        <div class="card-header mx-auto">
+            <h4 style="color: #3d0ee7; font-weight: bold;"
+                class="text-dark card-title d-flex justify-content-between align-items-center">Información Suplementaria
+                Uso de Suelo
+            </h4>
+            <div class="card-body">
+                <form>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Usuario que realizo el borrado:
+                        <input type="text" name="userborrado" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.userborrado}}" style="color: grey; " disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique; font-weight: bold;">
+                        Borrado:
+                        <input type="text" name="borrado" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.borrado}}" style="color: grey; " disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique;">
+                        Fecha Borrado:
+                        <input type="text" name="fechaborrado" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.fechaborrado}}" style="color: grey;" disabled>
+                    </div>                    
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Numº Expediente:
+                        <input type="text" name="numexpediente" class="form-control" placeholder="No Especificado"
+                            value="{{ usosuelo.expediente }}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Numº Adrema:
+                        <input type="text" name="adrema" class="form-control" placeholder="No Especificado"
+                            value="{{ usosuelo.adrema }}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Nombre y Apellido:
+                        <input type="text" name="iniciador" class="form-control" placeholder="Sin Información"
+                            value="{{ usosuelo.iniciador }}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Documento Nac. de Identidad:
+                        <input type="text" name="dni" class="form-control" placeholder="Sin Información"
+                            value="{{ usosuelo.dni }}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Contacto:
+                        <input type="text" name="contacto" class="form-control" placeholder="Sin Información"
+                            value="{{ usosuelo.contacto }}" style="color: black;" disabled>
+                    </div>
+                    
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Fecha del Expediente:
+                        <input type="text" name="fechaingresodus" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.fechaingresodus}}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Hora del Expediente:
+                        <input type="text" name="fechaegresodus" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.fechaegresodus}}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group" style="color:brown; font-style:oblique; font-weight: bold;">
+                        Observaciones:
+                        <input type="text" name="observaciones" class="form-control" placeholder="Sin Información"
+                            value="{{ usosuelo.observaciones }}" style="color: black;" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 1:</label>
+                        <br />
+                        {{!-- <img style="border-radius:30px;" src="{{usosuelo.path}}" alt="_Imagen No Cargada"
+                            width="400" /> <br /><br /> --}}
+                        {{!-- <a href="{{usosuelo.path}}">Ver Foto en Grande</a> --}}
+                        <a href="{{usosuelo.path}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{usosuelo.path}}" alt="_Imagen No Cargada"
+                                width="230" height="350">
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 2:</label>
+                        <br />
+                        <a href="{{usosuelo.pathdos}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{usosuelo.pathdos}}" alt="_Imagen No Cargada"
+                                width="230" height="350">
+                        </a>
+
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:bold">Foto 3:</label>
+                        <br />
+                        <a href="{{usosuelo.pathtres}}" target="_blank">
+                            <img style="border-radius:30px;" src="{{usosuelo.pathtres}}" alt="_Imagen No Cargada"
+                                width="230" height="350">
+                        </a>
+                    </div>   
+                    <div class="form-group" style="color:black; font-style:oblique;">
+                        Nombre Cargo Expediente:
+                        <input type="text" name="name" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.name}}" style="color: grey;" disabled>
+                    </div>
+                    <div class="form-group" style="color:black; font-style:oblique;">
+                        Datos Exactos Creación del Expediente:
+                        <input type="text" name="dateturno" class="form-control" placeholder="Sin Información"
+                            value="{{usosuelo.dateturno}}" style="color: grey;" disabled>
+                    </div>                    
+                    <p style="color:brown; font-style:oblique; font-weight: bold;"><a
+                            href="/usosuelo/borradolistado"><i class="fas fa-list"
+                                style='font-size:24px;color:blue'></i></a> 
+                                Volver Listado
+                    </p>                    
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -44,83 +44,77 @@
         }
     }
 </script>
-<div class="col-md-8 mx-auto">
-    <div class="card">
-        <div class="card-header">
-            <h3 style="color:red; text-shadow: 0 0 3px #FF0000;">Editar Expediente</h3>
-        </div>
-        <div class="card-body">
-            <form action="/notes/editexpediente/{{expediente._id}}?_method=PUT" method="POST">
-                <input type="hidden" name="_method" value="PUT">
-                <div class="card-body">
-                    {{!-- <form action="/notes/editinfraccion/{{expediente._id}}?_method=PUT" method="POST"> --}}
-                        {{!-- <input type="hidden" name="_method" value="PUT"> --}}
-                        <div class="form-group">
-                            Juzgado:
-                            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Juzgado"
-                                value="{{expediente.juzgado}}">
-                        </div>
-                        <div class="form-group">
-                            Secretaria:
-                            <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Secretaria"
-                                value="{{expediente.secretaria}}">
-                        </div>
-                        <div class="form-group">
-                            Expediente Nº:
-                            <input type="text" name="numexpediente" class="form-control" placeholder="Num.Expediente"
-                                value="{{expediente.numexpediente}}">
-                        </div>
-                        <div class="form-group">
-                            Tipo:
-                            <input type="text" id="tipo" name="tipo" class="form-control" placeholder="Tipo"
-                                value="{{expediente.tipo}}">
-                        </div>
-                        <div class="form-group">
-                            Ultima Notificación:
-                            <input type="text" id="ultimanotificacion" name="ultimanotificacion" class="form-control" placeholder="Ultima Notificación"
-                                value="{{expediente.ultimanotificacion}}">
-                        </div>
-                        <div class="form-group">
-                            Partes:
-                            <input type="text" id="partes" name="partes" class="form-control" placeholder="Partes"
-                                value="{{expediente.partes}}">
-                        </div>
-                        <div class="form-group">
-                            Estado:
-                            <input type="text" id="estado" name="estado" class="form-control"
-                                placeholder="Estado" value="{{expediente.estado}}">
-                        </div>                        
-                        <div class="form-group">
-                            Foto Expediente:
-                            <input type="file" name="inspectorinf" class="form-control" placeholder="Foto Expediente"
-                                value="{{expediente.fotoexpediente}}" disabled>
-                        </div>
-                        <div class="form-group">
-                            Fecha inicio entrada:
-                            <input type="text" id="date" name="date" class="form-control"
-                                placeholder="Date" value="{{expediente.date}}">
-                        </div>
-                        <div class="form-group">
-                            user:
-                            <input type="text" name="detallegeneral" class="form-control" placeholder="user"
-                                value="{{expediente.name}}" disabled>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-block" type="submit">
-                                Grabar
-                            </button>
-                        </div>
-                        {{!-- <div class="form-group">
-                            <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/expedientes"><i
-                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver</p>
-                        </div> --}}
-                        <br />
-                        <a href="javascript:window.history.back();" style="color:blue; font-weight: bold;">
-                            &laquo; Volver Atrás
-                        </a>
-                        <br /><br />
-                    </form>
-                </div>
-        </div>
 
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow border-0">
+        <div class="card-header bg-warning text-dark text-center">
+          <h4 class="fw-bold mb-0">Editar Expediente</h4>
+        </div>
+        <div class="card-body p-4">
+          <form action="/notes/editexpediente/{{expediente._id}}?_method=PUT" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Juzgado</label>
+                <input type="text" name="juzgado" class="form-control" value="{{expediente.juzgado}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Secretaría</label>
+                <input type="text" name="secretaria" class="form-control" value="{{expediente.secretaria}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Expediente Nº</label>
+                <input type="text" name="numexpediente" class="form-control" value="{{expediente.numexpediente}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Tipo</label>
+                <input type="text" name="tipo" class="form-control" value="{{expediente.tipo}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Última Notificación</label>
+                <input type="text" name="ultimanotificacion" class="form-control" value="{{expediente.ultimanotificacion}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Partes</label>
+                <input type="text" name="partes" class="form-control" value="{{expediente.partes}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Estado</label>
+                <input type="text" name="estado" class="form-control" value="{{expediente.estado}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Fecha Inicio Entrada</label>
+                <input type="text" name="date" class="form-control" value="{{expediente.date}}">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Usuario (solo lectura)</label>
+                <input type="text" name="detallegeneral" class="form-control" value="{{expediente.name}}" disabled>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Foto del Expediente</label>
+                <input type="file" class="form-control" disabled value="{{expediente.fotoexpediente}}">
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-success px-4">Guardar Cambios</button>
+              <a href="javascript:history.back();" class="btn btn-outline-secondary ms-2">Volver</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
