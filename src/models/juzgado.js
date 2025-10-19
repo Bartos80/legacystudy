@@ -1,20 +1,17 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// Hacer el Campo autoincremental - Primary Key
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-
-const JuzgadoSchema = new Schema ({
-    // Campo Autoincremental
-    idabogado: { 
-        type: Number, // El tipo debe ser Number
-        unique: true  // Debe ser único
+const JuzgadoSchema = new Schema({
+    idjuzgado: {
+        type: Number,
+        unique: true
     },
     borrado: {
-    type: String,
-    required: true,
-    default: "No",
+        type: String,
+        required: true,
+        default: "No",
     },
     userborrado: {
         type: String,
@@ -27,58 +24,54 @@ const JuzgadoSchema = new Schema ({
         default: "Sin Datos",
     },
     //matricula seria el id unico
-    matriculaabogado:{
-        type: String, 
-        require: false, 
-        default:"NoPosee"
+    numjuzgado: {
+        type: String,
+        require: false,
+        default: "NoPosee"
     },
-    nyaabogado: {
-        type: String, 
-        require: true},
-    dniabogado:{
-        type: String, 
+    dirjuzgado: {
+        type: String,
         require: true
     },
-    direccionabogado:{
-        type: String, 
+    teljuzgado: {
+        type: String,
+        require: true
+    },
+    emailjuzgado: {
+        type: String,
         require: false
-    },    
-    celularabogado: {
-        type: String, 
+    },
+    paisjuzgado: {
+        type: String,
         require: true,
-        default:"No Declarado"
-    },         
-    emailabogado: {
-        type: String, 
+        default: "No Declarado"
+    },
+    provinciajuzgado: {
+        type: String,
         require: true,
-        default:"No Declarado"
-    },  
-    localidadabogado: {
-        type: String, 
+        default: "No Declarado"
+    },
+    localidadjuzgado: {
+        type: String,
         require: true,
-        default:"No Declarado"
-    }, 
-    emailvinculadoabogadoestudio: {
-        type: String, 
+        default: "No Declarado"
+    },
+    observacionesjuzgado: {
+        type: String,
         require: true,
-        default:"No Declarado"
-    }, 
-    observacionesabogado: {
-        type: String, 
-        require: true,
-        default:"No Declarado"
-    }, 
+        default: "No Declarado"
+    },
     date: {
-        type: Date, 
+        type: Date,
         default: Date.now
     }
 });
 
 JuzgadoSchema.plugin(AutoIncrement, {
-    inc_field: 'idabogado', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+    inc_field: 'idjuzgado', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
     start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
     reference_fields: [],   // Opcional: Campos para crear secuencias independientes
-    id: 'abogado_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
+    id: 'juzgado_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
 module.exports = mongoose.model("Juzgado", JuzgadoSchema);

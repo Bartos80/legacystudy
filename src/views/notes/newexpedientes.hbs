@@ -23,12 +23,7 @@
       <div class="card-body p-4">
         <h3 class="text-center text-primary mb-4 fw-bold">Nuevo Expediente</h3>
 
-        <form action="/notes/newexpedientes" method="POST">
-          <!-- ID Cliente -->
-          <div class="mb-3">
-            <label for="idcliente" class="form-label">ID Cliente</label>
-            <input type="text" id="idcliente" class="form-control" placeholder="{{expedientes._id}}" disabled>
-          </div>
+        <form action="/notes/newexpedientes" method="POST">         
 
           <!-- Nombre y Apellido -->
           <div class="mb-3">
@@ -58,6 +53,12 @@
           <div class="mb-3">
             <label for="numexpediente" class="form-label">Nº de Expediente</label>
             <input type="text" id="numexpediente" name="numexpediente" class="form-control" placeholder="Ej: 12345/2024" onkeyup="ponerMayuscula('numexpediente')" autofocus>
+          </div>
+
+          <!-- Caratula -->
+          <div class="mb-3">
+            <label for="caratula" class="form-label">Carátula</label>
+            <input type="text" id="caratula" name="caratula" class="form-control" placeholder="Carátula del Expediente">
           </div>
 
           <!-- Tipo -->

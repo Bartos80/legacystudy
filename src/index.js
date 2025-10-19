@@ -94,46 +94,19 @@ app.use(require('./routes/index.js'));
 app.use(require('./routes/notes.js'));
 app.use(require('./routes/users.js'));
 app.use(require('./routes/mesaentrada.js'));
-// app.use(require('./routes/liquidaciones.js'));
 app.use(require('./routes/expedientes.js'));
-// app.use(require('./routes/usosuelo.js'));
 app.use(require('./routes/estadisticas.js'));
 app.use(require('./routes/clientes.js'));
+app.use(require('./routes/audiencias.js'));
+app.use(require('./routes/abogados.js'));
+app.use(require('./routes/juzgados.js'));
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Server is listen
-// app.listen(app.get('port'), () => {
-//     console.log ('Server on Port', app.get('port'));
-// });
-
-// Modifica el listener ****************************
-// const port = 8080;
-// //aquí va tu ip de mi pc o servidor q tenga el sistema
-// const IP = "172.25.2.119";
-// const IP = "172.25.2.106" // PC DOC
-
-// app.listen(app.get('port'), () => {
-// app.listen(port, () => {
-//   console.log("http://"+ IP +":" + port + "/");
-// });
-// ******************************* //
-
-// Server is listen en 3001 - desde Casa
-// app.listen(app.get('port'), () => {
-//   console.log ('Server on Port', app.get('port'));
-// });
-
-/// *****--- copiado del doc --- *****
-// Modifica el listener ****************************
 const port = 8080;
-//aquí va tu ip de mi pc o servidor q tenga el sistema
-//const IP = "172.25.2.119";
-// const IP = "172.25.2.215" // Mi PC
 const IP ="localhost";
-
-//app.listen(app.get('port'), () => {
 app.listen(port, () => {
   console.log("http://"+ IP +":" + port + "/");
 });

@@ -1,16 +1,47 @@
-<div class="card">
+<div class="card" style="background-color:rgb(240, 232, 228);">
     <div style="background-color:rgb(240, 232, 228); text-align: center">
-        <h1>SALOMON.STUDIO</h1>        
+        <div style="background-color:rgb(240, 232, 228);"
+            class="d-flex align-items-center justify-content-center bg-light p-4 border-0">
+            {{! The image is moved to the right side of the flex container.
+            'me-3' is changed to 'ms-3' or just removed, and 'mb-3' is changed to 'mb-0'
+            to ensure proper vertical alignment in the flex container. }}
+            <img style="background-color:rgb(240, 232, 228)" src="/css/img/logoredondo.png" height="50"
+                class="rounded-circle border border-dark shadow-sm mb-0" alt="Logo de SalomonStudy" />
+            {{! The H1 text is moved to the left side of the flex container }}
+            <h1 class="display-6 me-3 mb-0" style="background-color:white;color:white">
+                -
+            </h1>
+            <h1 class="display-5 fw-bold me-3 mb-0">
+                SalomonStudy
+            </h1>
+        </div>
         <h2 style="color:rgb(43, 153, 226)"> Sistema Estudios Júridicos</h2>
-            <h4>Acerca de:</h4>
-         <h5>Sistema de Cargas de Expedientes, Clientes, Honorarios y Abogados</h5>
-         <p>Posibilidad de realizar estadisticas precisas y detalladas</p>
-         <img style="" width="200" src="/css/img/GarciayAsociadosrv.png"/> 
+        <div class="mb-4">
+            <h5 class="fw-normal text-muted">
+                Gestión de:
+            </h5>
+            {{! The 'h5' from the original code is styled as a strong paragraph here }}
+            <p class="lead fw-bold text-dark mb-0">
+                Expedientes, Clientes, Honorarios y Abogados
+            </p>
+        </div>
+
+        {{! Statistical Capability (The original paragraph is highlighted as an alert) }}
+        <div class="alert alert-primary py-2 fw-semibold" role="alert">
+            <i class="fas fa-chart-line me-2"></i>
+            Posibilidad de realizar estadísticas precisas y detalladas.
+        </div>
+        <div class="mt-4 pt-3 border-top">
+            <p class="text-muted small mb-2">Plataforma utilizada por:</p>
+            {{! Image width maintained at 200px, styled for better integration }}
+            <img width="200" src="/css/img/GarciayAsociadosrv.png" alt="Logo de García y Asociados"
+                class="img-fluid rounded shadow-sm" />
+        </div>
+        {{!-- <img style="" width="200" src="/css/img/GarciayAsociadosrv.png" /> --}}
     </div>
-    {{!-- <img style="" width="300" src="https://seeklogo.com/images/M/Municipalidad_de_Corrientes-logo-8D9456EA42-seeklogo.com.png"/>     
-    <img style="" width="300" src="http://localhost:8080/views/css/img/GarciayAsociados.jpg"/>--}}
-      
+    {{!-- <img style="" width="300"
+        src="https://seeklogo.com/images/M/Municipalidad_de_Corrientes-logo-8D9456EA42-seeklogo.com.png" />
+    <img style="" width="300" src="http://localhost:8080/views/css/img/GarciayAsociados.jpg" />--}}
+
     <p></p>
 </div>
-
-

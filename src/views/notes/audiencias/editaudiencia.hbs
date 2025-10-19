@@ -1,0 +1,110 @@
+<script>
+  function ShowName(name) {
+    const input = document.getElementById(name);
+    const words = input.value.trim().split(" ");
+    const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+    input.value = formatted;
+  }
+
+  function ponerMayuscula(id) {
+    const input = document.getElementById(id);
+    input.value = input.value.toUpperCase();
+  }
+
+  function ponerminuscula(id) {
+    const input = document.getElementById(id);
+    input.value = input.value.toLowerCase();
+  }
+</script>
+
+<div class="container my-5">
+  <div class="col-md-8 mx-auto">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h3 class="text-center text-primary mb-4 fw-bold">Editar Audiencia</h3>
+
+        {{!-- <form action="/notes/editaudiencia/{{audiencia._id}}" method="POST"> --}}
+        <form action="/notes/editaudiencia/{{audiencia._id}}?_method=PUT" method="POST">
+
+          <!-- Juzgado -->
+          <div class="mb-3">
+            <label for="juzgado" class="form-label">Juzgado</label>
+            <input type="text" id="juzgado" name="juzgado" value="{{audiencia.juzgado}}" class="form-control" placeholder="Ej: Juzgado Civil Nº 3">
+          </div>
+
+          <!-- Nº Expediente -->
+          <div class="mb-3">
+            <label for="numexpediente" class="form-label">Nº de Expediente</label>
+            <input type="text" id="numexpediente" name="numexpediente" value="{{audiencia.numexpediente}}" class="form-control" placeholder="Ej: 12345/2024"
+              onkeyup="ponerMayuscula('numexpediente')" autofocus>
+          </div>
+
+          <!-- estadoexpediente -->
+          <div class="mb-3">
+            <label for="caratula" class="form-label">Carátula</label>
+            <input type="text" id="estadoexpediente" name="estadoexpediente" value="{{audiencia.estadoexpediente}}" class="form-control" placeholder="Estado del Expediente">
+          </div>
+          {{!-- <div class="form-group mb-3">
+            <label for="estadoexpediente" class="form-label">Estado del Expediente</label>
+            <select name="estadoexpediente" id="estadoexpediente" class="form-select" required>
+              <option selected disabled>Seleccione un rol</option>
+              <option>A despacho</option>
+              <option>En vista/giro</option>
+              <option>En fiscalía</option>
+              <option>Pre-paralizado</option>
+              <option>Paralizado</option>
+              <option>Archivado</option>
+            </select>
+          </div> --}}
+
+          <!-- Caratula -->
+          <div class="mb-3">
+            <label for="caratula" class="form-label">Carátula</label>
+            <input type="text" id="caratula" name="caratula" value="{{audiencia.caratula}}" class="form-control" placeholder="Carátula del Expediente">
+          </div>
+
+          <!-- Secretaría -->
+          <div class="mb-3">
+            <label for="secretaria" class="form-label">Secretaría</label>
+            <input type="text" id="secretaria" name="secretaria" value="{{audiencia.secretaria}}" class="form-control" placeholder="Ej: Secretaría B">
+          </div>
+
+          <!-- Fecha Audiencia -->          
+          <div class="mb-3">
+            <label for="dateturno" class="form-label">Fecha Audiencia</label>
+            <input type="date" id="dateturno" name="dateturno" value="{{audiencia.dateturno}}" class="form-control">
+          </div>
+
+          <!-- Hora Audiencia -->
+          <div class="mb-3">
+            <label for="horaaudiencia" class="form-label">Hora Audiencia</label>
+            <input type="text" id="horaaudiencia" name="horaaudiencia" value="{{audiencia.horaaudiencia}}" class="form-control" placeholder="Ej: 10:00 AM">
+          </div>
+
+          <div class="mb-3">
+            <label for="horaaudiencia" class="form-label">Fecha Saco Turno</label>
+            <input type="text" id="dateturno" name="dateturno" value="{{audiencia.dateturno}}" class="form-control" placeholder="Ej: 10:00 AM" disabled>
+          </div>
+
+          <div class="form-group">
+                    Observaciones:
+                    <input type="text" style="font-weight: bold; color:green" minlength="0" maxlength="50"
+                        name="observaciones" class="form-control"  placeholder="Observaciones" value="{{audiencia.observaciones}}"></input>
+          </div>
+          <p></p>
+          
+          <!-- Botón guardar -->
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">Guardar Audiencia</button>
+          </div>
+          <!-- Volver -->
+          <div class="text-center">
+            <a href="/Audiencia/listado" class="text-decoration-none text-muted">
+              <i class="fas fa-arrow-left me-1"></i> Volver al listado
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

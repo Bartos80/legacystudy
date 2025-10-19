@@ -1,0 +1,148 @@
+<script>
+  function ponerminuscula() { let ex = document.getElementById("email");
+  ex.value = ex.value.toLowerCase(); //let y =
+  document.getElementById("adrema"); //y.value = y.value.toLowerCase(); }
+  function ShowName() { var writtenName = document.getElementById('name').value;
+  document.getElementById('name').value = formatToString(writtenName); }
+  function formatToString(writtenName) { var tmp = writtenName.split(" "); var
+  fullName; tmp.forEach(element => { if (fullName) { fullName = fullName + " " +
+  element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase(); } else
+  { fullName = element.charAt(0).toUpperCase() +
+  element.slice(1).toLocaleLowerCase(); } }) return fullName; } function
+  cargar() { var provincias = ["Cantabria", "Asturias", "Galicia", "Andalucia",
+  "Extremadura"]; //Tu array de provincias var select =
+  document.getElementById("provincias"); //Seleccionamos el select for (var i =
+  0; i < provincias.length; i++) { var option =
+  document.createElement("option"); //Creamos la opcion option.innerHTML =
+  provincias[i]; //Metemos el texto en la opción select.appendChild(option);
+  //Metemos la opción en el select } } cargar();
+</script>
+
+{{! <h1> REGISTER </h1> }}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Registro de juzgados</h4>
+        </div>
+        <div class="card-body bg-light">
+          <form action="/juzgados/newjuzgado" method="POST">
+            <div class="form-group mb-3">
+              <label for="numjuzgado">Nombre del Juzgado</label>
+              <input
+                onkeyup="ShowName();"
+                type="text"
+                class="form-control"
+                id="numjuzgado"
+                name="numjuzgado"
+                placeholder="Nombre del Juzgado"
+                value="{{numjuzgado}}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="dirjuzgado">Domicilio Juzgado</label>
+              <input
+                type="text"
+                class="form-control"
+                id="dirjuzgado"
+                name="dirjuzgado"
+                placeholder="Doc. Nac. Identida"
+                value="{{dirjuzgado}}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="teljuzgado">Teléfono Juzgado</label>
+              <input
+                onkeyup="ShowName();"
+                type="text"
+                class="form-control"
+                id="teljuzgado"
+                name="teljuzgado"
+                placeholder="Teléfono Juzgado"
+                value="{{teljuzgado}}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="emailjuzgado">Email/Correo</label>
+              <input
+                onkeyup="ponerminuscula()"
+                id="emailjuzgado"
+                type="email"
+                class="form-control"
+                name="emailjuzgado"
+                placeholder="Email/Correo"
+                value="{{emailjuzgado}}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="paisjuzgado">Pais</label>
+              <input
+                onkeyup="ponerminuscula()"
+                id="paisjuzgado"
+                type="text"
+                class="form-control"
+                name="paisjuzgado"
+                placeholder="País"
+                value="{{paisjuzgado}}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="provinciajuzgado">Provincia</label>
+              <input
+                onkeyup="ShowName();"
+                type="text"
+                class="form-control"
+                name="provinciajuzgado"
+                placeholder="Provincia del Juzgado"
+                value="{{provinciajuzgado}}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="localidadjuzgado">Localidad</label>
+              <input
+              onkeyup="ShowName();"
+                type="text"
+                class="form-control"
+                name="localidadjuzgado"
+                placeholder="Localidad del Juzgado"
+                value="{{localidadjuzgado}}"              
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="observacionesjuzgado">Observaciones</label>
+              <textarea
+                class="form-control"
+                name="observacionesjuzgado"
+                rows="3"
+                placeholder="Observaciones"
+              >{{observacionesjuzgado}}</textarea>
+            </div>
+
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-success">Registrar</button>
+            </div>
+
+            <div class="text-center mt-4">
+              <a
+                href="/juzgados/listado"
+                class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
+                style="font-weight: bold;"
+              >
+                <i class="fas fa-times-circle"></i>
+                Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

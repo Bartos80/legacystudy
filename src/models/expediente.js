@@ -2,14 +2,12 @@ const mongoose = require("mongoose");
 //import mongoose, { model } from "mongoose";
 const { Schema } = mongoose; // aca defino esquema de base de datos
 
-// Hacer el Campo autoincremental - Primary Key
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-ExpedienteSchema = new Schema({
-  // Campo Autoincremental
+ExpedienteSchema = new Schema({ 
     idexpediente: { 
-        type: Number, // El tipo debe ser Number
-        unique: true  // Debe ser único
+        type: Number, 
+        unique: true 
     },
   borrado: {
     type: String,
@@ -32,6 +30,11 @@ ExpedienteSchema = new Schema({
     default: "No Posee Información",
   },
   tipo: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  caratula: {
     type: String,
     require: false,
     default: "No Posee Información",

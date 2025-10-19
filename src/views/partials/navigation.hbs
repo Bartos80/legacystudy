@@ -3,7 +3,7 @@
 
     <a class="navbar-brand d-flex align-items-center" href="/">
       <img src="/css/img/logoredondo.png" height="40" class="mr-2" alt="Logo" style="border-radius: 50%;" />
-      <span class="ml-2 font-weight-bold">SALOMON.STUDIO</span>
+      <span class="ml-2 font-weight-bold"></span>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -15,17 +15,17 @@
       {{#if user}}
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="turnosDropdown" data-toggle="dropdown">
-            Audiencias
+            <i class="fas fa-calendar-alt me-1"></i> Audiencias
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/mesaentrada/listado">Fechas Audiencias</a>
+            <a class="dropdown-item" href="/audiencia/listado">Fechas Audiencias</a>
             {{!-- <a class="dropdown-item" href="/mesaentrada/Estadisticas">Estadísticas</a> --}}
           </div>
         </li>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="turnosDropdown" data-toggle="dropdown">
-            Turnos
+            <i class="fas fa-clock me-1"></i> Turnos
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/mesaentrada/listado">Turnos Clientes</a>
@@ -37,32 +37,32 @@
         {{!-- Clientes --}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="clientesDropdown" data-toggle="dropdown">
-            Listados
+            <i class="fas fa-list-alt me-1"></i> Listados
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/clientes/listado">Lista de Clientes</a>
             <a class="dropdown-item" href="/abogados/listado">Lista de Abogados</a>
             <a class="dropdown-item" href="/expedientes/listado">Lista Expedientes</a>
-            <a class="dropdown-item" href="/juicios/listado">Listado Juzgados</a>
+            <a class="dropdown-item" href="/juzgados/listado">Listado Juzgados</a>
             
           </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="clientesDropdown" data-toggle="dropdown">
-            Agregar
+            <i class="fas fa-plus-circle me-1"></i> Agregar
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/clientes/add">Agregar Cliente</a>
             <a class="dropdown-item" href="/expedientes/add">Agregar Expediente</a>
             <a class="dropdown-item" href="/abogados/add">Agregar Abogado</a>
-            <a class="dropdown-item" href="/juicios/add">Agregar Juzgado</a>
+            <a class="dropdown-item" href="/juzgados/add">Agregar Juzgado</a>
 
           </div>
         </li> 
         {{!-- Cobros --}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="cobrosDropdown" data-toggle="dropdown">
-            Cobros
+            <i class="fas fa-money-check-alt me-1"></i> Cobros
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/multas">A Clientes</a>
@@ -76,7 +76,7 @@
         {{!-- Agenda --}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="agendaDropdown" data-toggle="dropdown">
-            Agenda
+            <i class="fas fa-book me-1"></i> Agenda
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/actuaciones/listado">Registro Actuaciones</a>       
@@ -86,7 +86,7 @@
         {{!-- Estadísticas --}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-success" href="#" id="estadisticaDropdown" data-toggle="dropdown">
-            Estadísticas
+            <i class="fas fa-chart-bar me-1"></i> Estadísticas
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/cautelares/estadistica/listado">Medidas Cautelares</a>
@@ -97,7 +97,7 @@
         {{!-- Admin --}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" id="adminDropdown" data-toggle="dropdown">
-            Admin
+            <i class="fas fa-user-cog me-1"></i> Admin
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/users/11vvsOpmo90W">Crear Usuario</a>
@@ -107,6 +107,7 @@
             <a class="dropdown-item" href="/marcarborradosennoall">Crear Campos Borrado</a>
             <div class="dropdown-divider"></div>
             <span class="dropdown-header text-danger">Borrados</span>
+            <a class="dropdown-item" href="/audiencias/borradolistado">Audiencias</a>
             <a class="dropdown-item" href="/mesaentrada/borradolistado">Mesa Entrada</a>
             <a class="dropdown-item" href="/clientes/borradolistado">Clientes</a>
             <a class="dropdown-item" href="/expedientes/borradolistado">Expedientes</a>
@@ -118,6 +119,7 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link text-danger font-weight-bold" href="/users/logout">CerrarSesion</a>
+          
         </li>
       </ul>
 
