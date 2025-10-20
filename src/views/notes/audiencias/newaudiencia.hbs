@@ -28,21 +28,21 @@
           <!-- Juzgado -->
           <div class="mb-3">
             <label for="juzgado" class="form-label">Juzgado</label>
-            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Ej: Juzgado Civil Nº 3">
+            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Ej: Juzgado Civil Nº 3" required>
           </div>
 
           <!-- Nº Expediente -->
           <div class="mb-3">
             <label for="numexpediente" class="form-label">Nº de Expediente</label>
             <input type="text" id="numexpediente" name="numexpediente" class="form-control" placeholder="Ej: 12345/2024"
-              onkeyup="ponerMayuscula('numexpediente')" autofocus>
+              onkeyup="ponerMayuscula('numexpediente')" autofocus required>
           </div>
 
           <!-- estadoexpediente -->
           <div class="form-group mb-3">
             <label for="estadoexpediente" class="form-label">Estado del Expediente</label>
             <select name="estadoexpediente" id="estadoexpediente" class="form-select" required>
-              <option selected disabled>Seleccione un rol</option>
+              <option></option>
               <option>A despacho</option>
               <option>En vista/giro</option>
               <option>En fiscalía</option>
@@ -55,25 +55,25 @@
           <!-- Caratula -->
           <div class="mb-3">
             <label for="caratula" class="form-label">Carátula</label>
-            <input type="text" id="caratula" name="caratula" class="form-control" placeholder="Carátula del Expediente">
+            <input type="text" id="caratula" name="caratula" class="form-control" placeholder="Carátula del Expediente" required>
           </div>
 
           <!-- Secretaría -->
           <div class="mb-3">
             <label for="secretaria" class="form-label">Secretaría</label>
-            <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Ej: Secretaría B">
+            <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Ej: Secretaría B" required>
           </div>
 
           <!-- Fecha Audiencia -->          
           <div class="mb-3">
             <label for="dateturno" class="form-label">Fecha Audiencia</label>
-            <input type="date" id="dateturno" name="dateturno" class="form-control">
+            <input type="date" id="dateturno" name="dateturno" class="form-control" required>
           </div>
 
           <!-- Hora Audiencia -->
           <div class="mb-3">
             <label for="horaaudiencia" class="form-label">Hora Audiencia</label>
-            <input type="time" id="horaaudiencia" name="horaaudiencia" class="form-control" placeholder="Ej: 10:00 AM">
+            <input type="time" id="horaaudiencia" name="horaaudiencia" class="form-control" placeholder="Ej: 10:00 AM" required>
           </div>
 
           <div class="form-group">

@@ -20,8 +20,14 @@
 
                         <div class="mb-3">
                             <label for="numexpediente" class="form-label fw-bold">Número de Expediente:</label>
-                            <input type="number" class="form-control text-center" id="numexpediente" name="numexpediente"
+                            <input type="text" class="form-control text-center" id="numexpediente" name="numexpediente"
                                 value="{{audiencia.numexpediente}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="estadoexpediente" class="form-label fw-bold">Estado de Expediente:</label>
+                            <input type="text" class="form-control text-center" id="estadoexpediente" name="estadoexpediente"
+                                value="{{audiencia.estadoexpediente}}" disabled>
                         </div>
 
                         <div class="mb-3">
@@ -32,12 +38,12 @@
 
                         <div class="mb-3">
                             <label for="secretaria" class="form-label fw-bold">Secretaría:</label>
-                            <input onkeyup="ponerminuscula()" id="secretaria" type="text" class="form-control text-center"
+                            <input id="secretaria" type="text" class="form-control text-center"
                                 name="secretaria" value="{{audiencia.secretaria}}" disabled>
                         </div>
 
                         <div class="mb-3">
-                            <label for="ultimanotificacion" class="form-label fw-bold">Ultima Notificación:</label>
+                            <label for="ultimanotificacion" class="form-label fw-bold">Fecha Audiencia:</label>
                             <input onkeyup="ponerminuscula()" id="ultimanotificacion" type="text" class="form-control text-center"
                                 name="ultimanotificacion" value="{{audiencia.ultimanotificacion}}" disabled>
                         </div>
@@ -45,11 +51,11 @@
                         <div class="mb-3">
                             <label for="horaaudiencia" class="form-label fw-bold">Hora Audiencia:</label>
                             <input type="text" class="form-control text-center" id="horaaudiencia" name="horaaudiencia"
-                                value="{{audiencia.horaaudiencia}}" disabled>
+                                value="{{audiencia.horaaudiencia}} Hs"  disabled>
                         </div>
 
                         <div class="mb-3">
-                            <label for="dateturno" class="form-label fw-bold">Fecha dio el Turno:</label>
+                            <label for="dateturno" class="form-label fw-bold">Fecha Saco Turno:</label>
                             <input type="text" class="form-control text-center" id="dateturno" name="dateturno"
                                 value="{{audiencia.dateturno}}" disabled>
                         </div>

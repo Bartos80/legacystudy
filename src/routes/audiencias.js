@@ -37,7 +37,7 @@ router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
     const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones, user, name, date
     } = req.body;
-    const newaudiencia = new audiencia({
+    const newaudiencia = new Audiencia({
         juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones, user, name, date
     })
@@ -48,19 +48,60 @@ router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
     res.redirect('/audiencia/listado');
 })
 
+// router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
+//     const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+//         dateturno, observaciones, user, name, date } = req.body;
+//     const newaudiencia = new Audiencia({
+//         juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+//         dateturno, observaciones, user, name, date
+//     })
+//     newaudiencia.user = req.user.id;
+//     newaudiencia.name = req.user.name;
+//     await newaudiencia.save();
+//     req.flash('success_msg', 'Turno Agregado Exitosamente');
+//     res.redirect('/audiencia/listado');
+// })
 router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
-    const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
-        dateturno, observaciones, user, name, date } = req.body;
-    const newaudiencia = new audiencia({
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
-        dateturno, observaciones, user, name, date
-    })
-    newaudiencia.user = req.user.id;
-    newaudiencia.name = req.user.name;
-    await newaudiencia.save();
-    req.flash('success_msg', 'Turno Agregado Exitosamente');
-    res.redirect('/audiencia/listado');
-})
+    const { 
+        juzgado, numexpediente, estadoexpediente, caratula, secretaria, 
+        ultimanotificacion, horaaudiencia, dateturno, observaciones, 
+        user, name, date 
+    } = req.body;
+    const errors = []; 
+    if (!juzgado) {
+        errors.push({ text: 'Por favor, ingrese el Juzgado.' });    }
+    if (!numexpediente) {
+        errors.push({ text: 'Por favor, ingrese el Número de Expediente.' });    }
+    if (!caratula) {
+        errors.push({ text: 'Por favor, ingrese la Carátula.' });    }
+    if (!dateturno) {
+        errors.push({ text: 'Por favor, ingrese la Fecha del Turno/Audiencia.' });
+    }
+    if (errors.length > 0) {
+        errors.forEach(error => req.flash('error_msg', error.text));        
+        return res.render('ruta/donde/esta/el/formulario', { 
+            errors,
+            juzgado, numexpediente, estadoexpediente, caratula, secretaria, 
+            ultimanotificacion, horaaudiencia, dateturno, observaciones             
+        });
+    }
+    try {
+        const newaudiencia = new Audiencia({
+            juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, 
+            horaaudiencia, dateturno, observaciones, user, name, date
+        });        
+        newaudiencia.user = req.user.id;
+        newaudiencia.name = req.user.name;
+        await newaudiencia.save();
+        req.flash('success_msg', 'Turno Agregado Exitosamente');
+        res.redirect('/audiencia/listado');
+    } catch (error) {
+        console.error("Error al guardar la nueva audiencia:", error);
+        req.flash('error_msg', 'Error al guardar el turno en la base de datos.');
+        res.redirect('back'); // Redirige a la página anterior
+    }
+});
+
 
 router.get('/audiencia', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
@@ -419,22 +460,69 @@ router.get('/audiencia/add/:id', isAuthenticated, async (req, res) => {
 
 router.get('/audiencia/edit/:id', isAuthenticated, async (req, res) => {
     const audiencia = await Audiencia.findById(req.params.id).lean()
+    const fechaOriginal = audiencia.dateturno;
+    const fechaObj = new Date(fechaOriginal);
+    const opcionesFecha = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+    const opcionesHora = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    };
+    const fechaFormateada = fechaObj.toLocaleString('es-AR', opcionesFecha);
+    const horaFormateada = fechaObj.toLocaleString('es-AR', opcionesHora);
+    const resultado = `Fecha: ${fechaFormateada} | Hora: ${horaFormateada}`;
+    audiencia.dateturno = resultado;
     res.render('notes/audiencias/editaudiencia', { audiencia })
 });
 
 router.put('/notes/editaudiencia/:id', isAuthenticated, async (req, res) => {
     const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
-        dateturno, observaciones } = req.body
+        dateturno, observaciones } = req.body;  
+
     await Audiencia.findByIdAndUpdate(req.params.id, {
         juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones
     });
     req.flash('success_msg', 'Audiencia actualizada')
-    res.redirect('notes/listaudiencia');
+    res.redirect('/Audiencia/listado');
 });
 
 router.get('/audiencia/list/:id', isAuthenticated, async (req, res) => {
     const audiencia = await Audiencia.findById(req.params.id).lean()
+
+    const fechaOriginal = audiencia.dateturno;
+    const fechaObj = new Date(fechaOriginal);
+    const opcionesFecha = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+    const opcionesHora = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    };
+    const fechaFormateada = fechaObj.toLocaleString('es-AR', opcionesFecha);
+    const horaFormateada = fechaObj.toLocaleString('es-AR', opcionesHora);
+    const resultado = `Fecha: ${fechaFormateada} | Hora: ${horaFormateada}`;
+    audiencia.dateturno = resultado;
+
+    
+    const fechaCompletaString = "Mon Oct 13 2025 23:13:17 GMT-0300 (hora estándar de Argentina)";
+    const fechaObjuf = new Date(fechaCompletaString);
+
+    // 2. Usar toLocaleDateString() para obtener un formato de fecha estándar (ej: DD/MM/AAAA o MM/DD/AAAA)
+    //    Dependerá de la configuración regional (locale) que uses.
+    const soloFecha = fechaObjuf.toLocaleDateString('es-AR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'    
+    });
+    audiencia.ultimanotificacion = soloFecha;
     res.render('notes/audiencias/listaudiencia', { audiencia })
 });
 router.get('/audiencia/borradolist/:id', isAuthenticated, async (req, res) => {
@@ -545,7 +633,7 @@ router.post('/audiencia/findlistainiciador', isAuthenticated, async (req, res) =
 router.post('/audiencia/findcaratula', isAuthenticated, async (req, res) => {
     const { caratula } = req.body;
     const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { caratula: { $regex: caratula, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    for (var audiencias of audienciastabla) {        
+    for (var audiencias of audienciastabla) {
         var tipoint = audiencias.dateturno;
         if (tipoint != null) {
             const fecha = new Date(audiencias.dateturno);
@@ -581,7 +669,7 @@ router.post('/audiencia/findcaratula', isAuthenticated, async (req, res) => {
 router.post('/audiencia/findjuzgado', isAuthenticated, async (req, res) => {
     const { juzgado } = req.body;
     const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { juzgado: { $regex: juzgado, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    for (var audiencias of audienciastabla) {        
+    for (var audiencias of audienciastabla) {
         var tipoint = audiencias.dateturno;
         if (tipoint != null) {
             const fecha = new Date(audiencias.dateturno);
@@ -752,16 +840,16 @@ router.put('/notes/editaddaudiencia/:id', isAuthenticated, async (req, res) => {
 });
 
 // ** SECTOR EDITAR **
-router.put('/notes/editaudiencia/:id', isAuthenticated, async (req, res) => {
-    const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
-        dateturno, observaciones } = req.body
-    await Audiencia.findByIdAndUpdate(req.params.id, {
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
-        dateturno, observaciones
-    });
-    req.flash('success_msg', 'Audiencia Actualizada')
-    res.redirect('/audiencia/listado');
-});
+// router.put('/notes/editaudiencia/:id', isAuthenticated, async (req, res) => {
+//     const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+//         dateturno, observaciones } = req.body
+//     await Audiencia.findByIdAndUpdate(req.params.id, {
+//         juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+//         dateturno, observaciones
+//     });
+//     req.flash('success_msg', 'Audiencia Actualizada')
+//     res.redirect('/audiencia/listado');
+// });
 
 // **** SECTOR DELETE ****
 
@@ -812,7 +900,7 @@ router.put('/audiencia/marcadeleterestaurar/:id', isAuthenticated, async (req, r
 router.delete('/audiencia/delete/:id', isAuthenticated, async (req, res) => {
     await Audiencia.findByIdAndDelete(req.params.id);
     req.flash('success_msg', 'Audiencia Eliminada')
-    res.redirect('/audiencia/listado')
+    res.redirect('/audiencias/borradolistado')
 });
 
 

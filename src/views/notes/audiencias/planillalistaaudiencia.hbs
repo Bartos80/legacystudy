@@ -43,6 +43,7 @@
           <th>Hora Audiencia</th>
           <th>Observaciones</th>
           <th>Acciones</th>
+          <th>Eliminar</th>
         </tr>
       </thead>
       <tbody>
@@ -56,22 +57,20 @@
           <td>{{ horaaudiencia }}</td>
           <td>{{ observaciones }}</td>
           <td>
-            <div class="d-flex justify-content-center gap-2">
-              {{!-- <a href="/audiencia/edit/{{_id}}" class="btn btn-warning btn-sm">Editar</a> --}}
+            <div class="d-flex justify-content-center gap-2">              
               <a href="/audiencia/list/{{_id}}" class="btn btn-info btn-sm w-100">+Info</a>
-              <form onSubmit="return confirm('Desea enviar Audiencia seleccionada a Papelera?')" style=""
+              <a href="/audiencia/edit/{{_id}}" class="btn btn-warning btn-sm">Editar</a>
+                         
+            </div>
+          </td>
+          <td>
+            <form onSubmit="return confirm('Desea enviar Audiencia seleccionada a Papelera?')" style=""
                 action="/audiencia/marcadelete/{{_id}}?_method=PUT" method="POST">
                 <input type="hidden" name="_method" value="PUT">
                 <button class="btn btn-danger btn-sm" type="submit">
-                  Borrar
+                  Papelera
                 </button>
-              </form>
-              {{!-- <form action="/Audiencia/delete/{{_id}}?_method=DELETE" method="POST"
-                onsubmit="return confirm('¿Estás seguro que deseas eliminar este turno?');">
-                <input type="hidden" name="_method" value="DELETE" />
-                <button class="btn btn-outline-danger btn-sm" type="submit">Borrar</button>
-              </form> --}}
-            </div>
+              </form>   
           </td>
         </tr>
         {{/each}}
