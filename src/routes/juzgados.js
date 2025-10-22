@@ -56,23 +56,23 @@ router.get('/juzgados/add', isAuthenticated, (req, res) => {
 });
 
 router.post('/juzgados/newJuzgado', isAuthenticated, async (req, res) => {
-    const { matriculaJuzgado, nyaJuzgado, dniJuzgado, direccionJuzgado, celularJuzgado,
-        emailJuzgado, localidadJuzgado, emailvinculadoJuzgadoestudio, observacionesJuzgado
+    const { numjuzgado, dirjuzgado, teljuzgado, emailjuzgado, paisjuzgado,
+        provinciajuzgado, localidadjuzgado, observacionesjuzgado
     } = req.body;
-    const newJuzgados = new juzgados({
-        matriculaJuzgado, nyaJuzgado, dniJuzgado, direccionJuzgado, celularJuzgado,
-        emailJuzgado, localidadJuzgado, emailvinculadoJuzgadoestudio, observacionesJuzgado
+    const newJuzgados = new Juzgados({
+        numjuzgado, dirjuzgado, teljuzgado, emailjuzgado, paisjuzgado,
+        provinciajuzgado, localidadjuzgado, observacionesjuzgado
     })
     newJuzgados.user = req.user.id;
     newJuzgados.name = req.user.name;
     await newJuzgados.save();
     req.flash('success_msg', 'Juzgado Agregado Exitosamente');
-    res.redirect('notes/juzgados/listado');
+    res.redirect('/juzgados/listado');
 })
 
 router.get('/juzgados/list/:id', isAuthenticated, async (req, res) => {
     const Juzgados = await Juzgados.findById(req.params.id).lean()
-    res.render('notes/juzgados/listJuzgado', { Juzgados })
+    res.render('notes/juzgados/planillalistajuzgado', { Juzgados })
 });
 
 router.get('/juzgados/edit/:id', isAuthenticated, async (req, res) => {
@@ -103,14 +103,14 @@ router.put('/juzgados/marcadeleterestaurar/:id', isAuthenticated, async (req, re
 });
 
 router.put('/notes/editJuzgado/:id', isAuthenticated, async (req, res) => {
-    const { matriculaJuzgado, nyaJuzgado, dniJuzgado, direccionJuzgado, celularJuzgado,
-        emailJuzgado, localidadJuzgado, emailvinculadoJuzgadoestudio, observacionesJuzgado } = req.body
+    const { numjuzgado, dirjuzgado, teljuzgado, emailjuzgado, paisjuzgado,
+        provinciajuzgado, localidadjuzgado, observacionesjuzgado } = req.body
     await Juzgados.findByIdAndUpdate(req.params.id, {
-        matriculaJuzgado, nyaJuzgado, dniJuzgado, direccionJuzgado, celularJuzgado,
-        emailJuzgado, localidadJuzgado, emailvinculadoJuzgadoestudio, observacionesJuzgado
+        numjuzgado, dirjuzgado, teljuzgado, emailjuzgado, paisjuzgado,
+        provinciajuzgado, localidadjuzgado, observacionesjuzgado
     });
     req.flash('success_msg', 'Juzgado actualizado')
-    res.redirect('/juzgados/listado');
+    res.redirect('/juzgados/planillalistajuzgado');
 });
 
 // *** SI O SI LOS MODULE EXPLORTS ***

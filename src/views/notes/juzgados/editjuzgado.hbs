@@ -24,10 +24,11 @@
     <div class="col-12 col-md-8 col-lg-6">
       <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">Registro de juzgados</h4>
+          <h4 class="mb-0">Edicion del Juzgado</h4>
         </div>
         <div class="card-body bg-light">
-          <form action="/juzgados/newjuzgado" method="POST">
+          <form action="/juzgados/newjuzgado" PUT method="POST">
+          <form action="/juzgados/editjuzgado/{{juzgado._id}}?_method=PUT" method="POST">
             <div class="form-group mb-3">
               <label for="numjuzgado">Nombre del Juzgado</label>
               <input
@@ -37,7 +38,7 @@
                 id="numjuzgado"
                 name="numjuzgado"
                 placeholder="Nombre del Juzgado"
-                title="Nombre del Juzgado"
+                value="{{numjuzgado}}"
               />
             </div>
 
@@ -48,8 +49,8 @@
                 class="form-control"
                 id="dirjuzgado"
                 name="dirjuzgado"
-                placeholder="Direccion del Juzgado"
-                title="Direccion del Juzgado" 
+                placeholder="Doc. Nac. Identida"
+                value="{{dirjuzgado}}"
               />
             </div>
 
@@ -62,7 +63,7 @@
                 id="teljuzgado"
                 name="teljuzgado"
                 placeholder="Teléfono Juzgado"
-                title="Teléfono Juzgado"
+                value="{{teljuzgado}}"
               />
             </div>
 
@@ -75,7 +76,7 @@
                 class="form-control"
                 name="emailjuzgado"
                 placeholder="Email/Correo"
-                title="Email/Correo"
+                value="{{emailjuzgado}}"
               />
             </div>
 
@@ -88,7 +89,7 @@
                 class="form-control"
                 name="paisjuzgado"
                 placeholder="País"
-                title="País"
+                value="{{paisjuzgado}}"
               />
             </div>
 
@@ -100,7 +101,7 @@
                 class="form-control"
                 name="provinciajuzgado"
                 placeholder="Provincia del Juzgado"
-                title="Provincia del Juzgado"
+                value="{{provinciajuzgado}}"
               />
             </div>
 
@@ -112,7 +113,7 @@
                 class="form-control"
                 name="localidadjuzgado"
                 placeholder="Localidad del Juzgado"
-                title="Localidad del Juzgado"
+                value="{{localidadjuzgado}}"              
               />
             </div>
 
@@ -123,12 +124,11 @@
                 name="observacionesjuzgado"
                 rows="3"
                 placeholder="Observaciones"
-                title="Observaciones"
-              ></textarea>
+              >{{observacionesjuzgado}}</textarea>
             </div>
 
             <div class="d-grid mb-3">
-              <button type="submit" class="btn btn-success">Registrar</button>
+              <button type="submit" class="btn btn-success">Grabar</button>
             </div>
 
             <div class="text-center mt-4">

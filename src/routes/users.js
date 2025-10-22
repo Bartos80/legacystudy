@@ -15,6 +15,54 @@ router.post('/users/signin', passport.authenticate('local',{
     failureFlash: true
 }));
 
+// --- Configuración del Admin Inicial ---
+const ADMIN_EMAIL = 'admin@admin.com';
+const ADMIN_PASSWORD_RAW = 'Admin'; // ¡CAMBIA ESTO!
+
+const ADMIN_NAME = 'Admin Principal';
+const ADMIN_ROLE = 'Administrador';
+
+const SALT_ROUNDS = 10; // Nivel de seguridad del hashing
+
+createAdminIfNoUsers(); // Llamar a la función al cargar este módulo
+
+async function createAdminIfNoUsers() {
+    console.log('--- Iniciando verificación de usuarios en MongoDB ---');
+    try {
+        // 1. Contar el número de documentos en la colección 'users'
+        const userCount = await User.countDocuments({});
+        if (userCount === 0) {
+            console.log('¡Colección de usuarios vacía! Creando usuario Administrador por defecto...');
+            const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD_RAW, SALT_ROUNDS);
+            // 3. Crear (Insertar) el nuevo usuario Administrador usando el modelo Mongoose
+            const newUser = await User.create({
+                estudioempresa: Admin,
+                rolusuario: Administrador,
+                name: Administrador,
+                celular: "000-0000",
+                email: "admin@admin.com",
+                dni: "00000000",
+                codigousuario: "001",
+                
+                date: new Date()
+            });
+
+            if (newUser) {
+                console.log(`✅ Usuario Administrador '${ADMIN_EMAIL}' creado exitosamente en MongoDB.`);
+            } else {
+                // Esta rama es poco probable si la inserción fue exitosa, pero es un buen control.
+                console.error('❌ Error al insertar el usuario Administrador en MongoDB.');
+            }
+
+        } else {
+            console.log(`La colección de usuarios tiene ${userCount} registro(s). El administrador por defecto NO fue creado.`);
+        }
+    } catch (error) {
+        // Este error puede ocurrir si la conexión a MongoDB no está lista o si hay problemas de validación del esquema.
+        console.error('🛑 ERROR en la inicialización de la base de datos (createAdminIfNoUsers):', error.message);
+    }
+}
+
 // router.get ('/users/signup', (req, res) => {
 router.get ('/users/11vvsOpmo90W', (req, res) => {    
     const rolusuario = req.user.rolusuario;

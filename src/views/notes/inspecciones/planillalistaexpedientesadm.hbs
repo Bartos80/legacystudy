@@ -1,89 +1,97 @@
-<div class="row">
-  <div class="form-group btn-center mx-auto">
-    <form action="/expedientes/findjuzgado" method="POST">
-      <input type="search" class="form-control" name="juzgado" placeholder="Buscar Juzgado..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar Juzgado
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="form-group btn-center mx-auto">
-    <form action="/expedientes/findsecretaria" method="POST">
-      <input type="search" class="form-control" name="adremaexp" placeholder="Buscar Secretaria..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar Secretaría
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="form-group btn-center mx-auto">
-    <form action="/expedientes/find" method="POST">
-      <input type="search" class="form-control" name="numexpediente" placeholder="Buscar Expediente..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar Expediente
-        </button>
-      </div>
-    </form>
-  </div>  
-  <div class="form-group btn-center mx-auto">
-    <form action="/expedientes/findultimanotificacion" method="POST">
-      <input type="search" class="form-control" name="ultimanotificacion" placeholder="Buscar Ultima Notif..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar Ult.Notificación
-        </button>
-      </div>
-    </form>
+<div class="container my-5">
+
+  <!-- Encabezado + botones -->
+  <div
+    class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center gap-3 mb-4">
+    <h5 class="fw-bold text-primary text-uppercase m-0">📋 Listado de expedientes</h5>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+      <a href="/expedientes/add" class="btn btn-success btn-sm mr-4">+ Agregar Expediente</a>
+      <a href="/expedientes/listado" class="btn btn-outline-warning btn-sm">↻ Recargar</a>
+    </div>
   </div>
 
-  <a href="/expedientes/add" class="btn btn-success btn-block">Agregar Expediente!</a>
-  <a href="/expedientes/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+  <!-- Formularios de búsqueda -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-3">
+      <form action="/expedientes/findjuzgado" method="POST">
+        <input type="search" class="form-control" name="juzgado" placeholder="Buscar Juzgado..." autofocus />
+        <div class="form-group">
+          <button title="buscar Juzgado" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">
+            Buscar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="/expedientes/findsecretaria" method="POST">
+        <input type="search" class="form-control" name="adremaexp" placeholder="Buscar Secretaria..." autofocus />
+        <div class="form-group">
+          <button title="buscar Secretaría" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">
+            Buscar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="/expedientes/find" method="POST">
+        <input type="search" class="form-control" name="numexpediente" placeholder="Buscar Expediente..." autofocus />
+        <div class="form-group">
+          <button title="buscar Expediente" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">
+            Buscar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="/expedientes/findultimanotificacion" method="POST">
+        <input type="search" class="form-control" name="ultimanotificacion" placeholder="Buscar Ultima Notif..."
+          autofocus />
+        <div class="form-group">
+          <button title="buscar Ultima Notificación" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">
+            Buscar
+          </button>
+        </div>
+        </form>
+    </div>
+  </div>
 
-  {{!-- <br /> --}}
-  <div class="form-group btn-center mx-auto">
-    <br />
-    {{!-- <h5 style="color:rgb(219, 216, 16); text-shadow: 2px 2px 4px #000000;">
-      LISTADO DE MESA DE ENTRADA</h5> --}}
-    {{!-- <br /><br /> --}}
-    <div class="form-group btn-center mx-auto">
-      <table class="table table-dark table-hover">
-        <thead>
+  <!-- Tabla responsiva de expedientes -->
+  {{#if expedientes.length}}
+  <div class="table-responsive rounded shadow-sm border">
+    <table class="table table-striped table-bordered align-middle text-nowrap">
+      <thead class="table-primary text-dark text-center">        
           <tr style="background-color: rgb(221, 157, 18);;text-shadow: 1px 1px 2px black">
             <td>Juzgado</td>
-            <td>secretaria</td>            
+            <td>secretaria</td>
             <td>Nº Expediente</td>
             <td>Tipo</td>
-            <td>Estado</td>            
-            <td>UltimaNotif</td>            
+            <td>Estado</td>
+            <td>UltimaNotif</td>
             <td>Opciones</td>
             <td>Extras</td>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each expedientes}}
-          <tr>
-            {{!-- <td>{{ _id }}</td> --}}            
+          </tr>        
+      </thead>
+      <tbody>
+        {{#each expedientes}}
+        <tr>
+          {{!-- <td>{{ _id }}</td> --}}
             <td style="text-transform: lowercase;">{{ secretaria }}</td>
-            <td>{{ juzgado }}</td>            
-            <td>{{ numexpediente }}</td>  
-            <td style="text-transform: lowercase;">{{ tipo }}</td>           
+            <td>{{ juzgado }}</td>
+            <td>{{ numexpediente }}</td>
+            <td style="text-transform: lowercase;">{{ tipo }}</td>
             <td style="text-transform: lowercase;color:yellow;">{{ estado }}</td>
-            <td style="text-transform: lowercase;color:green; font-weight: bold;">{{ ultimanotificacion }}</td>            
-            <td>              
+            <td style="text-transform: lowercase;color:green; font-weight: bold;">{{ ultimanotificacion }}</td>
+            <td>
               <a class="dropdown-item" href="/expedientes/list/{{_id}}"
                 style="color:rgb(24, 211, 33);font-weight: bold;text-shadow: 1px 1px 2px black;">
                 Info Expediente
-              </a>                     
+              </a>
             </td>
-            <td>              
+            <td>
               <a class="dropdown-item " href="/expedientes/edit/{{_id}}"
                 style="color:rgb(165, 196, 28);font-weight: bold;text-shadow: 1px 1px 2px black;">
                 Editar Exped.
-              </a>              
+              </a>
               <form onSubmit="return confirm('Desea enviar Papelera?')" style=""
                 action="/expedientes/marcadelete/{{_id}}?_method=PUT" method="POST">
                 <input type="hidden" name="_method" value="PUT">
@@ -92,12 +100,14 @@
                 </button>
               </form>
             </td>
-          </tr>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
+  {{else}}
+  <div class="alert alert-warning text-center mt-5" role="alert">
+    🚫 No existen expedientes registrados.
+  </div>
+  {{/if}}
 </div>
-{{!-- {{else}} --}}
