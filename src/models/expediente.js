@@ -4,11 +4,11 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-ExpedienteSchema = new Schema({ 
-    idexpediente: { 
-        type: Number, 
-        unique: true 
-    },
+ExpedienteSchema = new Schema({
+  idexpediente: {
+    type: Number,
+    unique: true
+  },
   borrado: {
     type: String,
     required: false,
@@ -35,6 +35,21 @@ ExpedienteSchema = new Schema({
     default: "No Posee Información",
   },
   caratula: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  idcliente: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  idabogado: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  idjuzgado: {
     type: String,
     require: false,
     default: "No Posee Información",
@@ -137,10 +152,10 @@ ExpedienteSchema = new Schema({
 });
 
 ExpedienteSchema.plugin(AutoIncrement, {
-    inc_field: 'idexpediente', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
-    start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
-    reference_fields: [],   // Opcional: Campos para crear secuencias independientes
-    id: 'expediente_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
+  inc_field: 'idexpediente', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+  start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
+  reference_fields: [],   // Opcional: Campos para crear secuencias independientes
+  id: 'expediente_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
 module.exports = mongoose.model("Expediente", ExpedienteSchema);

@@ -32,6 +32,34 @@ router.put('/expedientes/listadoborradosenno', isAuthenticated, async (req, res)
     res.redirect('/expedientes/listado');
 });
 
+router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
+    // res.send('Notes from data base');
+    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
+
+    try {
+        const rolusuario = req.user.rolusuario;
+        if (rolusuario == "Administrador") {
+            const expedientes = await Expediente.find({ borrado: "No" })
+                .lean() // Convierte los documentos de Mongoose a objetos JS planos para Handlebars
+                .limit(100)
+                .sort({ ultimanotificacion: 'desc' });
+            // Ahora, cada objeto en 'expedientes' tendrá campos como 'idcliente',
+            // pero contendrán los objetos completos del cliente, abogado y juzgado.
+
+            res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes });
+        } else {
+            req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
+            return res.redirect('/');
+        }
+    } catch (error) {
+        console.error("Error al obtener el listado de expedientes:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+    // const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(100).sort({ ultimanotificacion: 'desc' }); //        
+    // res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes });    
+
+});
+
 router.get('/expedientes/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
@@ -835,24 +863,6 @@ router.get('/expedientes', isAuthenticated, async (req, res) => {
         const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(200).sort({ numexpediente: 'desc' }); //
         // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
         res.render('notes/allexpedientes', { expedientes });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
-        return res.redirect('/');
-    }
-});
-
-router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-    const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(100).sort({ ultimanotificacion: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes });
-    } else if (rolusuario == "Inspector") {
-        const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(100).sort({ ultimanotificacion: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/planillalistaexpedientesusr', { expedientes });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
         return res.redirect('/');

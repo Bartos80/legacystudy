@@ -107,98 +107,101 @@
 
 </script>
 
-<div class="col-md-8 mx-auto">
-    <div class="card">
-        <div class="car-header mx-auto">
-            <br />
-            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Mesa Entrada - (Nuevo Turno)</h3>
-        </div>
-        <div class="card-body">
-            <form action="/notes/newmesaentradas" method="POST">
+<div class="container mt-0">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Mesa Entrada - (Turno Cliente)</h4>
+                </div>
+            </div>
+            <div class="card-body bg-light">
+                <form action="/notes/newmesaentradas" method="POST">
 
-                <div class="form-group">
-                    Abogado:
-                    <input onkeyup="ShowName('nomyape')" style="color:green" minlength="10" maxlength="40"
-                        value="{{mesaentrada.nomyapeabogado}}" type="text" name="nomyapeabogado" id="nomyapeabogado"
-                        class="form-control" placeholder="Nombre y Apellido Abogado" required autofocus>
-                    {{!-- ShowName('nomyape')" --}}
-                </div>
-                <div class="form-group">
-                    Fecha Turno Juzgado:
-                </div>
-                <div class="input-group-append">
-                    <input style="font-weight: bold; color:black" type="date" id="fechaingreso" name="fechaingreso"
-                        class="form-control">
-                    {{!--
-                </div>
-                <div class="input-group-append"> --}}
-                    <button id="botonfecha" class='btn btn-primary' name="botonfecha" type="button"
-                        onclick="ffechaactual()">
-                        <span class="fa fa-calendar icon"></span>
-                    </button>
-                </div>
-                <div class="form-group">
-                    Hora Turno Juzgado:
-                </div>
-                <div class="input-group-append">
-                    <input id="horaingreso" style="font-weight: bold; color:black" type="time" name="horaingreso"
-                        class="form-control">
-                    <button id="botonhora" class='btn btn-primary' name="botonhora" type="button"
-                        onclick="fhoraactual()">
-                        <span class="fa fa-hourglass-half" aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div class="form-group">
-                    Expediente:
-                    <input id="expediente" onkeyup="PonerMayuscula('expediente')" style="font-weight: bold; color:green"
-                        minlength="0" maxlength="11" value="{{mesaentrada.numexpediente}}" type="text"
-                        name="numexpediente" class="form-control" placeholder="Nº Expediente">
-                </div>
-                <div class="form-group">
-                    Juzgado:
-                    <input id="juzgado" name="juzgado" onkeyup="PonerMayuscula('juzgado')"
-                        style="font-weight: bold; color:green" value="{{mesaentrada.juzgado}}" type="text"
-                        class="form-control" placeholder="Nº Juzgado">
-                </div>
-                <div class="form-group">
-                    Nombre y Apellido:
-                    <input onkeyup="ShowName('nomyape')" style="font-weight: bold; color:green" minlength="10"
-                        maxlength="40" value="{{mesaentrada.nomyape}}" type="text" name="nomyape" id="nomyape"
-                        class="form-control" placeholder="Nombre y Apellido" required autofocus>
-                    {{!-- ShowName('nomyape')" --}}
-                </div>
-                <div class="form-group">
-                    Documento Nacional Identidad:
-                    <input type="dni" maxlength="9" style="font-weight: bold; color:green" value="{{mesaentrada.dni}}"
-                        name="dni" class="form-control" type="text" placeholder="Colocar DNI sin puntos" required
-                        autofocus></input>
-                </div>
-                <div class="form-group">
-                    contacto E-mail/Celular:
-                    <input onkeyup="ponerminuscula('contacto')" style="font-weight: bold; color:green" minlength="0"
-                        maxlength="30" value="{{mesaentrada.contacto}}" name="contacto" id="contacto"
-                        class="form-control" placeholder="E-mail/Celular"></input>
-                </div>
-                <div class="form-group">
-                    Observaciones:
-                    <input type="text" style="font-weight: bold; color:green" minlength="0" maxlength="50"
-                        value="{{mesaentrada.observaciones}}" name="observaciones" class="form-control"
-                        placeholder="Observaciones"></input>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block" type="submit">
-                        Grabar
-                    </button>
-                </div>
-                <div class="text-center mt-4">
-                    <a href="/juzgados/listado"
-                        class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
-                        style="font-weight: bold;">
-                        <i class="fas fa-times-circle"></i>
-                        Cancelar
-                    </a>
-                </div>
-            </form>
+                    <div class="form-group">
+                        cliente:
+                        <input onkeyup="ShowName('nomyape')" style="color:green" minlength="10" maxlength="40"
+                            value="{{mesaentrada.nomyapecliente}}" type="text" name="nomyapecliente" id="nomyapecliente"
+                            class="form-control" placeholder="Nombre y Apellido cliente" required autofocus>
+                        {{!-- ShowName('nomyape')" --}}
+                    </div>
+                    <div class="form-group">
+                        Fecha Turno al Estudio:
+                    </div>
+                    <div class="input-group-append">
+                        <input style="font-weight: bold; color:black" type="date" id="fechaingreso" name="fechaingreso"
+                            class="form-control">
+                        {{!--
+                    </div>
+                    <div class="input-group-append"> --}}
+                        <button id="botonfecha" class='btn btn-primary' name="botonfecha" type="button"
+                            onclick="ffechaactual()">
+                            <span class="fa fa-calendar icon"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        Hora Turno:
+                    </div>
+                    <div class="input-group-append">
+                        <input id="horaingreso" style="font-weight: bold; color:black" type="time" name="horaingreso"
+                            class="form-control">
+                        <button id="botonhora" class='btn btn-primary' name="botonhora" type="button"
+                            onclick="fhoraactual()">
+                            <span class="fa fa-hourglass-half" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        Expediente:
+                        <input id="expediente" onkeyup="PonerMayuscula('expediente')"
+                            style="font-weight: bold; color:green" minlength="0" maxlength="11"
+                            value="{{mesaentrada.numexpediente}}" type="text" name="numexpediente" class="form-control"
+                            placeholder="Nº Expediente">
+                    </div>
+                    <div class="form-group">
+                        Juzgado:
+                        <input id="juzgado" name="juzgado" onkeyup="PonerMayuscula('juzgado')"
+                            style="font-weight: bold; color:green" value="{{mesaentrada.juzgado}}" type="text"
+                            class="form-control" placeholder="Nº Juzgado">
+                    </div>
+                    <div class="form-group">
+                        Nombre y Apellido:
+                        <input onkeyup="ShowName('nomyape')" style="font-weight: bold; color:green" minlength="10"
+                            maxlength="40" value="{{mesaentrada.nomyape}}" type="text" name="nomyape" id="nomyape"
+                            class="form-control" placeholder="Nombre y Apellido" required autofocus>
+                        {{!-- ShowName('nomyape')" --}}
+                    </div>
+                    <div class="form-group">
+                        Documento Nacional Identidad:
+                        <input type="dni" maxlength="9" style="font-weight: bold; color:green"
+                            value="{{mesaentrada.dni}}" name="dni" class="form-control" type="text"
+                            placeholder="Colocar DNI sin puntos" required autofocus></input>
+                    </div>
+                    <div class="form-group">
+                        contacto E-mail/Celular:
+                        <input onkeyup="ponerminuscula('contacto')" style="font-weight: bold; color:green" minlength="0"
+                            maxlength="30" value="{{mesaentrada.contacto}}" name="contacto" id="contacto"
+                            class="form-control" placeholder="E-mail/Celular"></input>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea class="form-control" name="observaciones" rows="2" placeholder="Observaciones"
+                            title="Observaciones"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block" type="submit">
+                            Grabar
+                        </button>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="/juzgados/listado"
+                            class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
+                            style="font-weight: bold;">
+                            <i class="fas fa-times-circle"></i>
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
