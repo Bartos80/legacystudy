@@ -8,10 +8,11 @@ const Users = require('../models/User');
 const Clientes = require('../models/clientes')
 const Expediente = require('../models/Expediente');
 const Juzgados = require('../models/Juzgado')
+const Expedentrsalida = require('../models/expedentrsalida');
+const Abogados = require('../models/abogados');
 // const Expedinspeccion = require('../models/expedinspeccion');
 // const Expedticket = require('../models/Expedticket')
 // const Expedticketentrainsp = require('../models/Expedticketentrainsp')
-// const Expedentrsalida = require('../models/expedentrsalida');
 // const Expedcoordinado = require('../models/expedcoordinado');
 // const Expedcoordresultado = require('../models/expedcoordresultado');
 // const Inspectores = require('../models/inspectores');
@@ -62,13 +63,12 @@ router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
 
 router.get('/expedientes/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    //console.log("ROL USUARIO", rolusuario) //Inspector
     if (rolusuario == "Administrador") {
-        const usuarios = await Users.find().lean().sort({ date: 'desc' });
+        //const usuarios = await Users.find().lean().sort({ date: 'desc' });
         const juzgados = await Juzgados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
-        //res.render('notes/juzgados/planillalistajuzgado', { juzgados });
-        res.render('notes/expedientes/newexpedientes', { juzgados });
-        //res.render('notes/allusuariosadm', { usuarios });
+        const abogados = await Abogados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
+        const clientes = await Clientes.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });        
+        res.render('notes/expedientes/newexpedientes', { clientes, abogados, juzgados });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
         return res.redirect('/');
@@ -165,14 +165,16 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
 
 router.post('/notes/newexpedientes', isAuthenticated, async (req, res) => {
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, idcliente,
+        idabogado, idjuzgado
     } = req.body;
     const newExpediente = new Expediente({
         borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
         tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        idcliente, idabogado, idjuzgado
     })
     newExpediente.user = req.user.id;
-    newExpediente.name = req.user.name;
+    newExpediente.name = req.user.name;    
     await newExpediente.save();
     req.flash('success_msg', 'Expediente Agregado Exitosamente');
     res.redirect('/expedientes/listado');
