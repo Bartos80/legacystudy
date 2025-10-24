@@ -31,50 +31,60 @@
   </div>
 
   <!-- Tabla de Audiencias -->
-  <div class="table-responsive">
+  {{!-- <div class="table-responsive">
     <table class="table table-striped table-hover align-middle border rounded shadow-sm">
-      <thead class="table-light text-center">
-        <tr>
-          <th>Juzgado</th>
-          <th>Expediente</th>
-          <th>Estado</th>
-          <th>Caratula</th>
-          <th>Fecha Audiencia</th>
-          <th>Hora Audiencia</th>
-          <th>Observaciones</th>
-          <th>Acciones</th>
-          <th>Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each audiencias}}
-        <tr class="text-center">
-          <td class="text-capitalize">{{ juzgado }}</td>
-          <td>{{ numexpediente }}</td>
-          <td>{{ estadoexpediente }}</td>
-          <td>{{ caratula }}</td>
-          <td>{{ dateturno }}</td>
-          <td>{{ horaaudiencia }}</td>
-          <td>{{ observaciones }}</td>
-          <td>
-            <div class="d-flex justify-content-center gap-2">              
-              <a href="/audiencia/list/{{_id}}" class="btn btn-info btn-sm w-100">+Info</a>
-              <a href="/audiencia/edit/{{_id}}" class="btn btn-warning btn-sm">Editar</a>
-                         
-            </div>
-          </td>
-          <td>
-            <form onSubmit="return confirm('Desea enviar Audiencia seleccionada a Papelera?')" style=""
-                action="/audiencia/marcadelete/{{_id}}?_method=PUT" method="POST">
-                <input type="hidden" name="_method" value="PUT">
-                <button class="btn btn-danger btn-sm" type="submit">
-                  Papelera
-                </button>
-              </form>   
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
+      <thead class="table-light text-center"> --}}
+        <!-- Tabla responsiva de clientes -->
+        {{#if audiencias.length}}
+        <div class="table-responsive rounded shadow-sm border">
+          <table class="table table-striped table-bordered align-middle text-nowrap">
+            <thead class="table-primary text-dark text-center">
+              <tr>
+                <th>Juzgado</th>
+                <th>Expediente</th>
+                <th>Estado</th>
+                <th>Caratula</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Opciones</th>
+                <th>+Más</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each audiencias}}
+              <tr class="text-center">
+                <td class="text-capitalize">{{ juzgado }}</td>
+                <td>{{ numexpediente }}</td>
+                <td>{{ estadoexpediente }}</td>
+                <td>{{ caratula }}</td>
+                <td class="text-lowercase text-danger fw-bold">{{ dateturno }}</td>
+                <td class="text-lowercase text-danger fw-bold">{{ horaaudiencia }}</td>
+                <td>
+                  <div class="d-flex justify-content-center gap-2">
+                    <a href="/audiencia/list/{{_id}}" class="btn btn-info btn-sm w-100">+Info</a>                    
+                  </div>
+                </td>
+                <td>
+                  <a href="/audiencia/edit/{{_id}}"  class="btn btn-outline-warning btn-sm w-100">Editar</a>
+                  <form onSubmit="return confirm('Desea enviar Audiencia seleccionada a Papelera?')" style=""
+                    action="/audiencia/marcadelete/{{_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <button class="btn btn-outline-danger btn-sm w-100"  type="submit">
+                      Papelera
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        {{else}}
+        <div class="alert alert-warning text-center mt-5" role="alert">
+          🚫 No Hay Audiencias por mostrar.
+        </div>
+        {{/if}}
+        {{!-- </tbody>
     </table>
-  </div>
+  </div> --}}
 </div>

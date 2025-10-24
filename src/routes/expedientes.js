@@ -35,11 +35,11 @@ router.put('/expedientes/listadoborradosenno', isAuthenticated, async (req, res)
 router.get('/expedientes/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         const juzgados = await Juzgados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         //res.render('notes/juzgados/planillalistajuzgado', { juzgados });
-        res.render('notes/newexpedientes', { juzgados });
+        res.render('notes/expedientes/newexpedientes', { juzgados });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -49,9 +49,9 @@ router.get('/expedientes/add', isAuthenticated, async (req, res) => {
 
 router.get('/expedientes/add/:id', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         const clientes = await Clientes.findById(req.params.id).lean()
-        res.render('notes/newexpedientes', { clientes });
+        res.render('notes/expedientes/newexpedientes', { clientes });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -64,7 +64,7 @@ router.get('/informeinspeccion/add/:id', isAuthenticated, async (req, res) => {
     const notes = await Note.findById(req.params.id).lean();
     const expedientes = await Expediente.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/newinformeinspeccion', { notes, expedientes });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -77,7 +77,7 @@ router.get('/movimientoexpediente/add/:id', isAuthenticated, async (req, res) =>
     const rolusuario = req.user.rolusuario;
     const expedientes = await Expediente.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/inspecciones/movimientoexped', { expedientes });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -126,7 +126,7 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
     const notes = await Note.findById(req.params.id).lean();
     const expedientes = await Expediente.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/inspecciones/newnotes', { notes, expedientes });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -297,7 +297,7 @@ router.get('/expedientes/coordinados/intiminfracdesestimados', isAuthenticated, 
 
 router.get('/expedientes/coordinados/inspectolres/list', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         //const usuarios = await Users.find().lean().sort({ numorden: 'desc' });
         const inspectores = await Inspectores.find().lean()
         res.render('notes/inspecciones/listinspectorescoord', { inspectores });
@@ -310,7 +310,7 @@ router.get('/expedientes/coordinados/inspectolres/list', isAuthenticated, async 
 
 router.get('/expedientes/coordinados/inspectolagreresult/list', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         //const usuarios = await Users.find().lean().sort({ numorden: 'desc' });
         const inspectores = await Inspectores.find().lean()
         res.render('notes/inspecciones/listinspectoresresult', { inspectores });
@@ -326,7 +326,7 @@ router.get('/expedientes/coordinados/add/:id', isAuthenticated, async (req, res)
     //console.log("ROL USUARIO", rolusuario) //Inspector
     // const expedcoordinado = await Expedcoordinado.findById(req.params.id).lean()
     // res.render('notes/inspecciones/editexpedcood', { expedcoordinado })    //
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         //const usuarios = await Users.find().lean().sort({ numorden: 'desc' });
         const inspectores = await Inspectores.findById(req.params.id).lean()
         res.render('notes/inspecciones/newexpcoordin', { inspectores });
@@ -720,7 +720,7 @@ router.get('/movimientoexpedientecoord/add/:id', isAuthenticated, async (req, re
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
     var inspectoresname = []
     var inspectorescodigo = []
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         for (var inspectores of inspectorestabla) {
             inspectoresname.push(inspectores.name)
             inspectorescodigo.push(inspectores.codigoinspector)
@@ -1228,7 +1228,7 @@ router.get('/expedientes/listadoticket/add/:id', isAuthenticated, async (req, re
     const expedticket = await Expedticket.findById(req.params.id).lean();
     const expedticketentrainsp = await Expedticketentrainsp.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/inspecciones/expticket/newinforexpticket', { expedticket, expedticketentrainsp });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {

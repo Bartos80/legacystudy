@@ -13,7 +13,7 @@
         //import {NombreMayus(),} from '/../funciones/importantes';        
         document.getElementById("tabla").hidden = true;
     }
-    
+
     function ffechaactual() {
         var tipo = document.getElementById('fechaingreso');
         var eye = document.getElementById('botonfecha');
@@ -111,30 +111,15 @@
     <div class="card">
         <div class="car-header mx-auto">
             <br />
-            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Nuevo Turno</h3>
+            <h3 style="color:blue; text-decoration:underline; font-weight: bold;">Mesa Entrada - (Nuevo Turno)</h3>
         </div>
         <div class="card-body">
-            {{!-- <form action="/notes/newmesaentradas/{{mesaentrada._id}}?_method=POST" method="POST"></form> --}}
-            <form action="/notes/newmesaentradas" method="POST"> {{!-- enctype="multipart/form-data"> --}}                
-                {{!-- <div class="form-group">
-                    <p>Elige un Sector:
-                        <select name="sector">
-                            <option value="Inspección Obras">Inspección Obras</option>
-                            <option value="Obras Particulares">Obras Particulares</option>
-                            <option value="Visado">Visado</option>
-                            <option value="Sub Secretaria">Sub Secretaría</option>
-                        </select>
-                    </p>
-                </div> --}}
-                {{!-- <div class="form-group">
-                    Turno Número:
-                    <input type="number" name="numturno" value"" placeholder="Turno" minlength="0" maxlength="99"
-                        step="1" pattern="^[0-9]+" required autofocus disabled>
-                </div> --}}
+            <form action="/notes/newmesaentradas" method="POST">
+
                 <div class="form-group">
                     Abogado:
-                    <input onkeyup="ShowName('nomyape')" style="color:green" minlength="10"
-                        maxlength="40" value="{{mesaentrada.nomyapeabogado}}" type="text" name="nomyapeabogado" id="nomyapeabogado"
+                    <input onkeyup="ShowName('nomyape')" style="color:green" minlength="10" maxlength="40"
+                        value="{{mesaentrada.nomyapeabogado}}" type="text" name="nomyapeabogado" id="nomyapeabogado"
                         class="form-control" placeholder="Nombre y Apellido Abogado" required autofocus>
                     {{!-- ShowName('nomyape')" --}}
                 </div>
@@ -171,8 +156,9 @@
                 </div>
                 <div class="form-group">
                     Juzgado:
-                    <input id="juzgado" name="juzgado" onkeyup="PonerMayuscula('juzgado')" style="font-weight: bold; color:green"
-                        value="{{mesaentrada.juzgado}}" type="text" class="form-control" placeholder="Nº Juzgado">
+                    <input id="juzgado" name="juzgado" onkeyup="PonerMayuscula('juzgado')"
+                        style="font-weight: bold; color:green" value="{{mesaentrada.juzgado}}" type="text"
+                        class="form-control" placeholder="Nº Juzgado">
                 </div>
                 <div class="form-group">
                     Nombre y Apellido:
@@ -199,23 +185,19 @@
                         value="{{mesaentrada.observaciones}}" name="observaciones" class="form-control"
                         placeholder="Observaciones"></input>
                 </div>
-                {{!-- <div class="form-group">
-                    Usuario Actual:
-                    <input style="color:rgb(128, 131, 128)" value="{{user}}" name="user" class="form-control"
-                        placeholder="No Definido" disabled></input>
-                </div> --}}
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit">
                         Grabar
                     </button>
                 </div>
-                {{!-- <div class="form-group"> --}}
-                    <div>
-                        <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada"><i
-                                    class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Tarjetas</p>
-                        <p style="color:brown; font-style:oblique; font-weight: bold;"><a href="/mesaentrada/listado"><i
-                                    class="fas fa-list" style='font-size:24px;color:blue'></i></a> Volver Listado</p>
-                    </div>
+                <div class="text-center mt-4">
+                    <a href="/juzgados/listado"
+                        class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
+                        style="font-weight: bold;">
+                        <i class="fas fa-times-circle"></i>
+                        Cancelar
+                    </a>
+                </div>
             </form>
         </div>
     </div>

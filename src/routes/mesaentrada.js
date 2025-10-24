@@ -26,7 +26,7 @@ router.put('/mesaentrada/listadoborradosenno', isAuthenticated, async (req, res)
 });
 
 router.get('/mesaentradas/add', isAuthenticated, (req, res) => {
-    res.render('notes/newmesaentradas');
+    res.render('notes/mesaentrada/newmesaentradas');
 })
 router.get('/mesaentradas/add/:id', isAuthenticated, (req, res) => {
     res.render('notes/newmesaentradas');
@@ -47,7 +47,7 @@ router.post('/notes/newmesaentradas', isAuthenticated, async (req, res) => {
     res.redirect('/mesaentrada/listado');
 })
 
-router.post('/notes/newmesaentradas/:id', isAuthenticated, async (req, res) => {
+router.post('/notes/mesaentrada/newmesaentradas/:id', isAuthenticated, async (req, res) => {
     const { sector, nomyapeabogado, fechaingreso, horaingreso, numexpediente, juzgado, nomyape, dni,
         contacto, hora, observaciones, eliminado, user, name } = req.body;
     const newMesaentrada = new Mesaentrada({
@@ -71,7 +71,7 @@ router.get('/mesaentrada', isAuthenticated, async (req, res) => {
         res.render('notes/allmesaentrada', { mesaentradas });
     } else if (rolusuario == "Administrador") {
         const mesaentradas = await Mesaentrada.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
-        res.render('notes/allmesaentrada', { mesaentradas });
+        res.render('notes/mesaentrada/allmesaentrada', { mesaentradas });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA MESA DE ENTRADA')
         return res.redirect('/');
@@ -324,7 +324,7 @@ router.get('/mesaentrada/listado', isAuthenticated, async (req, res) => {
             //console.log("expedcoordresultadotabla", expedcoordresultadotabla);
         }
         //res.render('notes/inspecciones/listexpcordintvenc', { expedcoordresultado });
-        res.render('notes/planillalistaturnero', { mesaentradas });    
+        res.render('notes/mesaentrada/planillalistaturnero', { mesaentradas });    
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA MESA DE ENTRADA')
         return res.redirect('/');
