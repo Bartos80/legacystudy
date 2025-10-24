@@ -13,20 +13,20 @@
   <div class="row g-3 mb-4">
     <div class="col-sm-6 col-md-3">
       <form action="/clientes/findnombrecliente" method="POST">
-        <input type="search" name="namecliente" class="form-control" placeholder="Buscar por nombre..." />
+        <input type="search" name="nyacliente" id="nyacliente" class="form-control" placeholder="Buscar por nombre..." />
         <button title="Buscar Nombre" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
       </form>
     </div>    
     <div class="col-sm-6 col-md-3">
-      <form action="/clientes/findlistadni" method="POST">
+      <form action="/clientes/finddnicliente" method="POST">
         <input type="search" name="dnicliente" class="form-control" placeholder="Buscar por DNI..." />
         <button title="Buscar DNI" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
       </form>
     </div>
     <div class="col-sm-6 col-md-3">
-      <form action="/clientes/findlistafechaentrada" method="POST">
-        <input type="search" name="date" class="form-control" placeholder="Buscar por fecha alta..." />
-        <button title="Buscar Fecha Alta" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      <form action="/clientes/findprovinciacliente" method="POST">
+        <input type="search" name="provinciacliente" class="form-control" placeholder="Buscar por provincia..." />
+        <button title="Buscar Provincia" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
       </form>      
     </div>
     <div class="col-sm-6 col-md-3">
@@ -58,16 +58,16 @@
               <td class="text-capitalize">{{ nyacliente }}</td>
               <td>{{ dnicliente }}</td>
               <td>{{ telefonocliente }}</td>
-              <td class="text-lowercase text-warning fw-bold">{{ emailcliente }}</td>
+              <td class="text-lowercase text-danger fw-bold">{{ emailcliente }}</td>
               <td class="text-capitalize">{{ localidadcliente }}</td>
               <td>
                 <div class="d-flex flex-column gap-1">
-                  <a href="/clientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+ Expediente</a>
-                  <a href="/clientes/list/{{_id}}" class="btn btn-outline-info btn-sm w-100">Info Cliente</a>
+                  {{!-- <a href="/clientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+ Expediente</a> --}}
+                  <a href="/clientes/list/{{_id}}" class="btn btn-info btn-sm w-100">Info Cliente</a>                  
                 </div>
               </td>
               <td>
-                <div class="d-flex flex-column gap-1">
+                <div class="d-flex flex-column gap-1">                  
                   <a href="/clientes/edit/{{_id}}" class="btn btn-outline-warning btn-sm w-100">Editar</a>
                   <form action="/clientes/marcadelete/{{_id}}?_method=PUT" method="POST"
                     onsubmit="return confirm('¿Desea enviar a la papelera?')">
@@ -82,7 +82,7 @@
     </div>
   {{else}}
     <div class="alert alert-warning text-center mt-5" role="alert">
-      🚫 No existen clientes registrados.
+      🚫 No Hay Clientes por mostrar.
     </div>
   {{/if}}
 </div>

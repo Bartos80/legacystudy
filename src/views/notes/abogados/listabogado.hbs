@@ -80,7 +80,7 @@
     <div class="col-md-8 mx-auto">
         <div class="card shadow-lg border-primary">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Registro de abogados</h4>
+                <h4 class="mb-0">Informacion del Abogado</h4>
             </div>
             <div class="card-body">
                 <form action="/abogados/newabogado" method="POST">
@@ -102,77 +102,79 @@
                                     <label for="matriculaabogado">N° Matricula <span
                                             class="text-danger">*</span></label>
                                     <input id="matriculaabogado" type="text" class="form-control"
-                                        name="matriculaabogado" value="{{matriculaabogado}}" required>
+                                        name="matriculaabogado" value="{{abogados.matriculaabogado}}" disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="nyaabogado">Nombre y Apellido / Razón Social <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nyaabogado" name="nyaabogado" required>
+                                    <input type="text" class="form-control" id="nyaabogado" name="nyaabogado" 
+                                    value="{{abogados.nyaabogado}}" disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="dniabogado"> DNI / CUIT <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="dniabogado" name="dniabogado" required>
+                                    <input type="text" class="form-control" id="dniabogado" name="dniabogado" value="{{abogados.dniabogado}}" disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="domicilioabogado">Domicilio Completo</label>
                                     <input type="text" class="form-control" id="direccionabogado"
-                                        name="direccionabogado">
+                                        name="direccionabogado" value="{{abogados.direccionabogado}}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="telefonoabogado">Teléfono Fijo / Celular</label>
                                     <input type="text" class="form-control" id="celularabogado" name="celularabogado"
-                                        required>
+                                        value="{{abogados.celularabogado}}" disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="emailabogado">Correo Electrónico Personal</label>
                                     <input id="emailabogado" type="email" class="form-control" name="emailabogado"
-                                        required>
+                                        value="{{abogados.emailabogado}}" disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="provinciaabogado">Provincia</label>
                                     <input onkeyup="ShowName()" type="text" class="form-control" id="provinciaabogado"
-                                        name="provinciaabogado" required>
+                                        name="provinciaabogado" value="{{abogados.provinciaabogado}}" disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="localidadabogado">Ciudad/Localidad</label>
                                     <input onkeyup="ShowName()" id="localidadabogado" type="text" class="form-control"
-                                        name="localidadabogado" required>
+                                        name="localidadabogado" value="{{abogados.localidadabogado}}" disabled>
                                 </div>
-
-
-
 
                                 <div class="col-md-12 mb-3">
                                     <label for="correovinculadoabogadoestudio">Correo Vinculado abogado/Estudio</label>
                                     <input id="correovinculadoabogadoestudio" type="email" class="form-control"
-                                        name="correovinculadoabogadoestudio">
+                                        name="correovinculadoabogadoestudio" value="{{abogados.emailvinculadoabogadoestudio}}" disabled>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <label for="observacionesjuzgado">Observaciones (Opcional)</label>
                                     <textarea class="form-control" name="observacionesabogado" rows="3"
-                                        placeholder="observacionesabogado" title="Observaciones"></textarea>
+                                        placeholder="observacionesabogado" title="Observaciones" disabled>{{abogados.observacionesabogado}}</textarea>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <div class="d-grid gap-2">
+                    {{!-- <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success btn-lg">
                             <i class="fas fa-save"></i> Registrar abogado
                         </button>
-                    </div>
+                    </div> --}}
+                    <a class="btn btn-warning w-100 fw-bold mb-3" href="/abogados/edit/{{abogados._id}}">
+                            <i class="fas fa-edit"></i> Editar Abogado
+                    </a>
+
                     <div class="text-center mt-3">
                         <a href="javascript:history.back();" class="btn btn-link text-danger">
-                            <i class="fas fa-ban"></i> Cancelar
+                            <i class="fas fa-ban"></i> Volver
                         </a>
                     </div>
                 </form>

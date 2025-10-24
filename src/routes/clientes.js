@@ -54,12 +54,12 @@ router.get('/clientes/add', isAuthenticated, (req, res) => {
 });
 
 router.post('/clientes/newcliente', isAuthenticated, async (req, res) => {
-    const { nyacliente, dnicliente, domiciliocliente, localidadcliente, telefonocliente, 
-        emailcliente, observacionescliente, correovinculadoclienteestudio
+    const { nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+        emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio
     } = req.body;
     const newClientes = new Clientes({
-        nyacliente, dnicliente, domiciliocliente, localidadcliente, telefonocliente, 
-        emailcliente, observacionescliente, correovinculadoclienteestudio
+        nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+        emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio
     })
     newClientes.user = req.user.id;
     newClientes.name = req.user.name;
@@ -100,15 +100,66 @@ router.put('/clientes/marcadeleterestaurar/:id', isAuthenticated, async (req, re
     res.redirect('/clientes/borradolistado');
 });
 
+router.delete('/clientes/delete/:id', isAuthenticated, async (req, res) => {
+    await Clientes.findByIdAndDelete(req.params.id);
+    req.flash('success_msg', 'Cliente Eliminado')
+    res.redirect('/clientes/listado')
+});
+
 router.put('/notes/editcliente/:id', isAuthenticated, async (req, res) => {
-    const { nyacliente, dnicliente, domiciliocliente, localidadcliente, telefonocliente, 
-        emailcliente, observacionescliente, correovinculadoclienteestudio } = req.body
+    const { nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+        emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio } = req.body
     await Clientes.findByIdAndUpdate(req.params.id, {
-        nyacliente, dnicliente, domiciliocliente, localidadcliente, telefonocliente, 
-        emailcliente, observacionescliente, correovinculadoclienteestudio
+        nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+        emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio
     });
     req.flash('success_msg', 'Cliente actualizado')
     res.redirect('/clientes/listado');
+});
+
+router.post('/clientes/findnombrecliente', isAuthenticated, async (req, res) => {    
+    const { nyacliente } = req.body;
+    //const clientes = await Clientes.find({ $and: [{ borrado: "No" }, { nyacliente: { $regex: nyacliente, $options: "i" } }] }).lean().sort({ nyacliente: 'desc' })
+    const clientes = await Clientes.find({ $and: [{ borrado: "No" }, { nyacliente: { $regex: nyacliente, $options: "i" } }] }).lean().sort({ date: 'desc' });
+    if (!clientes) {
+        //req.flash('success_msg', 'cargue un Cliente')
+        return res.render("notes/clientes/planillalistaclientes");
+    } else {
+        res.render('notes/clientes/planillalistaclientes', { clientes })
+    }    
+});
+
+router.post('/clientes/finddnicliente', isAuthenticated, async (req, res) => {    
+    const { dnicliente } = req.body;
+    const clientes = await Clientes.find({ $and: [{ borrado: "No" }, { dnicliente: { $regex: dnicliente, $options: "i" } }] }).lean().sort({ date: 'desc' });
+    if (!clientes) {
+        //req.flash('success_msg', 'cargue un Cliente')
+        return res.render("notes/clientes/planillalistaclientes");
+    } else {
+        res.render('notes/clientes/planillalistaclientes', { clientes })
+    }    
+});
+
+router.post('/clientes/findprovinciacliente', isAuthenticated, async (req, res) => {    
+    const { provinciacliente } = req.body;
+    const clientes = await Clientes.find({ $and: [{ borrado: "No" }, { provinciacliente: { $regex: provinciacliente, $options: "i" } }] }).lean().sort({ date: 'desc' });
+    if (!clientes) {
+        //req.flash('success_msg', 'cargue un Cliente')
+        return res.render("notes/clientes/planillalistaclientes");
+    } else {
+        res.render('notes/clientes/planillalistaclientes', { clientes })
+    }    
+});
+
+router.post('/clientes/findlocalidadcliente', isAuthenticated, async (req, res) => {    
+    const { localidadcliente } = req.body;
+    const clientes = await Clientes.find({ $and: [{ borrado: "No" }, { localidadcliente: { $regex: localidadcliente, $options: "i" } }] }).lean().sort({ date: 'desc' });
+    if (!clientes) {
+        //req.flash('success_msg', 'cargue un Cliente')
+        return res.render("notes/clientes/planillalistaclientes");
+    } else {
+        res.render('notes/clientes/planillalistaclientes', { clientes })
+    }    
 });
 
 // *** SI O SI LOS MODULE EXPLORTS ***

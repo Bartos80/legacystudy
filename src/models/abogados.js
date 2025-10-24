@@ -53,6 +53,11 @@ const AbogadosSchema = new Schema({
         require: true,
         default: "No Declarado"
     },
+    provinciaabogado: {
+        type: String,
+        require: true,
+        default: "No Declarado"
+    },
     localidadabogado: {
         type: String,
         require: true,

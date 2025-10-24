@@ -59,44 +59,19 @@ ClientesSchema = new Schema({
   numerocarpetaopcionalcliente: {
     type: String,
     require: false,
-    default: "NoInformó",
+    default: "no-informa",
   },
-  numexpedientecliente: {
-    type: String,
-    require: false,
-    default: "No Posee Información",
-  },
-  caratulaexpedientecliente: {
+  provinciacliente: {
     type: String,
     require: false,
     default: "No Posee Info",
-  },
-  juzgadoexpedientecliente: {
-    type: String,
-    require: false,
-    default: "No Posee Infor",
   },
   localidadcliente: {
     type: String,
     require: false,
     default: "No Posee Info",
   },
-  actuacionjudicialconfechacliente: {
-    type: String,
-    require: false,
-    default: "No Posee Info",
-  },
   observacionescliente: {
-    type: String,
-    require: false,
-    default: "No Posee Info",
-  },
-  fechaaudienciacliente: {
-    type: String,
-    require: false,
-    default: "No Posee Info",
-  },
-  actosprocesalescliente: {
     type: String,
     require: false,
     default: "No Posee Info",

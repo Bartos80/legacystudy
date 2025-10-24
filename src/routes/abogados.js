@@ -48,11 +48,11 @@ router.get('/abogados/add', isAuthenticated, (req, res) => {
 
 router.post('/abogados/newAbogado', isAuthenticated, async (req, res) => {
     const { matriculaabogado, nyaabogado, dniabogado, direccionabogado, celularabogado, 
-        emailabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado
+        emailabogado, provinciaabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado
     } = req.body;
     const newabogados = new Abogados({
         matriculaabogado, nyaabogado, dniabogado, direccionabogado, celularabogado, 
-        emailabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado
+        emailabogado, provinciaabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado
     })
     newabogados.user = req.user.id;
     newabogados.name = req.user.name;
@@ -93,12 +93,12 @@ router.put('/abogados/marcadeleterestaurar/:id', isAuthenticated, async (req, re
     res.redirect('/abogados/borradolistado');
 });
 
-router.put('/notes/editAbogado/:id', isAuthenticated, async (req, res) => {
+router.put('/abogados/editAbogado/:id', isAuthenticated, async (req, res) => {
     const { matriculaabogado, nyaabogado, dniabogado, direccionabogado, celularabogado, 
-        emailabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado } = req.body
+        emailabogado, provinciaabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado } = req.body
     await Abogados.findByIdAndUpdate(req.params.id, {
         matriculaabogado, nyaabogado, dniabogado, direccionabogado, celularabogado, 
-        emailabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado
+        emailabogado, provinciaabogado, localidadabogado, emailvinculadoabogadoestudio, observacionesabogado
     });
     req.flash('success_msg', 'Abogado actualizado')
     res.redirect('/abogados/listado');

@@ -33,7 +33,6 @@ router.get('/juzgados/listado', isAuthenticated, async (req, res) => {
     }
 });
 
-
 router.get('/juzgados/borradolistado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     console.log("ROL USUARIO", rolusuario) //Inspector
@@ -71,13 +70,8 @@ router.post('/juzgados/newJuzgado', isAuthenticated, async (req, res) => {
 })
 
 router.get('/juzgados/list/:id', isAuthenticated, async (req, res) => {
-    const Juzgados = await Juzgados.findById(req.params.id).lean()
-    res.render('notes/juzgados/planillalistajuzgado', { Juzgados })
-});
-
-router.get('/juzgados/edit/:id', isAuthenticated, async (req, res) => {
     const juzgados = await Juzgados.findById(req.params.id).lean()
-    res.render('notes/juzgados/editJuzgado', { juzgados })
+    res.render('notes/juzgados/listjuzgado', { juzgados })
 });
 
 router.put('/juzgados/marcadelete/:id', isAuthenticated, async (req, res) => {
@@ -102,7 +96,13 @@ router.put('/juzgados/marcadeleterestaurar/:id', isAuthenticated, async (req, re
     res.redirect('/juzgados/borradolistado');
 });
 
-router.put('/notes/editJuzgado/:id', isAuthenticated, async (req, res) => {
+
+router.get('/juzgados/edit/:id', isAuthenticated, async (req, res) => {
+    const juzgados = await Juzgados.findById(req.params.id).lean()
+    res.render('notes/juzgados/editjuzgado', { juzgados })
+});
+
+router.put('/juzgados/editJuzgado/:id', isAuthenticated, async (req, res) => {
     const { numjuzgado, dirjuzgado, teljuzgado, emailjuzgado, paisjuzgado,
         provinciajuzgado, localidadjuzgado, observacionesjuzgado } = req.body
     await Juzgados.findByIdAndUpdate(req.params.id, {
@@ -110,7 +110,7 @@ router.put('/notes/editJuzgado/:id', isAuthenticated, async (req, res) => {
         provinciajuzgado, localidadjuzgado, observacionesjuzgado
     });
     req.flash('success_msg', 'Juzgado actualizado')
-    res.redirect('/juzgados/planillalistajuzgado');
+    res.redirect('/juzgados/listado');
 });
 
 // *** SI O SI LOS MODULE EXPLORTS ***

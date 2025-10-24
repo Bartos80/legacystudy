@@ -15,6 +15,37 @@
     const input = document.getElementById(id);
     input.value = input.value.toLowerCase();
   }
+
+  // Función para cargar los juzgados en el select al cargar la página
+  async function populateJuzgados() {
+        const juzgadoSelect = document.getElementById('juzgado');
+        if (!juzgadoSelect) return;
+        juzgadoSelect.innerHTML = '<option value="" disabled selected>Cargando Juzgados...</option>';
+        const juzgadosData = [];       
+
+        try {
+            // Realizar la petición fetch al backend                         
+            juzgadosData = {{juzgados}};
+
+        } catch (error) {
+            console.error('Error al cargar juzgados desde el backend:', error);
+            juzgadoSelect.innerHTML = '<option value="" disabled selected>❌ Error al cargar juzgados</option>';
+            return;
+        }
+        juzgadoSelect.innerHTML = '<option value="" disabled selected>Seleccione un Juzgado...</option>';
+        juzgadosData.forEach(juzgado => {
+            const option = document.createElement('option');
+            // Usar juzgado.id (o juzgado._id si es la convención de Mongoose)
+            // Usamos 'id' aquí, el backend debe asegurarse de mapear el _id a id si es necesario.
+            option.value = juzgado.id || juzgado._id; 
+            option.textContent = juzgado.numjuzgado; // Asumimos que el campo se llama 'name'
+            juzgadoSelect.appendChild(option);
+        });
+        if (juzgadosData.length === 0) {
+            juzgadoSelect.innerHTML = '<option value="" disabled selected>No hay juzgados disponibles</option>';
+        }
+    }
+
 </script>
 
 <div class="container my-5">
@@ -23,25 +54,22 @@
       <div class="card-body p-4">
         <h3 class="text-center text-primary mb-4 fw-bold">Nuevo Expediente</h3>
 
-        <form action="/notes/newexpedientes" method="POST">         
-
-          <!-- Nombre y Apellido -->
-          <div class="mb-3">
-            <label for="nyacliente" class="form-label">Nombre y Apellido del Cliente</label>
-            <input type="text" id="nyacliente" name="nyacliente" class="form-control" placeholder="{{expedientes.nyacliente}}">
-          </div>
-
-          <!-- DNI Cliente -->
-          <div class="mb-3">
-            <label for="dnicliente" class="form-label">DNI del Cliente</label>
-            <input type="text" id="dnicliente" name="dnicliente" class="form-control" placeholder="{{expedientes.dnicliente}}">
-          </div>
+        <form action="/notes/newexpedientes" method="POST">
 
           <!-- Juzgado -->
-          <div class="mb-3">
+          <p> {{juzgados}}</p>
+          {{!-- <div class="mb-3">
             <label for="juzgado" class="form-label">Juzgado</label>
             <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Ej: Juzgado Civil Nº 3">
-          </div>
+          </div> --}}
+          <!-- Juzgado (MODIFICADO A SELECT) -->
+                    <div class="mb-3">
+                        <label for="numjuzgado" class="form-label fw-semibold">Juzgado</label>
+                        <select id="numjuzgado" name="numjuzgado" class="form-select shadow-sm" required>
+                            <option value="">Cargando Juzgados...</option>
+                            <!-- Opciones cargadas por la función populateJuzgados() -->
+                        </select>
+                    </div>   
 
           <!-- Secretaría -->
           <div class="mb-3">
@@ -52,7 +80,8 @@
           <!-- Nº Expediente -->
           <div class="mb-3">
             <label for="numexpediente" class="form-label">Nº de Expediente</label>
-            <input type="text" id="numexpediente" name="numexpediente" class="form-control" placeholder="Ej: 12345/2024" onkeyup="ponerMayuscula('numexpediente')" autofocus>
+            <input type="text" id="numexpediente" name="numexpediente" class="form-control" placeholder="Ej: 12345/2024"
+              onkeyup="ponerMayuscula('numexpediente')" autofocus>
           </div>
 
           <!-- Caratula -->
@@ -76,19 +105,35 @@
           <!-- Partes -->
           <div class="mb-3">
             <label for="partes" class="form-label">Partes</label>
-            <input type="text" id="partes" name="partes" class="form-control" onkeyup="ShowName('partes')" placeholder="Ej: Juan Pérez c/ María López">
+            <input type="text" id="partes" name="partes" class="form-control" onkeyup="ShowName('partes')"
+              placeholder="Ej: Juan Pérez c/ María López">
           </div>
 
           <!-- Estado -->
           <div class="mb-3">
             <label for="estado" class="form-label">Estado del Expediente</label>
-            <input type="text" id="estado" name="estado" class="form-control" placeholder="Ej: En trámite" onkeyup="ponerMayuscula('estado')">
+            <input type="text" id="estado" name="estado" class="form-control" placeholder="Ej: En trámite"
+              onkeyup="ponerMayuscula('estado')">
           </div>
 
           <!-- Foto expediente (deshabilitado) -->
           <div class="mb-3">
             <label class="form-label">Foto del Expediente</label>
             <input type="text" name="fotoexpediente" class="form-control" placeholder="Foto de expediente" disabled>
+          </div>
+
+          <!-- Nombre y Apellido -->
+          <div class="mb-3">
+            <label for="nyacliente" class="form-label">Nombre y Apellido del Cliente</label>
+            <input type="text" id="nyacliente" name="nyacliente" class="form-control"
+              placeholder="{{expedientes.nyacliente}}">
+          </div>
+
+          <!-- DNI Cliente -->
+          <div class="mb-3">
+            <label for="dnicliente" class="form-label">DNI del Cliente</label>
+            <input type="text" id="dnicliente" name="dnicliente" class="form-control"
+              placeholder="{{expedientes.dnicliente}}">
           </div>
 
           <!-- Botón guardar -->

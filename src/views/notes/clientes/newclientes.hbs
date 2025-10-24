@@ -1,20 +1,32 @@
 <script>
-  function ponerminuscula() { let ex = document.getElementById("email");
-  ex.value = ex.value.toLowerCase(); //let y =
-  document.getElementById("adrema"); //y.value = y.value.toLowerCase(); }
-  function ShowName() { var writtenName = document.getElementById('name').value;
-  document.getElementById('name').value = formatToString(writtenName); }
-  function formatToString(writtenName) { var tmp = writtenName.split(" "); var
-  fullName; tmp.forEach(element => { if (fullName) { fullName = fullName + " " +
-  element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase(); } else
-  { fullName = element.charAt(0).toUpperCase() +
-  element.slice(1).toLocaleLowerCase(); } }) return fullName; } function
-  cargar() { var provincias = ["Cantabria", "Asturias", "Galicia", "Andalucia",
-  "Extremadura"]; //Tu array de provincias var select =
-  document.getElementById("provincias"); //Seleccionamos el select for (var i =
-  0; i < provincias.length; i++) { var option =
-  document.createElement("option"); //Creamos la opcion option.innerHTML =
-  provincias[i]; //Metemos el texto en la opción select.appendChild(option);
+  function ponerminuscula() {
+    let ex = document.getElementById("email");
+    ex.value = ex.value.toLowerCase(); //let y =
+    document.getElementById("adrema"); //y.value = y.value.toLowerCase(); }
+    function ShowName() {
+      var writtenName = document.getElementById('name').value;
+      document.getElementById('name').value = formatToString(writtenName);
+    }
+    function formatToString(writtenName) {
+      var tmp = writtenName.split(" "); var
+        fullName; tmp.forEach(element => {
+          if (fullName) {
+            fullName = fullName + " " +
+            element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
+          } else {
+            fullName = element.charAt(0).toUpperCase() +
+            element.slice(1).toLocaleLowerCase();
+          }
+        }) return fullName;
+    } function
+      cargar() {
+        var provincias = ["Cantabria", "Asturias", "Galicia", "Andalucia",
+          "Extremadura"]; //Tu array de provincias var select =
+      document.getElementById("provincias"); //Seleccionamos el select for (var i =
+      0; i < provincias.length; i++) {
+        var option =
+          document.createElement("option"); //Creamos la opcion option.innerHTML =
+        provincias[i]; //Metemos el texto en la opción select.appendChild(option);
   //Metemos la opción en el select } } cargar();
 </script>
 
@@ -30,86 +42,62 @@
           <form action="/clientes/newcliente" method="POST">
             <div class="form-group mb-3">
               <label for="nyacliente">Nombre y Apellido</label>
-              <input
-                onkeyup="ShowName();"
-                type="text"
-                class="form-control"
-                id="nyacliente"
-                name="nyacliente"
-                placeholder="Nombre y Apellido"
-                value="{{nyacliente}}"
-              />
+              <input onkeyup="ShowName();" type="text" class="form-control" id="nyacliente" name="nyacliente"
+                placeholder="Nombre y Apellido" value="{{nyacliente}}" required/>
             </div>
 
             <div class="form-group mb-3">
               <label for="dnicliente">DNI</label>
-              <input
-                type="number"
-                class="form-control"
-                id="dnicliente"
-                name="dnicliente"
-                placeholder="Doc. Nac. Identidad"
-                value="{{dnicliente}}"
-              />
+              <input type="number" class="form-control" id="dnicliente" name="dnicliente"
+                placeholder="Doc. Nac. Identidad" value="{{dnicliente}}" required/>
             </div>
 
             <div class="form-group mb-3">
               <label for="domiciliocliente">Domicilio</label>
-              <input
-                type="text"
-                class="form-control"
-                id="domiciliocliente"
-                name="domiciliocliente"
-                placeholder="Domicilio Cliente"
-                value="{{domiciliocliente}}"
-              />
+              <input type="text" class="form-control" id="domiciliocliente" name="domiciliocliente"
+                placeholder="Domicilio Cliente" value="{{domiciliocliente}}" required/>
             </div>
 
             <div class="form-group mb-3">
               <label for="telefonocliente">Teléfono</label>
-              <input
-                onkeyup="ponerminuscula()"
-                id="telefonocliente"
-                type="text"
-                class="form-control"
-                name="telefonocliente"
-                placeholder="Teléfono/Celular"
-                value="{{telefonocliente}}"
-              />
+              <input onkeyup="ponerminuscula()" id="telefonocliente" type="text" class="form-control"
+                name="telefonocliente" placeholder="Teléfono/Celular" value="{{telefonocliente}}" required/>
             </div>
 
             <div class="form-group mb-3">
               <label for="emailcliente">Correo Electrónico</label>
-              <input
-                onkeyup="ponerminuscula()"
-                id="emailcliente"
-                type="email"
-                class="form-control"
-                name="emailcliente"
-                placeholder="Correo/Email"
-                value="{{emailcliente}}"
-              />
+              <input onkeyup="ponerminuscula()" id="emailcliente" type="email" class="form-control" name="emailcliente"
+                placeholder="Correo/Email" value="{{emailcliente}}" required/>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="provinciacliente">Provincia</label>
+              <input type="text" class="form-control" name="provinciacliente" placeholder="Provincia del Cliente"
+                value="{{provinciacliente}}" required/>
             </div>
 
             <div class="form-group mb-3">
               <label for="localidadcliente">Localidad</label>
-              <input
-                type="text"
-                class="form-control"
-                name="localidadcliente"
-                placeholder="Localidad del Cliente"
-                value="{{localidadcliente}}"
-              />
+              <input type="text" class="form-control" name="localidadcliente" placeholder="Localidad del Cliente"
+                value="{{localidadcliente}}" required/>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="numerocarpetaopcionalcliente">Numero de Carpeta (Opcional)</label>
+              <input type="text" class="form-control" name="numerocarpetaopcionalcliente"
+                placeholder="Numero de Carpeta (Opcional)" value="{{numerocarpetaopcionalcliente}}"/>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="correovinculadoclienteestudio">Correo Vinculado al Estudio(Opcional)</label>
+              <input type="text" class="form-control" name="correovinculadoclienteestudio"
+                placeholder="Correo Vinculado al Estudio" value="{{correovinculadoclienteestudio}}"/>
             </div>
 
             <div class="form-group mb-4">
               <label for="observacionescliente">Observaciones</label>
-              <textarea
-                class="form-control"
-                name="observacionescliente"
-                rows="3"
-                placeholder="Observaciones"
-              >{{observacionescliente}}</textarea>
+              <textarea class="form-control" name="observacionescliente" rows="3"
+                placeholder="Observaciones">{{observacionescliente}}</textarea>
             </div>
 
             <div class="d-grid mb-3">
@@ -117,11 +105,9 @@
             </div>
 
             <div class="text-center mt-4">
-              <a
-                href="/clientes/listado"
+              <a href="/clientes/listado"
                 class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
-                style="font-weight: bold;"
-              >
+                style="font-weight: bold;">
                 <i class="fas fa-times-circle"></i>
                 Cancelar
               </a>

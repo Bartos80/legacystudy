@@ -38,6 +38,7 @@
                 name="numjuzgado"
                 placeholder="Nombre del Juzgado"
                 value="{{juzgados.numjuzgado}}"
+                disabled
               />
             </div>
 
@@ -50,6 +51,7 @@
                 name="dirjuzgado"
                 placeholder="Doc. Nac. Identida"
                 value="{{juzgados.dirjuzgado}}"
+                disabled
               />
             </div>
 
@@ -63,6 +65,7 @@
                 name="teljuzgado"
                 placeholder="Teléfono Juzgado"
                 value="{{juzgados.teljuzgado}}"
+                disabled
               />
             </div>
 
@@ -76,6 +79,7 @@
                 name="emailjuzgado"
                 placeholder="Email/Correo"
                 value="{{juzgados.emailjuzgado}}"
+                disabled
               />
             </div>
 
@@ -89,6 +93,7 @@
                 name="paisjuzgado"
                 placeholder="País"
                 value="{{juzgados.paisjuzgado}}"
+                disabled
               />
             </div>
 
@@ -101,6 +106,7 @@
                 name="provinciajuzgado"
                 placeholder="Provincia del Juzgado"
                 value="{{juzgados.provinciajuzgado}}"
+                disabled
               />
             </div>
 
@@ -112,7 +118,8 @@
                 class="form-control"
                 name="localidadjuzgado"
                 placeholder="Localidad del Juzgado"
-                value="{{juzgados.localidadjuzgado}}"              
+                value="{{juzgados.localidadjuzgado}}"   
+                disabled           
               />
             </div>
 
@@ -123,12 +130,13 @@
                 name="observacionesjuzgado"
                 rows="3"
                 placeholder="Observaciones"
+                disabled
               >{{juzgados.observacionesjuzgado}}</textarea>
             </div>
 
-            <div class="d-grid mb-3">
-              <button type="submit" class="btn btn-success">Grabar</button>
-            </div>
+            <a class="btn btn-warning w-100 fw-bold mb-3" href="/juzgados/edit/{{juzgados._id}}">
+                            <i class="fas fa-edit"></i> Editar Juzgado
+                    </a>
 
             <div class="text-center mt-4">
               <a

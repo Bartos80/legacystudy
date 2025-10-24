@@ -64,16 +64,14 @@
           <td style="color:yellow;">{{ emailabogado }}</td>
           <td>{{ localidadabogado }}</td>
 
-          <td>
-            <a class="dropdown-item" href="/Abogados/add/{{_id}}"
-              style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar Exped</a>
-            <a class="dropdown-item" href="/Abogados/list/{{_id}}"
-              style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info Abogado</a>
+          <td>            
+            <a class="btn btn-info btn-sm w-100" href="/Abogados/list/{{_id}}"
+              >+ Info</a>
           </td>
 
           <td>
-            <a class="dropdown-item" href="/Abogados/edit/{{_id}}" style="color:rgb(165, 196, 28)">Editar
-              Abogado</a>
+            <a class="btn btn-outline-warning btn-sm w-100" href="/Abogados/edit/{{_id}}" style="color:rgb(165, 196, 28)">Editar
+              </a>
             <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
               action="/Abogados/marcadelete/{{_id}}?_method=PUT" method="POST">
               <input type="hidden" name="_method" value="PUT">

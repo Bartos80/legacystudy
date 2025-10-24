@@ -62,6 +62,11 @@
                             value="{{clientes.domiciliocliente}}">
                     </div>
                     <div class="form-group">
+                        Provincia:
+                        <input type="text" class="form-control" name="provincianocliente" id="provincianocliente"
+                            value="{{clientes.provincianocliente}}">
+                    </div>
+                    <div class="form-group">
                         Localidad/Cuidad:
                         <input type="text" class="form-control" name="localidadcliente" id="localidadcliente"
                             value="{{clientes.localidadcliente}}">
@@ -76,6 +81,19 @@
                         <input onkeyup="ponerminuscula()" id="emailcliente" type="text" class="form-control"
                             name="emailcliente" value="{{clientes.emailcliente}}">
                     </div>
+
+                    <div class="form-group">
+                        Número de Carpeta (Opcional):
+                        <input type="text" class="form-control" name="numerocarpetaopcionalcliente"
+                            placeholder="Número de Carpeta" value="{{clientes.numerocarpetaopcionalcliente}}"/>
+                    </div>
+
+                    <div class="form-group">
+                        Correo Vinculado al Estudio (Opcional):
+                        <input type="text" class="form-control" name="correovinculadoclienteestudio"
+                            placeholder="Correo Vinculado al Estudio" value="{{clientes.correovinculadoclienteestudio}}"/>
+                    </div>                    
+
                     <div class="form-group">
                         Observaciones:
                         <input type="text" class="form-control" id="observacionescliente" name="observacionescliente"
