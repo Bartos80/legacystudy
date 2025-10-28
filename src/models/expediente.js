@@ -39,21 +39,36 @@ ExpedienteSchema = new Schema({
     require: false,
     default: "No Posee Información",
   },
-  idcliente: {
+  // Relación N:M con Abogados
+  idabogado: [{
     type: String,
-    require: false,
-    default: "No Posee Información",
-  },
-  idabogado: {
+    ref: 'Abogado' // Colección 'Abogado'
+  }],
+  // Relación N:M con Clientes
+  idcliente: [{
     type: String,
-    require: false,
-    default: "No Posee Información",
-  },
+    ref: 'Cliente' // Colección 'Cliente'
+  }],
+  // Relación N:1 con Juzgado
   idjuzgado: {
     type: String,
-    require: false,
-    default: "No Posee Información",
+    ref: 'Juzgado' // Colección 'Juzgado'
   },
+  // idcliente: {
+  //   type: String,
+  //   require: false,
+  //   default: "No Posee Información",
+  // },
+  // idabogado: {
+  //   type: String,
+  //   require: false,
+  //   default: "No Posee Información",
+  // },
+  // idjuzgado: {
+  //   type: String,
+  //   require: false,
+  //   default: "No Posee Información",
+  // },
   ultimanotificacion: {
     type: String,
     require: false,

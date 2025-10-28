@@ -10,6 +10,9 @@ const Expediente = require('../models/Expediente');
 const Juzgados = require('../models/Juzgado')
 const Expedentrsalida = require('../models/expedentrsalida');
 const Abogados = require('../models/abogados');
+const Expedientecliente = require('../models/expedientecliente');
+const Expedienteabogado = require('../models/expedienteabogado');
+const Expedientejuzgado = require('../models/expedientejuzgado');
 // const Expedinspeccion = require('../models/expedinspeccion');
 // const Expedticket = require('../models/Expedticket')
 // const Expedticketentrainsp = require('../models/Expedticketentrainsp')
@@ -24,6 +27,7 @@ const Note = require('../models/Note');
 // const expedinspeccion = require('../models/expedinspeccion');
 const pdf = require("html-pdf");
 const User = require('../models/User');
+const expedientejuzgado = require('../models/expedientejuzgado');
 var pdfoptionsA4 = { format: 'A4' };
 
 // **esto es para agregar campo borrado a todos los q no tienen borrado marcado**
@@ -34,20 +38,47 @@ router.put('/expedientes/listadoborradosenno', isAuthenticated, async (req, res)
 });
 
 router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-
     try {
         const rolusuario = req.user.rolusuario;
-        if (rolusuario == "Administrador") {
-            const expedientes = await Expediente.find({ borrado: "No" })
-                .lean() // Convierte los documentos de Mongoose a objetos JS planos para Handlebars
-                .limit(100)
-                .sort({ ultimanotificacion: 'desc' });
-            // Ahora, cada objeto en 'expedientes' tendrá campos como 'idcliente',
-            // pero contendrán los objetos completos del cliente, abogado y juzgado.
+        if (rolusuario === "Administrador") {
+            // **1. Optimización con .populate('idcliente')**
+            var expedientestabla = await Expediente.find({ borrado: "No" })
+                .lean()
+                .limit()
+                .sort({ date: 'desc' });
+            if (!expedientestabla) {
+            return res.status(404).send('Expediente no encontrado');
+        }
+            var expedientes = [];
+            for (expedientes of expedientestabla) {
 
-            res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes });
+                // Formato de Fecha Corregido y Limpiado
+                if (expedientes.ultimanotificacion) {
+                    const fecha = new Date(expedientes.ultimanotificacion);
+                    // Uso de .padStart para formato DD-MM-YYYY limpio
+                    const dia = String(fecha.getDate() + 1).padStart(2, '0'); // +1 día puede deberse a la conversión de zona horaria
+                    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                    const ano = fecha.getFullYear();
+                    expedientes.ultimanotificacion = `${dia}-${mes}-${ano}`;
+                    expedientes.idcliente=expedientes.idcliente[0.1]
+                
+                } else {
+                    expedientes.ultimanotificacion = "----";
+                }
+                if (expedientes.idjuzgado) {
+                    const juzgadoData = await Juzgados.findById(expedientes.idjuzgado).lean();
+                    if (juzgadoData) {
+                        expedientes.idjuzgado = juzgadoData.numjuzgado;
+                    } else {
+                        expedientes.idjuzgado = "----";
+                    }
+                }             
+
+                expedientes = expedientestabla;
+            }
+
+            res.render('notes/expedientes/planillalistaexpedientes', { expedientes : expedientestabla });
+
         } else {
             req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
             return res.redirect('/');
@@ -56,9 +87,6 @@ router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
         console.error("Error al obtener el listado de expedientes:", error);
         res.status(500).send("Error interno del servidor");
     }
-    // const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(100).sort({ ultimanotificacion: 'desc' }); //        
-    // res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes });    
-
 });
 
 router.get('/expedientes/add', isAuthenticated, async (req, res) => {
@@ -67,7 +95,7 @@ router.get('/expedientes/add', isAuthenticated, async (req, res) => {
         //const usuarios = await Users.find().lean().sort({ date: 'desc' });
         const juzgados = await Juzgados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         const abogados = await Abogados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
-        const clientes = await Clientes.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });        
+        const clientes = await Clientes.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         res.render('notes/expedientes/newexpedientes', { clientes, abogados, juzgados });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -163,18 +191,19 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/notes/newexpedientes', isAuthenticated, async (req, res) => {
+router.post('/notes/newexpedientes', isAuthenticated, async (req, res) => {    
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, idcliente,
-        idabogado, idjuzgado
+        caratula, tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, 
+        idcliente, idabogado, idjuzgado
     } = req.body;
     const newExpediente = new Expediente({
         borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        caratula, tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
         idcliente, idabogado, idjuzgado
     })
     newExpediente.user = req.user.id;
-    newExpediente.name = req.user.name;    
+    newExpediente.name = req.user.name;
+    console.log ("id cliente", idcliente)
     await newExpediente.save();
     req.flash('success_msg', 'Expediente Agregado Exitosamente');
     res.redirect('/expedientes/listado');
@@ -931,23 +960,26 @@ router.get('/expedientes/expedconinformeinspeccion/:id', isAuthenticated, async 
 
 router.get('/expedientes/edit/:id', isAuthenticated, async (req, res) => {
     const expediente = await Expediente.findById(req.params.id).lean()
-    res.render('notes/editexpediente', { expediente })
+    res.render('notes/expedientes/editexpediente', { expediente })
 });
 
 router.get('/expedientes/list/:id', isAuthenticated, async (req, res) => {
     const expediente = await Expediente.findById(req.params.id).lean()
-    res.render('notes/listexpediente', { expediente })
+    const expedientejuzgado = await Expedientejuzgado.findById(req.params.id).lean()
+    const expedienteabogado = await Expedienteabogado.findById(req.params.id).lean()
+    const expedientecliente = await Expedientecliente.findById(req.params.id).lean()
+    res.render('notes/expedientes/listexpediente', { expediente, expedientejuzgado, expedienteabogado, expedientecliente })
 });
 
 // *** BUSCAR EXPEDIENTES (NOTES) - LISTADO ***
-router.post('/expedientes/find', isAuthenticated, async (req, res) => {
-    const { numexpediente } = req.body;
-    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { numexpediente: { $regex: numexpediente, $options: "i" } }] }).lean().sort({ fechainicioentrada: 'desc' });;
+router.post('/expedientes/findcliente', isAuthenticated, async (req, res) => {
+    const { cliente } = req.body;
+    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { cliente: { $regex: cliente, $options: "i" } }] }).lean().sort({ fechainicioentrada: 'desc' });
     if (!expedientes) {
         req.flash('success_msg', 'cargue un Nº de expediente')
-        return res.render("notes/inspecciones/planillalistaexpedientesadm");
+        return res.render("notes/inspecciones/planillalistaexpedientes");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
@@ -956,20 +988,20 @@ router.post('/expedientes/findjuzgado', isAuthenticated, async (req, res) => {
     const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { juzgado: { $regex: juzgado, $options: "i" } }] }).lean().sort({ juzgado: 'desc' });;
     if (!expedientes) {
         req.flash('success_msg', 'cargue un Juzgado')
-        return res.render("notes/inspecciones/planillalistaexpedientesadm");
+        return res.render("notes/expedientes/planillalistaexpedientes");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
-router.post('/expedientes/findsecretaria', isAuthenticated, async (req, res) => {
-    const { secretaria } = req.body;
-    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { secretaria: { $regex: secretaria, $options: "i" } }] }).lean().sort({ secretaria: 'desc' });;
+router.post('/expedientes/findnumexpediente', isAuthenticated, async (req, res) => {
+    const { numexpediente } = req.body;
+    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { numexpediente: { $regex: numexpediente, $options: "i" } }] }).lean().sort({ date: 'desc' });
     if (!expedientes) {
-        req.flash('success_msg', 'cargue una Secretaría')
-        return res.render("notes/inspecciones/planillalistaexpedientesadm");
+        req.flash('success_msg', 'cargue Expediente')
+        return res.render("notes/expedientes/planillalistaexpedientes");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
@@ -980,7 +1012,7 @@ router.post('/expedientes/findestado', isAuthenticated, async (req, res) => {
         req.flash('success_msg', 'cargue estado (N y A)')
         return res.render("notes/inspecciones/planillalistaexpedientesadm");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
@@ -1381,6 +1413,28 @@ router.delete('/expedinspeccion/ticket/delete/:id', isAuthenticated, async (req,
     await Expedticketentrainsp.findByIdAndDelete(req.params.id);
     req.flash('success_msg', 'Informe de Ticket de Expediente Eliminado')
     res.redirect('/expedientes/listadoticket')
+});
+
+
+router.get('/expedientes/expedientejuzgado/add/:id', isAuthenticated, async (req, res) => {
+    const expediente = await Expediente.findById(req.params.id).lean()
+    const expedientejuzgado = await Expedientejuzgado.findone({ borrado: "No" },{ idexpediente: req.params.id}).lean().limit().sort({ date: 'desc' }); 
+    const juzgados = await Jusgado.find({ borrado: "No" },{ idexpediente: expedientejuzgado.idexpediente}).lean().limit().sort({ date: 'desc' }); 
+    res.render('notes/expedientes/newjuzgadoexpediente.hbs', { expediente, juzgados })
+});
+
+router.post('/notes/newjuzgadoexpediente', isAuthenticated, async (req, res) => {    
+    const { borrado, userborrado, fechaborrado, idjuzgado, idexpediente, estado
+        
+    } = req.body;
+    const newJuzgadoexpediente = new Expedientejuzgado({
+        borrado, userborrado, fechaborrado, idjuzgado, idexpediente, estado
+    })
+    newJuzgadoexpediente.user = req.user.id;
+    newJuzgadoexpediente.name = req.user.name;
+    await newJuzgadoexpediente.save();
+    req.flash('success_msg', 'Juzgado agregado al Expediente Exitosamente');
+    res.redirect('/expedientes/listado');
 });
 
 // *** SI O SI LOS MODULE EXPLORTS ***
