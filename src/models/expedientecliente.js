@@ -6,6 +6,10 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 ExpedienteclienteSchema = new Schema({
+  idexpedientecliente:{
+    type: Number,
+    // unique: true,
+  },
   borrado: {
     type: String,
     required: false,
@@ -20,33 +24,47 @@ ExpedienteclienteSchema = new Schema({
     type: String,
     required: false,
     default: "Sin Datos",
-  },
-  idexpedientecliente:{
-    type: Number,
-    unique: true,
-  },
+  },  
   idexpediente: {
     type: String,
     require: false,
     default: "No Posee Información",
   },
-  fechaentcliente: {
+  numexpediente:{
     type: String,
-    default: Date.now
+    require: true,
   },
+    caratula: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  bajacliente: {
+    type: String,
+    require: false,
+    default: "No",
+  }, 
   idcliente: {
     type: String,
     require: true,
   },
+    nyacliente: {
+    type: String,
+    require: true,
+  }, 
+  dnicliente: {
+    type: String,
+    require: true,
+  },
+  fechaentradacliente: {
+    type: String,
+    default: Date.now
+  },  
   observaciones: {
     type: String,
     require: false,
-    default: "No Posee Información"
-  },
-    dateexp: {
-    type: Date,
-    default: Date.now
-  },
+    default: "Sin Observaciones"
+  },    
   user: {
     type: String,
     require: false,

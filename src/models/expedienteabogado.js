@@ -6,6 +6,10 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 ExpedienteabogadoSchema = new Schema({
+  idexpedienteabogado: {
+    type: Number,
+    // unique: true  
+  },
   borrado: {
     type: String,
     required: false,
@@ -21,29 +25,51 @@ ExpedienteabogadoSchema = new Schema({
     required: false,
     default: "Sin Datos",
   },
-  idexpedienteabogado: {
-    type: Number, 
-        unique: true  
-  },
   idexpediente: {
     type: String,
     require: false,
     default: "No Posee Información",
   },
+  numexpediente: {
+    type: String,
+    require: true,
+  },
+  caratula: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  bajaabogado: {
+    type: String,
+    require: false,
+    default: "No",
+  },  
   idabogado: {
     type: String,
     require: false,
-  },  
-  fechaentabogado: {
+  },
+  nyaabogado: {
+    type: String,
+    require: true
+  },
+  dniabogado: {
+    type: String,
+    require: true
+  },
+  matriculaabogado: {
+    type: String,
+    require: true
+  },
+  fechaentradaabogado: {
     type: String,
     default: Date.now
   },
-    observaciones: {
+  observaciones: {
     type: String,
     require: false,
     default: "No Posee Información"
   },
-    dateexp: {
+  dateexp: {
     type: Date,
     default: Date.now
   },
@@ -64,10 +90,10 @@ ExpedienteabogadoSchema = new Schema({
 });
 
 ExpedienteabogadoSchema.plugin(AutoIncrement, {
-    inc_field: 'idexpedienteabogado', 
-    start_seq: 1,           
-    reference_fields: [],   
-    id: 'expedienteabogado_seq_counter'
+  inc_field: 'idexpedienteabogado',
+  start_seq: 1,
+  reference_fields: [],
+  id: 'expedienteabogado_seq_counter'
 });
 
 module.exports = mongoose.model("Expedienteabogado", ExpedienteabogadoSchema);

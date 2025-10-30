@@ -1,7 +1,12 @@
 // **** Juzgados ****
 const express = require('express')
 const router = express.Router()
-// const bcrypt = require("bcrypt");
+
+
+// Middleware necesario para leer req.body de formularios HTML
+router.use(express.urlencoded({ extended: true })); 
+router.use(express.json()); // También útil si maneja peticiones JSON
+//routerconst bcrypt = require("bcrypt");
 // const passport = require ('passport');
 // const User =  require ('../models/User')
 //const bcrypt = require("bcrypt");
@@ -10,6 +15,7 @@ const { isAuthenticated } = require('../helpers/auth')
 
 // tengo que requerir los modelos para que mongoose me cree las tablas
 const Juzgados = require('../models/Juzgado') //** SI O SI LLAMAR AL MODEL Q USAMOS EN ESTE ROUTES */
+const expedientejuzgado = require('../models/expedientejuzgado')
 
 //const Expediente = require('../models/Expediente')
 //const Expedentrsalida = require('../models/expedentrsalida')
@@ -72,6 +78,44 @@ router.post('/juzgados/newJuzgado', isAuthenticated, async (req, res) => {
 router.get('/juzgados/list/:id', isAuthenticated, async (req, res) => {
     const juzgados = await Juzgados.findById(req.params.id).lean()
     res.render('notes/juzgados/listjuzgado', { juzgados })
+});
+
+router.put('/juzgados/marcabajajuzgado/:id', isAuthenticated, async (req, res) => {
+    const idExpedienteRetorno = req.body.idRetorno;
+    console.log("id retorno RECIBIDO:", idExpedienteRetorno);
+    const juzgadoId = req.params.id;
+    try {
+        const bajajuzgado = "Si";
+        const fechabaja = new Date();
+        await expedientejuzgado.findByIdAndUpdate(juzgadoId, {
+            bajajuzgado, fechabaja
+        });
+        req.flash('success_msg', 'Juzgado dado de baja'); // Esto está bien aquí
+
+        if (idExpedienteRetorno) {
+            // Construir la URL de retorno: /expedientes/list/68ffe6825453680d456c586e
+            const urlRetorno = `/expedientes/list/${idExpedienteRetorno}`;
+
+            // ⭐️ La redirección efectiva 
+            res.redirect(urlRetorno);
+        } else {
+            res.redirect('/expedientes/listado');
+        }
+    } catch (error) {
+        console.error("Error al guardar la vinculación:", error);
+        // Si hay un error, puede ser útil redirigir de nuevo al formulario para mostrar el error.
+        res.status(500).send("Error al procesar la solicitud. Inténtelo de nuevo.");
+    }
+});
+
+router.put('/juzgados/desmarcabajajuzgado/:id', isAuthenticated, async (req, res) => {
+    const bajajuzgado = "No";
+    const fechabaja = new Date();
+    await expedientejuzgado.findByIdAndUpdate(req.params.id, {
+        bajajuzgado, fechabaja
+    });
+    req.flash('success_msg', 'Juzgado recuperado')
+    res.redirect = '/expedientes/list/';
 });
 
 router.put('/juzgados/marcadelete/:id', isAuthenticated, async (req, res) => {
