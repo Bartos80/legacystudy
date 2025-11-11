@@ -6,7 +6,7 @@ const { isAuthenticated } = require('../helpers/auth');
 
 const Users = require('../models/User');
 const Clientes = require('../models/clientes')
-const Expediente = require('../models/Expediente');
+const Expediente = require('../models/expediente');
 const Juzgados = require('../models/Juzgado')
 //const Expedentrsalida = require('../models/expedentrsalida');
 const Abogados = require('../models/abogados');
