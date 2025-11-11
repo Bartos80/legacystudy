@@ -79,7 +79,7 @@ router.get ('/users/11vvsOpmo90W-MAD', (req, res) => {
     res.render ('users/signup');
 });
 
-router.post('/users/signup', isAuthenticated, async (req, res) =>{
+router.post('/users/signup',isAuthenticated,  async (req, res) =>{
     const { estudioempresa, rolusuario, name, celular, email, dni, codigousuario, funcion, password, confirm_password, date} = req.body;
     const errors = [];
     if(rolusuario.length<=0 || name.length<=0 || email.length<=0 || dni.length<=0 || password.length<=0 || confirm_password.length<=0){
