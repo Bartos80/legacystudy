@@ -54,11 +54,11 @@ router.get('/clientes/add', isAuthenticated, (req, res) => {
 });
 
 router.post('/clientes/newcliente', isAuthenticated, async (req, res) => {
-    const { nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+    const { nyacliente, dnicliente, domiciliocliente, provinciacliente, localidadcliente, telefonocliente, 
         emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio
     } = req.body;
     const newClientes = new Clientes({
-        nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+        nyacliente, dnicliente, domiciliocliente, provinciacliente, localidadcliente, telefonocliente, 
         emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio
     })
     newClientes.user = req.user.id;
@@ -107,10 +107,10 @@ router.delete('/clientes/delete/:id', isAuthenticated, async (req, res) => {
 });
 
 router.put('/notes/editcliente/:id', isAuthenticated, async (req, res) => {
-    const { nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+    const { nyacliente, dnicliente, domiciliocliente, provinciacliente, localidadcliente, telefonocliente, 
         emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio } = req.body
     await Clientes.findByIdAndUpdate(req.params.id, {
-        nyacliente, dnicliente, domiciliocliente, provincianocliente, localidadcliente, telefonocliente, 
+        nyacliente, dnicliente, domiciliocliente, provinciacliente, localidadcliente, telefonocliente, 
         emailcliente, observacionescliente, numerocarpetaopcionalcliente, correovinculadoclienteestudio
     });
     req.flash('success_msg', 'Cliente actualizado')

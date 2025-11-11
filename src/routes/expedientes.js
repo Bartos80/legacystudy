@@ -1109,10 +1109,10 @@ router.post('/expedientes/borradofindestado', isAuthenticated, async (req, res) 
 
 router.put('/notes/editexpediente/:id', isAuthenticated, async (req, res) => {
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, } = req.body
+        tipo, ultimanotificacion, caratula, dateexp,  partes, estado, user, name, fotoexpediente, } = req.body
     await Expediente.findByIdAndUpdate(req.params.id, {
         borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, caratula, dateexp,  
     });
     req.flash('success_msg', 'Expediente actualizado')
     res.redirect('/expedientes/listado');

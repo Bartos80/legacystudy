@@ -73,21 +73,21 @@
           </div>
 
           <div class="mb-3">
-            <label for="ultimanotificacion" class="form-label fw-bold">Fecha Audiencia::</label>
-            <input onkeyup="ponerminuscula()" id="ultimanotificacion" type="date" class="form-control text-center"
-              name="ultimanotificacion" value="{{audiencia.ultimanotificacion}}">
+            <label for="dateturno" class="form-label fw-bold">Fecha Audiencia:  (si desea cambiar registre nueva audiencia)</label>
+            <input onkeyup="ponerminuscula()" id="dateturno" type="text" class="form-control"
+              name="dateturno" value="{{audiencia.dateturno}}" disabled>
           </div>
           
           <!-- Hora Audiencia -->
           <div class="mb-3">
             <label for="horaaudiencia" class="form-label">Hora Audiencia</label>
             <input type="time" id="horaaudiencia" name="horaaudiencia" value="{{audiencia.horaaudiencia}}"
-              class="form-control" placeholder="Ej: 10:00 AM">
+              class="form-control" placeholder="Ej: 10:00 AM" disabled>
           </div>
 
           <div class="mb-3">
-            <label for="horaaudiencia" class="form-label">Fecha Saco Turno Inicialmente</label>
-            <input type="text" id="dateturno" name="dateturno" value="{{audiencia.dateturno}}" class="form-control"
+            <label for="horaaudiencia" class="form-label">Fecha que Pidio el Turno</label>
+            <input type="text" id="dateturno" name="dateturno" value="{{audiencia.date}}" class="form-control"
               placeholder="Ej: 10:00 AM" disabled>
           </div>
 

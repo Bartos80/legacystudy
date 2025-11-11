@@ -62,34 +62,37 @@ router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
 //     res.redirect('/audiencia/listado');
 // })
 router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
-    const { 
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria, 
-        ultimanotificacion, horaaudiencia, dateturno, observaciones, 
-        user, name, date 
+    const {
+        juzgado, numexpediente, estadoexpediente, caratula, secretaria,
+        ultimanotificacion, horaaudiencia, dateturno, observaciones,
+        user, name, date
     } = req.body;
-    const errors = []; 
+    const errors = [];
     if (!juzgado) {
-        errors.push({ text: 'Por favor, ingrese el Juzgado.' });    }
+        errors.push({ text: 'Por favor, ingrese el Juzgado.' });
+    }
     if (!numexpediente) {
-        errors.push({ text: 'Por favor, ingrese el Número de Expediente.' });    }
+        errors.push({ text: 'Por favor, ingrese el Número de Expediente.' });
+    }
     if (!caratula) {
-        errors.push({ text: 'Por favor, ingrese la Carátula.' });    }
+        errors.push({ text: 'Por favor, ingrese la Carátula.' });
+    }
     if (!dateturno) {
         errors.push({ text: 'Por favor, ingrese la Fecha del Turno/Audiencia.' });
     }
     if (errors.length > 0) {
-        errors.forEach(error => req.flash('error_msg', error.text));        
-        return res.render('ruta/donde/esta/el/formulario', { 
+        errors.forEach(error => req.flash('error_msg', error.text));
+        return res.render('ruta/donde/esta/el/formulario', {
             errors,
-            juzgado, numexpediente, estadoexpediente, caratula, secretaria, 
-            ultimanotificacion, horaaudiencia, dateturno, observaciones             
+            juzgado, numexpediente, estadoexpediente, caratula, secretaria,
+            ultimanotificacion, horaaudiencia, dateturno, observaciones
         });
     }
     try {
         const newaudiencia = new Audiencia({
-            juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, 
+            juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion,
             horaaudiencia, dateturno, observaciones, user, name, date
-        });        
+        });
         newaudiencia.user = req.user.id;
         newaudiencia.name = req.user.name;
         await newaudiencia.save();
@@ -460,28 +463,37 @@ router.get('/audiencia/add/:id', isAuthenticated, async (req, res) => {
 
 router.get('/audiencia/edit/:id', isAuthenticated, async (req, res) => {
     const audiencia = await Audiencia.findById(req.params.id).lean()
-    const fechaOriginal = audiencia.dateturno;
-    const fechaObj = new Date(fechaOriginal);
-    const opcionesFecha = {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    };
-    const opcionesHora = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    };
-    const fechaFormateada = fechaObj.toLocaleString('es-AR', opcionesFecha);
-    const horaFormateada = fechaObj.toLocaleString('es-AR', opcionesHora);
-    const resultado = `Fecha: ${fechaFormateada} | Hora: ${horaFormateada}`;
-    audiencia.dateturno = resultado;
+
+    var tipoint = audiencia.dateturno;
+            if (tipoint != null) {
+                const fecha = new Date(audiencia.dateturno);
+                const dia = fecha.getDate() + 1;
+                var mes = 0
+                const calcmes = fecha.getMonth() + 1
+                if (calcmes < 10) {
+                    mes = "0" + calcmes + "-"
+                } else {
+                    mes = calcmes + "-"
+                }
+                if (dia > 0 && dia < 10) {
+                    var diastring = "0" + dia + "-"
+                } else {
+                    var diastring = dia + "-"
+                }
+                const ano = fecha.getFullYear()
+                //const fullyear = fecha.toLocaleDateString();
+                const fullyear = diastring + mes + ano
+                //const fullyear = fecha.toLocaleDateString();
+                audiencia.dateturno = fullyear;
+            } else {
+                audiencia.dateturno = "----"
+            }
     res.render('notes/audiencias/editaudiencia', { audiencia })
 });
 
 router.put('/notes/editaudiencia/:id', isAuthenticated, async (req, res) => {
     const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
-        dateturno, observaciones } = req.body;  
+        dateturno, observaciones } = req.body;
 
     await Audiencia.findByIdAndUpdate(req.params.id, {
         juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
@@ -494,35 +506,30 @@ router.put('/notes/editaudiencia/:id', isAuthenticated, async (req, res) => {
 router.get('/audiencia/list/:id', isAuthenticated, async (req, res) => {
     const audiencia = await Audiencia.findById(req.params.id).lean()
 
-    const fechaOriginal = audiencia.dateturno;
-    const fechaObj = new Date(fechaOriginal);
-    const opcionesFecha = {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    };
-    const opcionesHora = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    };
-    const fechaFormateada = fechaObj.toLocaleString('es-AR', opcionesFecha);
-    const horaFormateada = fechaObj.toLocaleString('es-AR', opcionesHora);
-    const resultado = `Fecha: ${fechaFormateada} | Hora: ${horaFormateada}`;
-    audiencia.dateturno = resultado;
-
-    
-    const fechaCompletaString = "Mon Oct 13 2025 23:13:17 GMT-0300 (hora estándar de Argentina)";
-    const fechaObjuf = new Date(fechaCompletaString);
-
-    // 2. Usar toLocaleDateString() para obtener un formato de fecha estándar (ej: DD/MM/AAAA o MM/DD/AAAA)
-    //    Dependerá de la configuración regional (locale) que uses.
-    const soloFecha = fechaObjuf.toLocaleDateString('es-AR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'    
-    });
-    audiencia.ultimanotificacion = soloFecha;
+    var tipoint = audiencia.dateturno;
+    if (tipoint != null) {
+        const fecha = new Date(audiencia.dateturno);
+        const dia = fecha.getDate() + 1;
+        var mes = 0
+        const calcmes = fecha.getMonth() + 1
+        if (calcmes < 10) {
+            mes = "0" + calcmes + "-"
+        } else {
+            mes = calcmes + "-"
+        }
+        if (dia > 0 && dia < 10) {
+            var diastring = "0" + dia + "-"
+        } else {
+            var diastring = dia + "-"
+        }
+        const ano = fecha.getFullYear()
+        //const fullyear = fecha.toLocaleDateString();
+        const fullyear = diastring + mes + ano
+        //const fullyear = fecha.toLocaleDateString();
+        audiencia.dateturno = fullyear;
+    } else {
+        audiencia.dateturno = "----"
+    }
     res.render('notes/audiencias/listaudiencia', { audiencia })
 });
 router.get('/audiencia/borradolist/:id', isAuthenticated, async (req, res) => {
