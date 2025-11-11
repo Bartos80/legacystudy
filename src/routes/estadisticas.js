@@ -9,8 +9,8 @@ const fs = require('fs').promises
 const { isAuthenticated } = require('../helpers/auth')
 
 // tengo que requerir los modelos para que mongoose me cree las tablas
-const Estadistica = require('../models/Estadistica')
-const Expediente = require('../models/Expediente')
+const Estadistica = require('../models/estadistica')
+const Expediente = require('../models/expediente')
 const Expedentrsalida = require('../models/expedentrsalida')
 
 router.get('/estadisticas/list/:id', isAuthenticated, async (req, res) => {

@@ -14,7 +14,7 @@ const fs = require('fs').promises
 const { isAuthenticated } = require('../helpers/auth')
 
 // tengo que requerir los modelos para que mongoose me cree las tablas
-const Juzgados = require('../models/Juzgado') //** SI O SI LLAMAR AL MODEL Q USAMOS EN ESTE ROUTES */
+const Juzgados = require('../models/juzgado') //** SI O SI LLAMAR AL MODEL Q USAMOS EN ESTE ROUTES */
 const expedientejuzgado = require('../models/expedientejuzgado')
 
 //const Expediente = require('../models/Expediente')

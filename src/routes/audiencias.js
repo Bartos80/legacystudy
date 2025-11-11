@@ -16,7 +16,7 @@ const User = require('../models/User');
 var pdfoptionsA4 = { format: 'A4' };
 
 // tengo que requerir los modelos para que mongoose me cree las tablas
-const Audiencia = require('../models/Audiencia');
+const Audiencia = require('../models/audiencia');
 
 // **esto es para agregar campo borrado a todos los q no tienen borrado marcado**
 router.put('/audiencia/listadoborradosenno', isAuthenticated, async (req, res) => {
