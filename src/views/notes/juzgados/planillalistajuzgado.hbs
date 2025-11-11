@@ -1,0 +1,92 @@
+<div class="container my-5">
+
+  <!-- Encabezado + botones -->
+  <div
+    class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center gap-3 mb-4">
+    <h5 class="fw-bold text-primary text-uppercase m-0">📋 Listado de juzgados</h5>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+      <a href="/juzgados/add" class="btn btn-success btn-sm mr-4">+ Agregar</a>
+      <a href="/juzgados/listado" class="btn btn-outline-warning btn-sm">↻ Recargar</a>
+    </div>
+  </div>
+
+  <!-- Formularios de búsqueda -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-3">
+      <form action="//juzgados/listados/findnumjuzgado" method="POST">
+        <input type="search" name="numjuzgado" class="form-control" placeholder="Buscar por número de juzgado..." />
+        <button title="buscar Número de Juzgado" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="//juzgados/listados/findapellidocliente" method="POST">
+        <input type="search" name="dirjuzgado" class="form-control" placeholder="Buscar por dirección..." />
+        <button title="buscar Dirección juzgados" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="//juzgados/listados/findprovinciajuzgado" method="POST">
+        <input type="search" name="provinciajuzgado" class="form-control" placeholder="Buscar por provincia..." />
+        <button title="buscar Provincia" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="//juzgados/listados/findlocalidadjuzgado" method="POST">
+        <input type="search" name="localidadjuzgado" class="form-control" placeholder="Buscar por localidad..." />
+        <button title="buscar Localidad" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabla responsiva de /juzgados/listados -->
+  {{#if juzgados.length}}
+  <div class="table-responsive rounded shadow-sm border">
+    <table class="table table-striped table-bordered align-middle text-nowrap">
+      <thead class="table-primary text-dark text-center">
+        <tr>
+          <th>N° Juzgado</th>
+          <th>Provincia</th>
+          <th>Localidad</th>
+          <th>Direccion</th>
+          <th>Teléfono</th>
+          <th>Email</th>  
+          <td>Opciones</td>
+          <td>+Más</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each juzgados}}
+        <tr>
+          <td class="text-capitalize">{{ numjuzgado }}</td>
+          <td class="text-capitalize">{{ provinciajuzgado }}</td>
+          <td class="text-capitalize">{{ localidadjuzgado }}</td>
+          <td>{{ dirjuzgado }}</td>
+          <td>{{ teljuzgado }}</td>
+          <td class="text-lowercase text-danger fw-bold">{{ emailjuzgado }}</td>  
+          <td>            
+            <a class="btn btn-info btn-sm w-100" href="/juzgados/list/{{_id}}"
+              >+ Info</a>
+          </td>
+          <td>
+              <a class="btn btn-warning btn-sm w-100"  href="/juzgados/edit/{{_id}}">
+                Editar
+              </a>
+              <form onSubmit="return confirm('Desea enviar Papelera?')" style=""
+                action="/juzgados/marcadelete/{{_id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                  Papelera
+                </button>
+              </form>
+            </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  {{else}}
+  <div class="alert alert-warning text-center mt-5" role="alert">
+    🚫 No existen Juzgados registrados.
+  </div>
+  {{/if}}
+</div>

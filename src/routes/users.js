@@ -15,8 +15,53 @@ router.post('/users/signin', passport.authenticate('local',{
     failureFlash: true
 }));
 
+// --- Configuración del Admin Inicial ---
+const ADMIN_EMAIL = 'admin@admin.com';
+// const ADMIN_PASSWORD_RAW = 'Admin';
+const ADMIN_NAME = 'Admin Principal';
+const ADMIN_ROLE = 'Administrador';
+const SALT_ROUNDS = 10; // Nivel de seguridad del hashing
+
+//createAdminIfNoUsers(); // Llamar a la función al cargar este módulo
+
+async function createAdminIfNoUsers() {
+    console.log('--- Iniciando verificación de usuarios en MongoDB ---');
+    try {
+        // 1. Contar el número de documentos en la colección 'users'
+        const userCount = await User.countDocuments({});
+        if (userCount === 0) {
+            console.log('¡Colección de usuarios vacía! Creando usuario Administrador por defecto...');
+            const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD_RAW, SALT_ROUNDS);
+            // 3. Crear (Insertar) el nuevo usuario Administrador usando el modelo Mongoose
+            const newUser = await User.create({
+                estudioempresa: RD-IT,
+                rolusuario: Administrador,
+                name: Administrador,
+                celular: "000-0000",
+                email: "admin@admin.com",
+                dni: "00000000",
+                codigousuario: "000",                
+                date: new Date()
+            });
+
+            if (newUser) {
+                console.log(`✅ Usuario Administrador '${ADMIN_EMAIL}' creado exitosamente en MongoDB.`);
+            } else {
+                // Esta rama es poco probable si la inserción fue exitosa, pero es un buen control.
+                console.error('❌ Error al insertar el usuario Administrador en MongoDB.');
+            }
+
+        } else {
+            console.log(`La colección de usuarios tiene ${userCount} registro(s). El administrador por defecto NO fue creado.`);
+        }
+    } catch (error) {
+        // Este error puede ocurrir si la conexión a MongoDB no está lista o si hay problemas de validación del esquema.
+        console.error('🛑 ERROR en la inicialización de la base de datos (createAdminIfNoUsers):', error.message);
+    }
+}
+
 // router.get ('/users/signup', (req, res) => {
-router.get ('/users/11vvsOpmo90W', (req, res) => {    
+router.get ('/users/11vvsOpmo90W', isAuthenticated,  (req, res) => {    
     const rolusuario = req.user.rolusuario;
     //console.log ("ROL USUARIO",rolusuario) //Inspector
     if (rolusuario == "Administrador" || rolusuario == "Programador" ) {
@@ -62,16 +107,8 @@ router.post('/users/signup', isAuthenticated, async (req, res) =>{
         // newUser.password = await newUser.EncryptPassword(password); //NOSE PORQUE NO ANDA
         await newUser.save();
         req.flash('success_msg', 'Nuevo Usuario Registrado');
-        res.redirect('/usuarios');
-        // console.log(req.body);
-    // res.send('OK')}s
+        res.redirect('/usuarios');        
 }});
-
-// router.get('/users/logout',  (req, res, next) => {    
-//       req.logout() 
-//     //   ("success_msg", "You are logged out now.");
-//       res.redirect("/users/signin");
-//     });
 
 router.get('/users/logout', function (req, res, next) {
     req.logout(function(err) {
@@ -81,11 +118,5 @@ router.get('/users/logout', function (req, res, next) {
       res.redirect('/');
     });
   });
-
-// router.get ("/users/logout", (req, res) => {
-//     req.logout();
-//     res.redirect("/");
-// })
-
 
 module.exports = router;

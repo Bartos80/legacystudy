@@ -1,110 +1,179 @@
 <script>
-    function ponerminuscula() {
-        let ex = document.getElementById("email");
-        ex.value = ex.value.toLowerCase();
-        //let y = document.getElementById("adrema");
-        //y.value = y.value.toLowerCase();
-    }
+  function ponerminuscula() {
+    const email = document.getElementById("email");
+    email.value = email.value.toLowerCase();
+  }
 
-    function ShowName() {
-        var writtenName = document.getElementById('name').value;
-        document.getElementById('name').value = formatToString(writtenName);
-    }
+  function ShowName() {
+    const nameInput = document.getElementById('name');
+    nameInput.value = formatToString(nameInput.value);
+  }
 
-    function formatToString(writtenName) {
-        var tmp = writtenName.split(" ");
-        var fullName;
-        tmp.forEach(element => {
-            if (fullName) {
-                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
-            } else {
-                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
-            }
-        })
-        return fullName;
-    }
+  function formatToString(writtenName) {
+    return writtenName
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  }
 
-    function cargar() {
-        var provincias = ["Cantabria", "Asturias", "Galicia", "Andalucia", "Extremadura"]; //Tu array de provincias
-        var select = document.getElementById("provincias"); //Seleccionamos el select
+  function cargar() {
+    const provincias = ["Cantabria", "Asturias", "Galicia", "Andalucía", "Extremadura"];
+    const select = document.getElementById("provincias");
 
-        for (var i = 0; i < provincias.length; i++) {
-            var option = document.createElement("option"); //Creamos la opcion
-            option.innerHTML = provincias[i]; //Metemos el texto en la opción
-            select.appendChild(option); //Metemos la opción en el select
-        }
-    }
-    cargar();
+    provincias.forEach(p => {
+      const option = document.createElement("option");
+      option.textContent = p;
+      select.appendChild(option);
+    });
+  }
+
+  cargar();
 </script>
 
-{{!-- <h1> REGISTER </h1> --}}
-<div class="row">
-    <div class="col-md-6 mx-auto">
-        <div class="card">
-            <div class="card-header">
-                <h4 style="color:red; text-shadow: 1px 1px 2px black">Registro de Usuarios</h4>
-                <div class="card-body">
-                    <form action="/users/signup" method="POST">
-                        <div class="form-group">
-                            <p style="color:black;font-weight: bold;text-shadow: 1px 1px 2px black;">Elige un Rol de
-                                Usuario:
-                                <select name="rolusuario">
-                                    <option>Programador</option>
-                                    <option>Administrador</option>
-                                    <option>Abogado/a</option>
-                                    <option>Secretario/a</option>
-                                    <option>Visitante</option>                                    
-                                </select>
-                            </p>
-                        </div><div class="form-group">
-                            <input onkeyup="ShowName();" type="text" class="form-control" id="estudioempresa" name="estudioempresa"
-                                placeholder="Estudio/Empresa" value="{{name}}">
-                        </div>
-                        <div class="form-group">
-                            <input onkeyup="ShowName();" type="text" class="form-control" id="name" name="name"
-                                placeholder="Nombre" value="{{name}}">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" id="dni" name="dni"
-                                placeholder="Doc. Nac.Identidad" value="{{dni}}">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="codigousuario" name="codigousuario"
-                                placeholder="Codigo de Usuario" value="{{codigousuario}}">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="funcion" name="funcion"
-                                placeholder="funcion" value="{{funcion}}">
-                        </div>
-                        <div class="form-group">
-                            <input onkeyup="ponerminuscula()" id="celular" type="celular" class="form-control" name="celular"
-                                placeholder="Telefono/Celular" value="{{celular}}">
-                        </div>
-                        <div class="form-group">
-                            <input onkeyup="ponerminuscula()" id="email" type="email" class="form-control" name="email"
-                                placeholder="Correo/Email" value="{{email}}">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña"
-                                value="{{password}}">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="confirm_password"
-                                placeholder="Confirmar Contraseña" value="{{confirm_password}}">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-block">
-                                Registrar
-                            </button>
-                            <br />
-                        </div>
-                        <div>
-                            <p style="color:red; font-style:oblique; font-weight: bold;"><a href="/usuarios"><i
-                                        class="fas fa-list" style='font-size:24px;color:blue'></i></a> Cancelar</p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm border-0 mt-5">
+      <div class="card-header text-center bg-white">
+        <h4 class="fw-bold text-dark mb-0">Registro de Usuarios</h4>
+      </div>
+      <div class="card-body">
+        <form action="/users/signup" method="POST" novalidate>
+          <div class="form-group mb-3">
+            <label for="rolusuario" class="form-label">Rol de Usuario</label>
+            <select name="rolusuario" id="rolusuario" class="form-select" required>
+              <option selected disabled>Seleccione un rol</option>
+              <option>Programador</option>
+              <option>Administrador</option>
+              <option>Abogado/a</option>
+              <option>Secretario/a</option>
+              <option>Visitante</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="estudioempresa" class="form-label">Estudio / Empresa</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="estudioempresa" 
+              name="estudioempresa"
+              onkeyup="ShowName();" 
+              value="{{estudioempresa}}" 
+              placeholder="Nombre de estudio o empresa"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="name" class="form-label">Nombre completo</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="name" 
+              name="name" 
+              onkeyup="ShowName();" 
+              value="{{name}}" 
+              required 
+              placeholder="Nombre y Apellido" 
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="dni" class="form-label">DNI</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              id="dni" 
+              name="dni" 
+              value="{{dni}}" 
+              placeholder="Documento Nacional de Identidad"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="codigousuario" class="form-label">Código de Usuario</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="codigousuario" 
+              name="codigousuario" 
+              value="{{codigousuario}}" 
+              placeholder="Código interno de usuario"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="funcion" class="form-label">Función</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="funcion" 
+              name="funcion" 
+              value="{{funcion}}" 
+              placeholder="Ejemplo: Abogado, Secretaria"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="celular" class="form-label">Teléfono / Celular</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="celular" 
+              name="celular" 
+              value="{{celular}}" 
+              placeholder="Ej: 11 2345 6789"
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input 
+              type="email" 
+              class="form-control" 
+              id="email" 
+              name="email" 
+              onkeyup="ponerminuscula()" 
+              value="{{email}}" 
+              placeholder="ejemplo@email.com"
+              required
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input 
+              type="password" 
+              class="form-control" 
+              id="password" 
+              name="password" 
+              placeholder="Contraseña segura"
+              required
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+            <input 
+              type="password" 
+              class="form-control" 
+              id="confirm_password" 
+              name="confirm_password" 
+              placeholder="Repetir contraseña"
+              required
+            />
+          </div>
+
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-success">Registrar</button>
+          </div>
+
+          <div class="text-center">
+            <a href="/usuarios" class="btn btn-link text-danger fw-semibold">
+              <i class="fas fa-arrow-left me-1"></i> Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

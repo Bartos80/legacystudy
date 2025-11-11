@@ -1,0 +1,129 @@
+<script>
+  function ShowName(name) {
+    const input = document.getElementById(name);
+    const words = input.value.trim().split(" ");
+    const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+    input.value = formatted;
+  }
+
+  function ponerMayuscula(id) {
+    const input = document.getElementById(id);
+    input.value = input.value.toUpperCase();
+  }
+
+  function ponerminuscula(id) {
+    const input = document.getElementById(id);
+    input.value = input.value.toLowerCase();
+  }
+
+  // Make sure this runs after the page loads, e.g., inside $(document).ready() if using jQuery
+  $(document).ready(function () {
+    $('#idcliente').select2({
+      placeholder: "Buscar Cliente...",
+      allowClear: true // Optional: allows the user to clear the selection
+    });
+  });
+
+</script>
+
+<div class="container my-5">
+  <div class="col-md-8 mx-auto">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h3 class="text-center text-primary mb-4 fw-bold">Nuevo Expediente</h3>
+
+        <form action="/notes/newexpedientes" method="POST">
+
+          <!-- Juzgado -->
+          {{!-- <p> {{juzgados}}</p> --}}
+          {{!-- <div class="mb-3">
+            <label for="juzgado" class="form-label">Juzgado</label>
+            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Ej: Juzgado Civil Nº 3">
+          </div> --}}
+          <!-- Juzgado (MODIFICADO A SELECT) -->
+          {{!-- <div class="mb-3">
+            <label for="numjuzgado" class="form-label fw-semibold">Juzgado</label>
+            <select id="numjuzgado" name="numjuzgado" class="form-select shadow-sm" required>
+              <option value="">Cargando Juzgados...</option>
+              <!-- Opciones cargadas por la función populateJuzgados() -->
+            </select>
+          </div> --}}
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
+
+
+            <div id="resultsContainer">
+
+
+              <!-- Nº Expediente -->
+              <div class="mb-3">
+                <label for="numexpediente" class="form-label">Nº de Expediente</label>
+                <input type="text" id="numexpediente" name="numexpediente" class="form-control"
+                  placeholder="Ej: 12345/2024" onkeyup="ponerMayuscula('numexpediente')" autofocus>
+              </div>
+
+              <!-- Caratula -->
+              <div class="mb-3">
+                <label for="caratula" class="form-label">Carátula</label>
+                <input type="text" id="caratula" name="caratula" class="form-control"
+                  placeholder="Carátula del Expediente">
+              </div>
+
+              <!-- Tipo -->
+              <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo de Expediente</label>
+                <input type="text" id="tipo" name="tipo" class="form-control"
+                  placeholder="Ej: Sucesión, Reclamación, etc.">
+              </div>
+
+              <!-- Última Notificación -->
+              <div class="mb-3">
+                <label for="ultimanotificacion" class="form-label">Última Notificación</label>
+                <input type="date" id="ultimanotificacion" name="ultimanotificacion" class="form-control">
+              </div>
+
+              <!-- Partes -->
+              <div class="mb-3">
+                <label for="partes" class="form-label">Partes</label>
+                <input type="text" id="partes" name="partes" class="form-control" onkeyup="ShowName('partes')"
+                  placeholder="Ej: Juan Pérez c/ María López">
+              </div>
+
+              <!-- Estado -->
+              <div class="form-group mb-3">
+                <label for="estado" class="form-label">Estado del Expediente</label>
+                <select name="estado" id="estado" class="form-select" required>
+                  <option></option>
+                  <option>Etapa Postulatoria o de Inicio</option>
+                  <option>Etapa Probatoria</option>
+                  <option>Etapa Decisoria</option>
+                  <option>Etapa Impugnativa y Ejecutoria</option>
+                  <option>Estados Comunes y Transitorios</option>
+                  <option>Archivado</option>
+                </select>
+              </div>
+
+              <!-- Foto expediente (deshabilitado) -->
+              <div class="mb-3">
+                <label class="form-label">Foto del Expediente</label>
+                <input type="text" name="fotoexpediente" class="form-control" placeholder="Foto de expediente" disabled>
+              </div>
+
+              <!-- Botón guardar -->
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary">Guardar Expediente</button>
+              </div>
+
+              <!-- Volver -->
+              <div class="text-center mt-4">
+                <a href="javascript:window.history.back()"
+                  class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
+                  style="font-weight: bold;">
+                  <i class="fas fa-times-circle"></i>
+                  Volver Atrás
+                </a>
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

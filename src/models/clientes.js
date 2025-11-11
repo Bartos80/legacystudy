@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 //const bcrypt = require("bcryptjs");
+// Hacer el Campo autoincremental - Primary Key
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 ClientesSchema = new Schema({
+  // Campo Autoincremental
+  idcliente: {
+    type: Number, // El tipo debe ser Number
+    // unique: true  // Debe ser único
+  },
   borrado: {
     type: String,
     required: true,
@@ -52,44 +59,19 @@ ClientesSchema = new Schema({
   numerocarpetaopcionalcliente: {
     type: String,
     require: false,
-    default: "NoInformó",
+    default: "no-informa",
   },
-  numexpedientecliente: {
-    type: String,
-    require: false,
-    default: "No Posee Información",
-  },
-  caratulaexpedientecliente: {
+  provinciacliente: {
     type: String,
     require: false,
     default: "No Posee Info",
-  },
-  juzgadoexpedientecliente: {
-    type: String,
-    require: false,
-    default: "No Posee Infor",
   },
   localidadcliente: {
     type: String,
     require: false,
     default: "No Posee Info",
   },
-  actuacionjudicialconfechacliente: {
-    type: String,
-    require: false,
-    default: "No Posee Info",
-  },
   observacionescliente: {
-    type: String,
-    require: false,
-    default: "No Posee Info",
-  },
-  fechaaudienciacliente: {
-    type: String,
-    require: false,
-    default: "No Posee Info",
-  },
-  actosprocesalescliente: {
     type: String,
     require: false,
     default: "No Posee Info",
@@ -107,6 +89,13 @@ ClientesSchema = new Schema({
     type: String,
     require: true,
   },
+});
+
+ClientesSchema.plugin(AutoIncrement, {
+  inc_field: 'idcliente', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+  start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
+  reference_fields: [],   // Opcional: Campos para crear secuencias independientes
+  id: 'iscliente_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
 module.exports = mongoose.model("Clientes", ClientesSchema);

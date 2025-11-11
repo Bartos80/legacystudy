@@ -1,89 +1,92 @@
 <script>
     function ShowName() {
-        var writtenName = document.getElementById('input_name').value;
-        document.getElementById('input_name').value = formatToString(writtenName);
+        const nameInput = document.getElementById('input_name');
+        nameInput.value = formatToString(nameInput.value);
     }
 
-    function formatToString(writtenName) {
-        var tmp = writtenName.split(" ");
-        var fullName;
-        tmp.forEach(element => {
-            if (fullName) {
-                fullName = fullName + " " + element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
-            } else {
-                fullName = element.charAt(0).toUpperCase() + element.slice(1).toLocaleLowerCase();
-            }
-        })
-        return fullName;
+    function formatToString(name) {
+        return name
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(" ");
     }
 
     function mostrarContrasena() {
-        var tipo = document.getElementById('txtpassword');
-        var eye = document.getElementById('eyepassword');
-        if (tipo.type == "password") {
-            tipo.type = "text";
-            eye.class = "btn btn-secondary"
+        const passwordInput = document.getElementById('txtpassword');
+        const eyeBtn = document.getElementById('eyepassword');
+        const icon = document.getElementById('eyeicon');
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.classList.replace("fa-eye-slash", "fa-eye");
         } else {
-            tipo.type = "password";
-            eye.class = "btn btn-primary"
+            passwordInput.type = "password";
+            icon.classList.replace("fa-eye", "fa-eye-slash");
         }
     }
 
     function ponerminuscula() {
-        let ex = document.getElementById("email");
-        ex.value = ex.value.toLowerCase();
-        //let y = document.getElementById("adrema");
-        //y.value = y.value.toLowerCase();
+        const email = document.getElementById("email");
+        email.value = email.value.toLowerCase();
     }
 </script>
 
-{{!-- <label for="input_name">Escribe nombres y apellidos:</label>
-<br>
-<input type="text" name="input_name" id="input_name" onchange="ShowName();"></input> --}}
-
-<div class="row">
-    <div class="col-md-4 mx-auto">
-        <div class="card mt-1 text-center">
-            <div class="card-header">
-                <h4 style="color:red; text-shadow: 1px 1px 2px black"> Acceso Abogados</h4>
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 mt-5">
+            <div class="card-header bg-white text-center">
+                <h4 class="text-dark fw-semibold mb-0">Acceso Abogados</h4>
             </div>
-            <img class="mx-auto d-block m-2 logo " src="/css/img/card.png" alt="Logo" />
+            <div class="text-center mt-3">
+                <img class="img-fluid" style="max-width: 100px;" src="/css/img/card.png" alt="Logo" />
+            </div>
             <div class="card-body">
                 <form action="/users/signin" method="POST">
-                    <div class="form-group">
-                        <input onkeyup="ponerminuscula()" type="email" id="email" class="form-control" name="email"
-                            placeholder="E-mail" autofocus>
+                    <div class="form-group mb-3">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="ejemplo@email.com"
+                            onkeyup="ponerminuscula()" 
+                            required 
+                            autofocus>
                     </div>
-                    <div class="form-group">
-                        <input type='password' class="form-control" name="password" placeholder="password"
-                            id="txtpassword" autofocus>
+
+                    <div class="form-group mb-3">
+                        <label for="txtpassword" class="form-label">Contraseña</label>
+                        <div class="input-group">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                name="password" 
+                                id="txtpassword"
+                                placeholder="Tu contraseña" 
+                                required>
+                            <button 
+                                id="eyepassword" 
+                                type="button" 
+                                class="btn btn-outline-secondary" 
+                                onclick="mostrarContrasena()"
+                                tabindex="-1">
+                                <span id="eyeicon" class="fa fa-eye-slash"></span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="input-group-append">
-                        <button id="eyepassword" class='btn btn-secondary' name="eyepassword" type="button"
-                            onclick="mostrarContrasena()">
-                            <span class="fa fa-eye-slash icon"></span>
-                        </button>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <button class="btn btn-success btn-block" type="submit">
+
+                    <div class="d-grid mb-2">
+                        <button type="submit" class="btn btn-success">
                             Ingresar
                         </button>
-                        <br />
                     </div>
-                    {{!-- <a class="btn btn-success btn-sm" href="/users/signup" role="button">Registrar</a> --}}
+
+                    <div class="text-center mt-2">
+                        <a href="/users/signup" class="btn btn-link">¿No tienes cuenta? Regístrate</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-{{!-- // Buttons --}}
-{{!-- <button type="button" class="btn btn-outline-primary">Primary</button>
-<button type="button" class="btn btn-outline-secondary">Secondary</button>
-<button type="button" class="btn btn-outline-success">Success</button>
-<button type="button" class="btn btn-outline-info">Info</button>
-<button type="button" class="btn btn-outline-warning">Warning</button>
-<button type="button" class="btn btn-outline-danger">Danger</button>
-<button type="button" class="btn btn-outline-light">Light</button>
-<button type="button" class="btn btn-outline-dark">Dark</button> --}}

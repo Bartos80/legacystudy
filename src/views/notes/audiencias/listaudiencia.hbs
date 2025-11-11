@@ -1,0 +1,86 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card shadow-lg border-primary">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0" style="font-weight: bold;">
+                        <i class="fas fa-user-circle"></i> Información Audiencia
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    {{! The form remains a PUT method for potential future edits, though fields are disabled }}
+                    <form action="/audiencia/list/{{audiencia._id}}?_method=PUT" method="POST">
+                        <input type="hidden" name="_method" value="PUT">
+
+                        <div class="mb-3">
+                            <label for="juzgado" class="form-label fw-bold">Juzgado:</label>
+                            <input onkeyup="ShowName();" type="text" class="form-control text-center" id="juzgado"
+                                name="juzgado" value="{{audiencia.juzgado}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="numexpediente" class="form-label fw-bold">Número de Expediente:</label>
+                            <input type="text" class="form-control text-center" id="numexpediente" name="numexpediente"
+                                value="{{audiencia.numexpediente}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="estadoexpediente" class="form-label fw-bold">Estado de Expediente:</label>
+                            <input type="text" class="form-control text-center" id="estadoexpediente" name="estadoexpediente"
+                                value="{{audiencia.estadoexpediente}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="caratula" class="form-label fw-bold">Carátula:</label>
+                            <input type="text" class="form-control text-center" id="caratula" name="caratula"
+                                value="{{audiencia.caratula}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="secretaria" class="form-label fw-bold">Secretaría:</label>
+                            <input id="secretaria" type="text" class="form-control text-center"
+                                name="secretaria" value="{{audiencia.secretaria}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dateturno" class="form-label fw-bold">Fecha Audiencia:</label>
+                            <input onkeyup="ponerminuscula()" id="dateturno" type="text" class="form-control text-center"
+                                name="dateturno" value="{{audiencia.dateturno}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="horaaudiencia" class="form-label fw-bold">Hora Audiencia:</label>
+                            <input type="text" class="form-control text-center" id="horaaudiencia" name="horaaudiencia"
+                                value="{{audiencia.horaaudiencia}} Hs"  disabled>
+                        </div>
+
+                        {{!-- <div class="mb-3">
+                            <label for="dateturno" class="form-label fw-bold">Fecha Saco Turno:</label>
+                            <input type="text" class="form-control text-center" id="dateturno" name="dateturno"
+                                value="{{audiencia.dateturno}}" disabled>
+                        </div> --}}
+
+                        <div class="mb-3">
+                            <label for="observaciones" class="form-label fw-bold">Observaciones:</label>
+                            <input type="text" class="form-control text-center" id="observaciones" name="observaciones"
+                                placeholder="Sin observaciones" value="{{audiencia.observaciones}}" disabled>
+                        </div>
+
+                        {{! --- Action Buttons --- }}
+                        <hr class="mt-4 mb-3">
+
+                        <a class="btn btn-warning w-100 fw-bold mb-3" href="/audiencia/edit/{{audiencia._id}}">
+                            <i class="fas fa-edit"></i> Editar Audiencia
+                        </a>
+
+                        <div class="text-center">
+                            <a href="javascript:window.history.back();" class="text-primary text-decoration-none fw-bold">
+                                &laquo; Volver Atrás
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

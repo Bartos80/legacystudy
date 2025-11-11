@@ -1,104 +1,88 @@
-<div class="row">
-  <div class="form-group btn-center mx-auto">
-    <form action="/clientes/findnombrecliente" method="POST">
-      <input type="search" class="form-control" name="namecliente" placeholder="Buscar x Nombre..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar x Nombre
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="form-group btn-center mx-auto">
-    <form action="/clientes/findapellidocliente" method="POST">
-      <input type="search" class="form-control" name="lastnamecliente" placeholder="Buscar x NyApellido..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar x Apellido
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="form-group btn-center mx-auto">
-    <form action="/clientes/findlistadni" method="POST">
-      <input type="search" class="form-control" name="dnicliente" placeholder="Buscar x DNI..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar DNI
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="form-group btn-center mx-auto">
-    <form action="/clientes/findlistafechaentrada" method="POST">
-      <input type="search" class="form-control" name="date" placeholder="Buscar x Fecha Alta Cliente..." autofocus />
-      <div class="form-group">
-        <button class="btn btn-warning btn-block btn-sm" type="submit">
-          Buscar Fecha alta
-        </button>
-      </div>
-    </form>
-  </div>
-  <br /><br />
-  <div style="color: rgb(2, 2, 2);text-shadow: 2px 2px 15px black">
-    <h5>Sección de Listado de Clientes</h5>
-  </div>
-  <a href="/clientes/add" class="btn btn-success btn-block">Agregar Cliente!</a>
-  <a href="/clientes/listado" class="btn btn-outline-warning btn-block btn-sm">Recargar Listado</a>
+<div class="container my-5">
 
-  <div class="form-group btn-center mx-auto">
-    <br />
-    <div class="form-group btn-center mx-auto">
-      <table class="table table-dark table-hover">
-        <thead>
-          <tr style="background-color: rgb(22, 166, 214);text-shadow: 1px 1px 2px black">
-            <td>Nombre/Apellido</td>
-            <td>D.N.I.</td>
-            <td>Tel/Cel</td>
-            <td>Email/Correo</td>
-            <td>Localidad</td>
-            <td>Opciones</td>
-            <td>Suplementario</td>
+  <!-- Encabezado + botones -->
+  <div class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center gap-3 mb-4">
+    <h5 class="fw-bold text-primary text-uppercase m-0">📋 Listado de Clientes</h5>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+      <a href="/clientes/add" class="btn btn-success btn-sm mr-4">+ Agregar Cliente</a>
+      <a href="/clientes/listado" class="btn btn-outline-warning btn-sm">↻ Recargar</a>
+    </div>
+  </div>
+
+  <!-- Formularios de búsqueda -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-3">
+      <form action="/clientes/findnombrecliente" method="POST">
+        <input type="search" name="nyacliente" id="nyacliente" class="form-control" placeholder="Buscar por nombre..." />
+        <button title="Buscar Nombre" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>    
+    <div class="col-sm-6 col-md-3">
+      <form action="/clientes/finddnicliente" method="POST">
+        <input type="search" name="dnicliente" class="form-control" placeholder="Buscar por DNI..." />
+        <button title="Buscar DNI" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="/clientes/findprovinciacliente" method="POST">
+        <input type="search" name="provinciacliente" class="form-control" placeholder="Buscar por provincia..." />
+        <button title="Buscar Provincia" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>      
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <form action="/clientes/findlocalidadcliente" method="POST">
+        <input type="search" name="localidadcliente" class="form-control" placeholder="Buscar por localidad..." />
+        <button title="Buscar Localidad" class="btn btn-outline-secondary w-100 mt-2 btn-sm" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabla responsiva de clientes -->
+  {{#if clientes.length}}
+    <div class="table-responsive rounded shadow-sm border">
+      <table class="table table-striped table-bordered align-middle text-nowrap">
+        <thead class="table-primary text-dark text-center">
+          <tr>
+            <th>Nombre / Apellido</th>
+            <th>D.N.I.</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Localidad</th>
+            <th>Opciones</th>
+            <th>+Más</th>
           </tr>
         </thead>
         <tbody>
           {{#each clientes}}
-          <tr>
-            {{!-- <td style="visibility:collapse;">{{ _id }}</td> --}}
-            {{!-- <td>{{ sector }}</td> --}}
-            <td style="text-transform: lowercase;">{{ nyacliente }}</td>
-            <td>{{ dnicliente }}</td>
-            <td style="text-transform: lowercase;">{{ telefonocliente }}</td>
-            <td style="color:yellow;">{{ emailcliente }}</td>
-            <td>{{ localidadcliente }}</td>
-            <td>
-              <a class="dropdown-item" href="/clientes/add/{{_id}}"
-                style="color:rgb(211, 24, 24);font-weight: bold;text-shadow: 1px 1px 2px black;">Agregar Exped</a>
-              <a class="dropdown-item" href="/clientes/list/{{_id}}"
-                style="color:rgb(53, 28, 196);font-weight: bold;text-shadow: 1px 1px 2px black">Info Cliente</a>
-            </td>
-            <td>
-              <a class="dropdown-item" href="/clientes/edit/{{_id}}" style="color:rgb(165, 196, 28)">Editar Cliente</a>
-              <form onSubmit="return confirm('Desea enviar a Papelera?')" style=""
-                action="/clientes/marcadelete/{{_id}}?_method=PUT" method="POST">
-                <input type="hidden" name="_method" value="PUT">
-                <button class="btn btn-danger btn-block btn-sm" type="submit">
-                  Papelera
-                </button>
-              </form>
-              {{!-- **** EL BORRADO DE ABAJO ES DEFINITIVO PARA ADMIN --}}
-              {{!-- <form onSubmit="return confirm('Desea Borrar?')" style=""
-                action="/clientes/delete/{{_id}}?_method=DELETE" method="POST">
-                <input type="hidden" name="_method" value="DELETE">
-                <button class="btn btn-danger btn-block btn-sm" type="submit">
-                  Borrar
-                </button>
-              </form> --}}
-            </td>
-          </tr>
+            <tr>
+              <td class="text-capitalize">{{ nyacliente }}</td>
+              <td>{{ dnicliente }}</td>
+              <td>{{ telefonocliente }}</td>
+              <td class="text-lowercase text-danger fw-bold">{{ emailcliente }}</td>
+              <td class="text-capitalize">{{ localidadcliente }}</td>
+              <td>
+                <div class="d-flex flex-column gap-1">
+                  {{!-- <a href="/clientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+ Expediente</a> --}}
+                  <a href="/clientes/list/{{_id}}" class="btn btn-info btn-sm w-100">Info Cliente</a>                  
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column gap-1">                  
+                  <a href="/clientes/edit/{{_id}}" class="btn btn-outline-warning btn-sm w-100">Editar</a>
+                  <form action="/clientes/marcadelete/{{_id}}?_method=PUT" method="POST"
+                    onsubmit="return confirm('¿Desea enviar a la papelera?')">
+                    <button class="btn btn-outline-danger btn-sm w-100" type="submit">Papelera</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
           {{/each}}
         </tbody>
       </table>
     </div>
-  </div>
-  {{!-- {{else}} --}}
+  {{else}}
+    <div class="alert alert-warning text-center mt-5" role="alert">
+      🚫 No Hay Clientes por mostrar.
+    </div>
+  {{/if}}
+</div>

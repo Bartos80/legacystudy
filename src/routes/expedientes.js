@@ -5,12 +5,17 @@ const fs = require('fs').promises;
 const { isAuthenticated } = require('../helpers/auth');
 
 const Users = require('../models/User');
-const Clientes = require('../models/clientes') 
+const Clientes = require('../models/clientes')
 const Expediente = require('../models/Expediente');
+const Juzgados = require('../models/Juzgado')
+//const Expedentrsalida = require('../models/expedentrsalida');
+const Abogados = require('../models/abogados');
+const Expedientecliente = require('../models/expedientecliente');
+const Expedienteabogado = require('../models/expedienteabogado');
+const Expedientejuzgado = require('../models/expedientejuzgado');
 // const Expedinspeccion = require('../models/expedinspeccion');
 // const Expedticket = require('../models/Expedticket')
 // const Expedticketentrainsp = require('../models/Expedticketentrainsp')
-// const Expedentrsalida = require('../models/expedentrsalida');
 // const Expedcoordinado = require('../models/expedcoordinado');
 // const Expedcoordresultado = require('../models/expedcoordresultado');
 // const Inspectores = require('../models/inspectores');
@@ -22,6 +27,7 @@ const Note = require('../models/Note');
 // const expedinspeccion = require('../models/expedinspeccion');
 const pdf = require("html-pdf");
 const User = require('../models/User');
+const expedientejuzgado = require('../models/expedientejuzgado');
 var pdfoptionsA4 = { format: 'A4' };
 
 // **esto es para agregar campo borrado a todos los q no tienen borrado marcado**
@@ -31,24 +37,77 @@ router.put('/expedientes/listadoborradosenno', isAuthenticated, async (req, res)
     res.redirect('/expedientes/listado');
 });
 
+router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
+    try {
+        const rolusuario = req.user.rolusuario;
+        if (rolusuario === "Administrador") {
+            // **1. Optimización con .populate('idcliente')**
+            var expedientestabla = await Expediente.find({ borrado: "No" })
+                .lean()
+                .limit()
+                .sort({ date: 'desc' });
+            if (!expedientestabla) {
+                return res.status(404).send('Expediente no encontrado');
+            }
+            var expedientes = [];
+            for (expedientes of expedientestabla) {
+
+                // Formato de Fecha Corregido y Limpiado
+                if (expedientes.ultimanotificacion) {
+                    const fecha = new Date(expedientes.ultimanotificacion);
+                    // Uso de .padStart para formato DD-MM-YYYY limpio
+                    const dia = String(fecha.getDate() + 1).padStart(2, '0'); // +1 día puede deberse a la conversión de zona horaria
+                    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                    const ano = fecha.getFullYear();
+                    expedientes.ultimanotificacion = `${dia}-${mes}-${ano}`;
+                    expedientes.idcliente = expedientes.idcliente[0.1]
+
+                } else {
+                    expedientes.ultimanotificacion = "----";
+                }
+                if (expedientes.idjuzgado) {
+                    const juzgadoData = await Juzgados.findById(expedientes.idjuzgado).lean();
+                    if (juzgadoData) {
+                        expedientes.idjuzgado = juzgadoData.numjuzgado;
+                    } else {
+                        expedientes.idjuzgado = "----";
+                    }
+                }
+
+                expedientes = expedientestabla;
+            }
+
+            res.render('notes/expedientes/planillalistaexpedientes', { expedientes: expedientestabla });
+
+        } else {
+            req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
+            return res.redirect('/');
+        }
+    } catch (error) {
+        console.error("Error al obtener el listado de expedientes:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
+
 router.get('/expedientes/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
-        const usuarios = await Users.find().lean().sort({ date: 'desc' });
-        res.render('notes/newexpedientes');
-        //res.render('notes/allusuariosadm', { usuarios });
+    if (rolusuario == "Administrador") {
+        //const usuarios = await Users.find().lean().sort({ date: 'desc' });
+        const juzgados = await Juzgados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
+        const abogados = await Abogados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
+        const clientes = await Clientes.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
+        res.render('notes/expedientes/newexpedientes', { clientes, abogados, juzgados });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
         return res.redirect('/');
     }
 });
 
-router.get('/expedientes/add/:id', isAuthenticated, async (req, res) => {    
+router.get('/expedientes/add/:id', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         const clientes = await Clientes.findById(req.params.id).lean()
-        res.render('notes/newexpedientes', { clientes });
+        res.render('notes/expedientes/newexpedientes', { clientes });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -61,7 +120,7 @@ router.get('/informeinspeccion/add/:id', isAuthenticated, async (req, res) => {
     const notes = await Note.findById(req.params.id).lean();
     const expedientes = await Expediente.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/newinformeinspeccion', { notes, expedientes });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -74,7 +133,7 @@ router.get('/movimientoexpediente/add/:id', isAuthenticated, async (req, res) =>
     const rolusuario = req.user.rolusuario;
     const expedientes = await Expediente.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/inspecciones/movimientoexped', { expedientes });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -123,7 +182,7 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
     const notes = await Note.findById(req.params.id).lean();
     const expedientes = await Expediente.findById(req.params.id).lean();
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         res.render('notes/inspecciones/newnotes', { notes, expedientes });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -133,12 +192,14 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
 });
 
 router.post('/notes/newexpedientes', isAuthenticated, async (req, res) => {
-    const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, 
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,        
+    const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
+        caratula, tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        idcliente, idabogado, idjuzgado
     } = req.body;
     const newExpediente = new Expediente({
-        borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, 
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, 
+        borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
+        caratula, tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        idcliente, idabogado, idjuzgado
     })
     newExpediente.user = req.user.id;
     newExpediente.name = req.user.name;
@@ -180,7 +241,7 @@ router.get('/expedientes/coordinados/intimacionesvencidas', isAuthenticated, asy
     if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
         //console.log("HASTAD", fechaActual)
         console.log("D", d)
-        const expedcoordresultadotabla = await Expedcoordresultado.find({$and : [ {borrado : "No"}, {desestimar : "No"}, { vencimientointimacion: { $lte: fechaActual } }]}).lean().sort({ vencimientointimacion: 'desc' });
+        const expedcoordresultadotabla = await Expedcoordresultado.find({ $and: [{ borrado: "No" }, { desestimar: "No" }, { vencimientointimacion: { $lte: fechaActual } }] }).lean().sort({ vencimientointimacion: 'desc' });
         //console.log("Expedientes Coordinados", expedcoordresultado)
         for (var expedcoordresultado of expedcoordresultadotabla) {
             //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
@@ -209,7 +270,7 @@ router.get('/expedientes/coordinados/intimacionesvencidas', isAuthenticated, asy
                 expedcoordresultado.vencimientointimacion = fullyear;
             } else {
                 expedcoordresultado.vencimientointimacion = "----"
-            }    
+            }
             // fechaActual.toString() = expedcoordresultado.fechaintimacion.slice(0, 10); //.slice(inicioTrozo[, finTrozo])
             // expedcoordresultado.fechaintimacion = parseInt(fechaActual);
             // necesito igualar para que se copie el cambio
@@ -241,7 +302,7 @@ router.get('/expedientes/coordinados/intiminfracdesestimados', isAuthenticated, 
     if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
         //console.log("HASTAD", fechaActual)
         console.log("D", d)
-        const expedcoordresultadotabla = await Expedcoordresultado.find({$and : [ {borrado : "No"}, {desestimar : "Si"}, { vencimientointimacion: { $lte: fechaActual } }]}).lean().sort({ vencimientointimacion: 'desc' });
+        const expedcoordresultadotabla = await Expedcoordresultado.find({ $and: [{ borrado: "No" }, { desestimar: "Si" }, { vencimientointimacion: { $lte: fechaActual } }] }).lean().sort({ vencimientointimacion: 'desc' });
         //console.log("Expedientes Coordinados", expedcoordresultado)
         for (var expedcoordresultado of expedcoordresultadotabla) {
             //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
@@ -271,7 +332,7 @@ router.get('/expedientes/coordinados/intiminfracdesestimados', isAuthenticated, 
                 expedcoordresultado.vencimientointimacion = fullyear;
             } else {
                 expedcoordresultado.vencimientointimacion = "----"
-            }           
+            }
 
             // fechaActual.toString() = expedcoordresultado.fechaintimacion.slice(0, 10); //.slice(inicioTrozo[, finTrozo])
 
@@ -292,12 +353,12 @@ router.get('/expedientes/coordinados/intiminfracdesestimados', isAuthenticated, 
     }
 });
 
-router.get('/expedientes/coordinados/inspectolres/list', isAuthenticated, async (req, res) => {  
+router.get('/expedientes/coordinados/inspectolres/list', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         //const usuarios = await Users.find().lean().sort({ numorden: 'desc' });
         const inspectores = await Inspectores.find().lean()
-        res.render('notes/inspecciones/listinspectorescoord', {inspectores});
+        res.render('notes/inspecciones/listinspectorescoord', { inspectores });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -305,12 +366,12 @@ router.get('/expedientes/coordinados/inspectolres/list', isAuthenticated, async 
     }
 });
 
-router.get('/expedientes/coordinados/inspectolagreresult/list', isAuthenticated, async (req, res) => {  
+router.get('/expedientes/coordinados/inspectolagreresult/list', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         //const usuarios = await Users.find().lean().sort({ numorden: 'desc' });
         const inspectores = await Inspectores.find().lean()
-        res.render('notes/inspecciones/listinspectoresresult', {inspectores});
+        res.render('notes/inspecciones/listinspectoresresult', { inspectores });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -319,14 +380,14 @@ router.get('/expedientes/coordinados/inspectolagreresult/list', isAuthenticated,
 });
 
 router.get('/expedientes/coordinados/add/:id', isAuthenticated, async (req, res) => {
-    const rolusuario = req.user.rolusuario;    
+    const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
     // const expedcoordinado = await Expedcoordinado.findById(req.params.id).lean()
     // res.render('notes/inspecciones/editexpedcood', { expedcoordinado })    //
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador") {
         //const usuarios = await Users.find().lean().sort({ numorden: 'desc' });
         const inspectores = await Inspectores.findById(req.params.id).lean()
-        res.render('notes/inspecciones/newexpcoordin', {inspectores});
+        res.render('notes/inspecciones/newexpcoordin', { inspectores });
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -348,7 +409,7 @@ router.get('/expedientes/coordinados/listresultado/:id', isAuthenticated, async 
     var expedcoordinado = await Expedcoordinado.findById(req.params.id).lean()
     //const expedientes = await Expediente.findById(id).lean().sort({ numexpediente: 'desc' });
     var idexpediente = expedcoordinado._id
-    var expedcoordresultadotabla = await Expedcoordresultado.find({ $and: [{ borrado: "No" }, { idexpediente: idexpediente }] }).lean().sort({date: 'desc'});
+    var expedcoordresultadotabla = await Expedcoordresultado.find({ $and: [{ borrado: "No" }, { idexpediente: idexpediente }] }).lean().sort({ date: 'desc' });
 
     for (var expedcoordresultado of expedcoordresultadotabla) {
         //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
@@ -497,7 +558,7 @@ router.post('/expedientes/coordinados/intimacionesvencidas/find', isAuthenticate
             expedcoordresultado.vencimientointimacion = fullyear;
         } else {
             expedcoordresultado.vencimientointimacion = "----"
-        }           
+        }
 
         // fechaActual.toString() = expedcoordresultado.fechaintimacion.slice(0, 10); //.slice(inicioTrozo[, finTrozo])
 
@@ -549,7 +610,7 @@ router.post('/expedientes/coordinados/intimacionesvencidas/findadrema', isAuthen
             expedcoordresultado.vencimientointimacion = fullyear;
         } else {
             expedcoordresultado.vencimientointimacion = "----"
-        }           
+        }
 
         // fechaActual.toString() = expedcoordresultado.fechaintimacion.slice(0, 10); //.slice(inicioTrozo[, finTrozo])
 
@@ -601,7 +662,7 @@ router.post('/expedientes/coordinados/intimacionesvencidas/findiniciador', isAut
             expedcoordresultado.vencimientointimacion = fullyear;
         } else {
             expedcoordresultado.vencimientointimacion = "----"
-        }           
+        }
 
         // fechaActual.toString() = expedcoordresultado.fechaintimacion.slice(0, 10); //.slice(inicioTrozo[, finTrozo])
 
@@ -653,7 +714,7 @@ router.post('/expedientes/coordinados/intimacionesvencidas/findinspector', isAut
             expedcoordresultado.vencimientointimacion = fullyear;
         } else {
             expedcoordresultado.vencimientointimacion = "----"
-        }           
+        }
 
         // fechaActual.toString() = expedcoordresultado.fechaintimacion.slice(0, 10); //.slice(inicioTrozo[, finTrozo])
 
@@ -701,7 +762,7 @@ router.post('/notes/newexpedcoordinresult', isAuthenticated, async (req, res) =>
         vencimientointimacion, intimvinculadainfraccion, fechainfraccion, horainfraccion, descripcionintimacion, descripcioninfraccion, codigoinspector, inspector,
         iniciadornomyape, domicilio, fechainspeccion, horainspeccion, motivoinspeccion,
         eliminado, user, name, date
-    })    
+    })
     Expedcoordresultado.user = req.user.id;
     Expedcoordresultado.name = req.user.name;
     await newexpedcoordresultado.save();
@@ -717,12 +778,12 @@ router.get('/movimientoexpedientecoord/add/:id', isAuthenticated, async (req, re
     //const usuarios = await Users.find().lean().sort({ date: 'desc' });
     var inspectoresname = []
     var inspectorescodigo = []
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
-        for (var inspectores of inspectorestabla) {           
-            inspectoresname.push(inspectores.name)            
+    if (rolusuario == "Administrador") {
+        for (var inspectores of inspectorestabla) {
+            inspectoresname.push(inspectores.name)
             inspectorescodigo.push(inspectores.codigoinspector)
         }
-        res.render('notes/inspecciones/movimientoexpedcoord', {expedcoordinado, inspectoresname, inspectorescodigo});;
+        res.render('notes/inspecciones/movimientoexpedcoord', { expedcoordinado, inspectoresname, inspectorescodigo });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
@@ -738,9 +799,9 @@ router.put('/expedcoordin/marcadelete/:id', isAuthenticated, async (req, res) =>
         borrado, fechaborrado, userborrado
     });
     const idexpediente = req.params.id
-    await Expedcoordresultado.updateMany({idexpediente : idexpediente, borrado : "No"},{ 
-        borrado : borrado, fechaborrado: fechaborrado, userborrado: userborrado
-});
+    await Expedcoordresultado.updateMany({ idexpediente: idexpediente, borrado: "No" }, {
+        borrado: borrado, fechaborrado: fechaborrado, userborrado: userborrado
+    });
     req.flash('success_msg', 'Expediente y sus Movimientos a Papelera Reciclaje')
     //res.render('notes/inspecciones/listexpcordintvenc');
     res.redirect('/expedientes/coordinados');
@@ -838,24 +899,6 @@ router.get('/expedientes', isAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-    const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(100).sort({ ultimanotificacion: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes });
-    } else if (rolusuario == "Inspector") {
-        const expedientes = await Expediente.find({ borrado: "No" }).lean().limit(100).sort({ ultimanotificacion: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/planillalistaexpedientesusr', { expedientes });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
-        return res.redirect('/');
-    }
-});
-
 router.get('/expedientes/borradolistado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
@@ -916,23 +959,27 @@ router.get('/expedientes/expedconinformeinspeccion/:id', isAuthenticated, async 
 
 router.get('/expedientes/edit/:id', isAuthenticated, async (req, res) => {
     const expediente = await Expediente.findById(req.params.id).lean()
-    res.render('notes/editexpediente', { expediente })
+    res.render('notes/expedientes/editexpediente', { expediente })
 });
 
 router.get('/expedientes/list/:id', isAuthenticated, async (req, res) => {
     const expediente = await Expediente.findById(req.params.id).lean()
-    res.render('notes/listexpediente', { expediente })
+    const idexpediente = expediente.idexpediente;
+    const expedientejuzgado = await Expedientejuzgado.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()    
+    const expedienteabogado = await Expedienteabogado.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()
+    const expedientecliente = await Expedientecliente.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()
+    res.render('notes/expedientes/listexpediente', { expediente, expedientejuzgado, expedienteabogado, expedientecliente })
 });
 
 // *** BUSCAR EXPEDIENTES (NOTES) - LISTADO ***
-router.post('/expedientes/find', isAuthenticated, async (req, res) => {
-    const { numexpediente } = req.body;
-    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { numexpediente: { $regex: numexpediente, $options: "i" } }] }).lean().sort({ fechainicioentrada: 'desc' });;
+router.post('/expedientes/findcliente', isAuthenticated, async (req, res) => {
+    const { cliente } = req.body;
+    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { cliente: { $regex: cliente, $options: "i" } }] }).lean().sort({ fechainicioentrada: 'desc' });
     if (!expedientes) {
         req.flash('success_msg', 'cargue un Nº de expediente')
-        return res.render("notes/inspecciones/planillalistaexpedientesadm");
+        return res.render("notes/inspecciones/planillalistaexpedientes");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
@@ -941,20 +988,20 @@ router.post('/expedientes/findjuzgado', isAuthenticated, async (req, res) => {
     const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { juzgado: { $regex: juzgado, $options: "i" } }] }).lean().sort({ juzgado: 'desc' });;
     if (!expedientes) {
         req.flash('success_msg', 'cargue un Juzgado')
-        return res.render("notes/inspecciones/planillalistaexpedientesadm");
+        return res.render("notes/expedientes/planillalistaexpedientes");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
-router.post('/expedientes/findsecretaria', isAuthenticated, async (req, res) => {
-    const { secretaria } = req.body;
-    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { secretaria: { $regex: secretaria, $options: "i" } }] }).lean().sort({ secretaria: 'desc' });;
+router.post('/expedientes/findnumexpediente', isAuthenticated, async (req, res) => {
+    const { numexpediente } = req.body;
+    const expedientes = await Expediente.find({ $and: [{ borrado: "No" }, { numexpediente: { $regex: numexpediente, $options: "i" } }] }).lean().sort({ date: 'desc' });
     if (!expedientes) {
-        req.flash('success_msg', 'cargue una Secretaría')
-        return res.render("notes/inspecciones/planillalistaexpedientesadm");
+        req.flash('success_msg', 'cargue Expediente')
+        return res.render("notes/expedientes/planillalistaexpedientes");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
@@ -965,7 +1012,7 @@ router.post('/expedientes/findestado', isAuthenticated, async (req, res) => {
         req.flash('success_msg', 'cargue estado (N y A)')
         return res.render("notes/inspecciones/planillalistaexpedientesadm");
     } else {
-        res.render('notes/inspecciones/planillalistaexpedientesadm', { expedientes })
+        res.render('notes/expedientes/planillalistaexpedientes', { expedientes })
     }
 });
 
@@ -1061,11 +1108,11 @@ router.post('/expedientes/borradofindestado', isAuthenticated, async (req, res) 
 
 
 router.put('/notes/editexpediente/:id', isAuthenticated, async (req, res) => {
-    const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, 
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,  } = req.body
+    const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
+        tipo, ultimanotificacion, caratula, dateexp,  partes, estado, user, name, fotoexpediente, } = req.body
     await Expediente.findByIdAndUpdate(req.params.id, {
-        borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, 
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, 
+        borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
+        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, caratula, dateexp,  
     });
     req.flash('success_msg', 'Expediente actualizado')
     res.redirect('/expedientes/listado');
@@ -1088,6 +1135,29 @@ router.put('/expedientes/marcadelete/:id', isAuthenticated, async (req, res) => 
     res.redirect('/expedientes/listado');
 });
 
+router.put('/expedientes/marcadeleteexpedientesclientes/:id', isAuthenticated, async (req, res) => {
+    const borrado = "Si";
+    const fechaborrado = new Date();
+    const userborrado = req.user.name;
+    await Expedientecliente.findByIdAndUpdate(req.params.id, {
+        borrado, fechaborrado, userborrado
+    });
+    req.flash('success_msg', 'Cliente Expediente a Papelera')
+    res.redirect('/expedientes/listado');
+});
+
+router.put('/expedientes/marcadeleteexpedientesjuzgado/:id', isAuthenticated, async (req, res) => {
+    const borrado = "Si";
+    const fechaborrado = new Date();
+    const userborrado = req.user.name;
+    await Expedientejuzgado.findByIdAndUpdate(req.params.id, {
+        borrado, fechaborrado, userborrado
+    });
+    req.flash('success_msg', 'Juzgado Expediente a Papelera')
+    res.redirect('/expedientes/listado');
+});
+
+
 router.put('/expedientes/recuperarlistado', isAuthenticated, async (req, res) => {
     //await Multas.updateMany({ borrado: "Si", fechaborrado: new Date(), userborrado:req.user.name});    
     await Expediente.updateMany({ borrado: 'Si' }, { borrado: "No", fechaborrado: "Recuperado" });
@@ -1106,266 +1176,69 @@ router.put('/expedientes/marcadeleterestaurar/:id', isAuthenticated, async (req,
     res.redirect('/expedientes/borradolistado');
 });
 
-// ********* ZONA DE INFORMES DE INSPECCION *********
+router.get('/expedientes/expedientejuzgado/add/:id', isAuthenticated, async (req, res) => {
+    const expediente = await Expediente.findById(req.params.id).lean()
+    const juzgado = await Juzgados.find({ borrado: "No" }).lean()
+    //const expedientejuzgado = await Expedientejuzgado.find({ borrado: "No" },{ idexpediente: req.params.id}).lean().limit().sort({ date: 'desc' }); 
+    res.render('notes/expedientes/newjuzgadoexpediente.hbs', { expediente, juzgado })
+});
 
-router.post('/informeinspeccion/newinformeinspeccion', isAuthenticated, async (req, res) => {
-    //console.log(req.body)
-    const { idexpediente, numexpediente, numadrema, fechaentradainspeccion, fechaeinspectorinspeccion,
-        numintimacion, darcumplimientoa, plazointimacion, numinfraccion, causas, paralizacion, causasparalizacion, informe, destinopase, fechasalida, user, name, date
+router.post('/notes/newexpedientejuzgado', isAuthenticated, async (req, res) => {
+    const { borrado, userborrado, fechaborrado, idjuzgadoexpediente, bajajuzgado, idjuzgado, numjuzgado, paisjuzgado, provinciajuzgado, 
+        localidadjuzgado, idexpediente, numexpediente, caratula, estado
     } = req.body;
-
-    const newInformeinspeccion = new Expedinspeccion({
-        idexpediente, numexpediente, numadrema, fechaentradainspeccion, fechaeinspectorinspeccion,
-        numintimacion, darcumplimientoa, plazointimacion, numinfraccion, causas, paralizacion, causasparalizacion, informe, destinopase, fechasalida, user, name, date
-    })
-    newInformeinspeccion.user = req.user.id;
-    newInformeinspeccion.name = req.user.name;
-    await newInformeinspeccion.save();
-    req.flash('success_msg', 'Informe de Inspección Agregado Exitosamente');
+    const newExpedientejuzgado = new Expedientejuzgado({
+        borrado, userborrado, fechaborrado, idjuzgadoexpediente, bajajuzgado, idjuzgado, numjuzgado, paisjuzgado, provinciajuzgado, 
+        localidadjuzgado, idexpediente, numexpediente, caratula, estado
+    });
+    newExpedientejuzgado.user = req.user.id;
+    newExpedientejuzgado.name = req.user.name;
+    await newExpedientejuzgado.save();
+    req.flash('success_msg', 'Juzgado agregado al Expediente');
     res.redirect('/expedientes/listado');
 });
 
-router.get('/expedientes/informeinspeccion', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-    const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        const expedisnpeccion = await Expedinspeccion.find().lean().limit(100).sort({ date: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/planillalistainformeexped', { expedisnpeccion });
-    } else if (rolusuario == "Inspector") {
-        const expedisnpeccion = await Expedinspeccion.find().lean().limit(100).sort({ date: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/planillalistainformeexped', { expedisnpeccion });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
-        return res.redirect('/');
-    }
+router.get('/expedientes/expedienteabogado/add/:id', isAuthenticated, async (req, res) => {
+    const expediente = await Expediente.findById(req.params.id).lean()
+    const abogado = await Abogados.find({ borrado: "No" }).lean()
+    //const expedientejuzgado = await Expedientejuzgado.find({ borrado: "No" },{ idexpediente: req.params.id}).lean().limit().sort({ date: 'desc' }); 
+    res.render('notes/expedientes/newabogadoexpediente.hbs', { expediente, abogado })
 });
 
-router.get('/informexpedientes/edit/:id', isAuthenticated, async (req, res) => {
-    const expedinspeccion = await Expedinspeccion.findById(req.params.id).lean()
-    res.render('notes/inspecciones/editinformexpediente', { expedinspeccion })
-});
-
-router.get('/informexpedientes/list/:id', isAuthenticated, async (req, res) => {
-    const expedinspeccion = await Expedinspeccion.findById(req.params.id).lean()
-    res.render('notes/inspecciones/listinformexpediente', { expedinspeccion })
-});
-
-router.put('/notes/editinformexpediente/:id', isAuthenticated, async (req, res) => {
-    const { idexpediente, numexpediente, numadrema, fechaentradainspeccion, fechaeinspectorinspeccion,
-        numintimacion, darcumplimientoa, numinfraccion, causas, paralizacion, causasparalizacion, informe, destinopase, fechasalida, user, name, date } = req.body
-    await Expedinspeccion.findByIdAndUpdate(req.params.id, {
-        idexpediente, numexpediente, numadrema, fechaentradainspeccion, fechaeinspectorinspeccion,
-        numintimacion, darcumplimientoa, numinfraccion, causas, paralizacion, causasparalizacion, informe, destinopase, fechasalida, user, name, date
+router.post('/notes/newexpedienteabogado', isAuthenticated, async (req, res) => {
+    const { borrado, userborrado, fechaborrado, bajaabogado, idabogado, nyaabogado, dniabogado, matriculaabogado, 
+        idexpediente, numexpediente, caratula, estado } = req.body;
+    const newExpedienteabogado = new Expedienteabogado({
+        borrado, userborrado, fechaborrado, bajaabogado, idabogado, nyaabogado, dniabogado, matriculaabogado, 
+        idexpediente, numexpediente, caratula, estado
     });
-    req.flash('success_msg', 'Informe de Expediente actualizado')
+    newExpedienteabogado.user = req.user.id;
+    newExpedienteabogado.name = req.user.name;
+    await newExpedienteabogado.save();
+    req.flash('success_msg', 'Abogado agregado al Expediente');
     res.redirect('/expedientes/listado');
 });
 
-router.delete('/expedinspeccion/delete/:id', isAuthenticated, async (req, res) => {
-    await expedinspeccion.findByIdAndDelete(req.params.id);
-    req.flash('success_msg', 'Informe de Expediente Eliminado')
-    res.redirect('/expedientes/informeinspeccion')
+router.get('/expedientes/expedientecliente/add/:id', isAuthenticated, async (req, res) => {
+    const expediente = await Expediente.findById(req.params.id).lean()
+    const cliente = await Clientes.find({ borrado: "No" }).lean()
+    //const expedientejuzgado = await Expedientejuzgado.find({ borrado: "No" },{ idexpediente: req.params.id}).lean().limit().sort({ date: 'desc' });       
+    res.render('notes/expedientes/newclienteexpediente.hbs', { expediente, cliente })
 });
 
-// ********* ZONA DE TICKETS DE INSPECCION *********
-
-router.get('/expedientes/listadoticket', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-    const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        const expedticket = await Expedticket.find().lean().limit(100).sort({ date: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/expticket/planillaexpticketinsp.hbs', { expedticket });
-    } else if (rolusuario == "Inspector") {
-        const expedticket = await Expedticket.find().lean().limit(100).sort({ date: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/expticket/planillaexpticketinsp.hbs', { expedticket });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
-        return res.redirect('/');
-    }
-});
-
-router.get('/expedientes/ticket/ticketexpedconinformeinspeccion/:id', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-    const rolusuario = req.user.rolusuario;
-    var id = req.params.id;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        //const mesaentrada = await Mesaentrada.findById(req.params.id).lean() 
-        const expedticket = await Expedticket.findById(req.params.id).lean()
-        //const expedientes = await Expediente.findById(id).lean().sort({ numexpediente: 'desc' });
-        var numticket = expedticket.numticket
-        const expedticketentrainsp = await Expedticketentrainsp.find({ numticket: numticket }).lean().sort({ date: 'desc' }); //
-        res.render('notes/inspecciones/expticket/planillalistaticketconinforme', { expedticketentrainsp, expedticket });
-    } else if (rolusuario == "Inspector") {
-        //const mesaentrada = await Mesaentrada.findById(req.params.id).lean() 
-        const expedticket = await Expedticket.findById(req.params.id).lean()
-        //const expedientes = await Expediente.findById(id).lean().sort({ numexpediente: 'desc' });
-        var numticket = expedticket.numticket
-        const expedticketentrainsp = await Expedticketentrainsp.find({ numticket: numticket }).lean().sort({ date: 'desc' }); //
-        res.render('notes/inspecciones/expticket/planillalistaticketconinforme', { expedticketentrainsp, expedticket });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
-        return res.redirect('/');
-    }
-});
-
-router.get('/expedientes/ticket/edit/:id', isAuthenticated, async (req, res) => {
-    const expedticket = await Expedticket.findById(req.params.id).lean()
-    res.render('notes/inspecciones/expticket/editticketexpediente', { expedticket })
-});
-
-router.get('/expedientes/listadoticket/add/:id', isAuthenticated, async (req, res) => {
-    const rolusuario = req.user.rolusuario;
-    const expedticket = await Expedticket.findById(req.params.id).lean();
-    const expedticketentrainsp = await Expedticketentrainsp.findById(req.params.id).lean();
-    //const usuarios = await Users.find().lean().sort({ date: 'desc' });
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
-        res.render('notes/inspecciones/expticket/newinforexpticket', { expedticket, expedticketentrainsp });;
-        //res.render('notes/allusuariosadm', { usuarios });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
-        return res.redirect('/');
-    }
-});
-
-router.get('/expedientes/ticket/list/:id', isAuthenticated, async (req, res) => {
-    const expedticket = await Expedticket.findById(req.params.id).lean()
-    res.render('notes/inspecciones/expticket/listticketexp.hbs', { expedticket })
-});
-
-// *** BUSCAR TICKETS DE EXPEDIENTES - LISTADO ***
-router.post('/ticketexp/findlistaticket', isAuthenticated, async (req, res) => {
-    const rolusuario = req.user.rolusuario;
-    const { numeroticket } = req.body;
-    const expedticket = await Expedticket.find({ numticket: { $regex: numeroticket, $options: "i" } }).lean().sort({ date: 'desc' })
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        res.render("notes/inspecciones/expticket/planillaexpticketinsp.hbs", { expedticket })
-    } else {
-        res.render("notes/inspecciones/expticket/planillaexpticketinsp.hbs", { expedticket })
-    }
-});
-
-router.post('/ticketexp/findlistainiciador', isAuthenticated, async (req, res) => {
-    const rolusuario = req.user.rolusuario;
-    const { iniciador } = req.body;
-    const expedticket = await Expedticket.find({ iniciador: { $regex: iniciador, $options: "i" } }).lean().sort({ date: 'desc' })
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        if (!expedticket) {
-            req.flash('success_msg', 'cargue Nombre y Apellido')
-            return res.render("notes/inspecciones/expticket/planillaexpticketinsp.hbs");
-        } else {
-            res.render('notes/inspecciones/expticket/planillaexpticketinsp.hbs', { expedticket })
-        }
-    } else {
-        res.render('notes/planillalistaticket', { expedticket })
-    }
-});
-
-router.post('/ticketexp/findlistaadrema', isAuthenticated, async (req, res) => {
-    const rolusuario = req.user.rolusuario;
-    const { adrema } = req.body;
-    const expedticket = await Expedticket.find({ adrema: { $regex: adrema, $options: "i" } }).lean().sort({ date: 'desc' })
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        if (!expedticket) {
-            req.flash('success_msg', 'cargue Nombre y Apellido')
-            return res.render("notes/inspecciones/expticket/planillaexpticketinsp.hbs");
-        } else {
-            res.render('notes/inspecciones/expticket/planillaexpticketinsp.hbs', { expedticket })
-        }
-    } else {
-        res.render('notes/inspecciones/expticket/planillaexpticketinsp.hbs', { expedticket })
-    }
-});
-
-router.put('/notes/editexpedticket/:id', isAuthenticated, async (req, res) => {
-    const { estado, numticket, iniciador, domicilio, adrema, fiduciariopropsocio, direcfiduciariopropsocio,
-        correofiduciariopropsocio, directorobraoperitovisor, destinodeobra,
-        superficieterreno, superficieaconstruir, superficiesubsueloplantabaja, superficieprimerpisoymaspisos,
-        observaciones, permisobraoactainfrac, user, name, date } = req.body
-    await Expedticket.findByIdAndUpdate(req.params.id, {
-        estado, numticket, iniciador, domicilio, adrema, fiduciariopropsocio, direcfiduciariopropsocio,
-        correofiduciariopropsocio, directorobraoperitovisor, destinodeobra,
-        superficieterreno, superficieaconstruir, superficiesubsueloplantabaja, superficieprimerpisoymaspisos
-        , observaciones, permisobraoactainfrac, user, name, date
-    });
-    req.flash('success_msg', 'Ticket de Expediente actualizado')
-    res.redirect('/expedientes/listadoticket');
-});
-
-// ********* ZONA DE TICKET CON ENTRADA A INFORMES DE INSPECCION ********* (Expedticketentrainsp)
-
-router.get('/expedientes/ticket/informeinspeccion', isAuthenticated, async (req, res) => {
-    // res.send('Notes from data base');
-    // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
-    const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
-        const expedticketentrainsp = await Expedticketentrainsp.find().lean().limit(100).sort({ date: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/expticket/planillalistainforticketexp', { expedticketentrainsp });
-    } else if (rolusuario == "Inspector") {
-        const expedticketentrainsp = await Expedticketentrainsp.find().lean().limit(100).sort({ date: 'desc' }); //
-        // const expedientes = await Expediente.paginate({},{paginadoexpedientes}).lean().sort({ numexpediente: 'desc' });
-        res.render('notes/inspecciones/expticket/planillalistainforticketexp', { expedticketentrainsp });
-    } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA TICKET EXPEDIENTES')
-        return res.redirect('/');
-    }
-});
-
-router.get('/informexpedtickets/list/:id', isAuthenticated, async (req, res) => {
-    const expedticketentrainsp = await Expedticketentrainsp.findById(req.params.id).lean()
-    res.render('notes/inspecciones/expticket/listinforticket', { expedticketentrainsp })
-});
-
-router.put('/notes/editinformeticket/:id', isAuthenticated, async (req, res) => {
-    const { idexpediente, numexpediente, numadrema, fechaentradainspeccion, fechaeinspectorinspeccion, numintimacion,
-        numinfraccion, observaciones, destinopase, fechasalida,
-        user, name, date } = req.body
-    await Expedticketentrainsp.findByIdAndUpdate(req.params.id, {
-        idexpediente, numexpediente, numadrema, fechaentradainspeccion, fechaeinspectorinspeccion, numintimacion,
-        numinfraccion, observaciones, destinopase, fechasalida,
-        user, name, date
-    });
-    req.flash('success_msg', 'Informe de ticket de Expediente actualizado')
-    res.redirect('/expedientes/listadoticket');
-});
-
-router.get('/informexpedtickets/edit/:id', isAuthenticated, async (req, res) => {
-    const expedticketentrainsp = await Expedticketentrainsp.findById(req.params.id).lean()
-    res.render('notes/inspecciones/expticket/editinformeticket.hbs', { expedticketentrainsp })
-});
-
-router.post('/ticket/informeinspeccion/newinforexpticket', isAuthenticated, async (req, res) => {
-    //console.log(req.body)
-    const { idexpediente, numexpediente, numadrema, numticket, fechaentradainspeccion, fechaeinspectorinspeccion,
-        selectintimacion, numintimacion, darcumplimientoa, plazointimacion, selectinfraccion,
-        numinfraccion, causas, paralizacion, causasparalizacion, informe, destinopase, fechasalida,
-        user, name, date
+router.post('/notes/newexpedientecliente', isAuthenticated, async (req, res) => {
+    const { borrado, userborrado, fechaborrado, bajacliente, idcliente, nyacliente, dnicliente,
+        idexpediente, numexpediente, caratula, estado
     } = req.body;
-
-    const newExpedticketentrainsp = new Expedticketentrainsp({
-        idexpediente, numexpediente, numadrema, numticket, fechaentradainspeccion, fechaeinspectorinspeccion,
-        selectintimacion, numintimacion, darcumplimientoa, plazointimacion, selectinfraccion,
-        numinfraccion, causas, paralizacion, causasparalizacion, informe, destinopase, fechasalida,
-        user, name, date
-    })
-    newExpedticketentrainsp.user = req.user.id;
-    newExpedticketentrainsp.name = req.user.name;
-    await newExpedticketentrainsp.save();
-    req.flash('success_msg', 'Informe Expediente de Inspección Ticket Agregado Exitosamente');
-    res.redirect('/expedientes/listadoticket');
-});
-
-router.delete('/expedinspeccion/ticket/delete/:id', isAuthenticated, async (req, res) => {
-    await Expedticketentrainsp.findByIdAndDelete(req.params.id);
-    req.flash('success_msg', 'Informe de Ticket de Expediente Eliminado')
-    res.redirect('/expedientes/listadoticket')
+    const newExpedientecliente = new Expedientecliente({
+        borrado, userborrado, fechaborrado, bajacliente, idcliente, nyacliente, dnicliente,
+        idexpediente, numexpediente, caratula, estado
+    });
+    newExpedientecliente.user = req.user.id;
+    newExpedientecliente.name = req.user.name;
+    await newExpedientecliente.save();
+    req.flash('success_msg', 'Cliente agregado al Expediente');
+    res.redirect('/expedientes/listado');
 });
 
 // *** SI O SI LOS MODULE EXPLORTS ***

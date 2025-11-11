@@ -1,214 +1,142 @@
-<div>
-  <nav class="navbar navbar-expand-lg navbar-black bg-black">
-    <div class="container">
-      {{#if user}}
-      <br />
-      </style>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="navbar-nav ml">
-        <li class="nav-item dropdown">
-          <a style="color:rgb(143, 182, 204)" class="nav-link dropdown-toggle" href="#" role="button"
-            data-toggle="dropdown" aria-expanded="false">
-            Turnos
-          </a>
-          <div class="dropdown-menu">            
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/mesaentrada/listado">Turnero-Listado</a>            
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/mesaentrada/Estadisticas">Estadisticas</a>
-          </div>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            Clientes
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/clientes/listado">Clientes-Listado</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/clientes/add">Agregar Clientes</a>
-            <div class="dropdown-divider"></div>            
-          </div>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            Expedientes
-          </a>
-          <div class="dropdown-menu">
-            {{!-- <a class="dropdown-item" href="/expedientes">Expediente-Cartas</a> --}}
-            <a class="dropdown-item" href="/expedientes/listado">Expediente-Listado</a>
-            {{!-- <div class="dropdown-divider"></div> --}}
-            {{!-- <a class="dropdown-item" href="/expedientes/informeinspeccion">Ultimos Infor.Inspección</a>
-            <div class="dropdown-divider"></div> --}}
-            {{!-- <a class="dropdown-item" href="/expedientes/listadoticket">Tickets Expedientes</a>
-            <div class="dropdown-divider"></div> --}}
-            {{!-- <a class="dropdown-item" href="/expedientes/ticket/informeinspeccion">Ultimos Infor.Ticket Inspec</a> --}}
-          </div>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml">
-        <li class="nav-item dropdown">
-          <a style="color:rgb(143, 182, 204)" class="nav-link dropdown-toggle" href="#" role="button"
-            data-toggle="dropdown" aria-expanded="false">
-            Juicios
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/usosuelo/listado">U.S.-Listado</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/usosuelo/add">U.S.-Agregar Expediente</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/usosuelo/Estadisticas">U.S.-Estadistica</a>
-          </div>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            Cobros
-          </a>
-          <div class="dropdown-menu">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/">Proximamente</a>
-            <div class="dropdown-divider"></div>
-          </div>
-        </li>
-      </ul>     
-      
-      <ul class="navbar-nav ml">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            Agenda
-          </a>
-          <div class="dropdown-menu">
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/">Proximamente</a>
-            <div class="dropdown-divider"></div>
-          </div>
-        </li>
-        <ul class="navbar-nav ml">
-          <li class="nav-item dropdown">
-            <a style="color:rgb(157, 255, 0)" class="nav-link dropdown-toggle" href="#" role="button"
-              data-toggle="dropdown" aria-expanded="false">
-              Estadistica
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="/estadisticas">Estad.-Cartas</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/estadisticas/listado">Estad.-Listado</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/estadisticas/add">Crear Estadistica</a>
-            </div>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml">
-          <li class="nav-item dropdown">
-            <a style="color: white; text-shadow: 2px 2px 4px #000000;" class="nav-link dropdown-toggle" href="#"
-              role="button" data-toggle="dropdown" aria-expanded="false">
-              Admin
-            </a>
-            <div class="dropdown-menu">
-              {{!-- <div class="dropdown-divider"></div> --}}
-              <a class="dropdown-item" href="/users/11vvsOpmo90W">Crear Usuario</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/usuario/list">Usuario Actual</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/usuarios">Listar Usuarios</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/Inspectores">Listar Inspectores</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/marcarborradosennoall">CrearCamposBorrado</a>
-              <div class="dropdown-divider"></div>
-              <a style="color: rgb(185, 31, 31); text-shadow: 2px 2px 4px #000000;" class="nav-link dropdown-toggle"
-                href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Borrados
-              </a>
-                <a class="dropdown-item" href="/mesaentrada/borradolistado">MesaEntrada</a>
-                <a class="dropdown-item" href="/clientes/borradolistado">Clientes</a>
-                {{!-- <a class="dropdown-item" href="/multas/borradolistado">Liquidaciones</a> --}}
-                <a class="dropdown-item" href="/expedientes/borradolistado">Expedientes</a>
-                {{!-- <a class="dropdown-item" href="/actuaciones/borradolistado">Actuaciones</a>               --}}
-            </div>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a style="color:red; font-weight: bold;" class="nav-link" href="/users/logout">OFF <span
-                class="sr-only">(current)</span></a>
-          </li>
-        </ul>
-        {{else}}
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a style="color:rgb(187, 224, 19); font-weight: bold;" class="nav-link" href="/users/signin">INGRESAR</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a style="color:rgb(5, 5, 5); font-weight: bold;"> --- <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/About">Acerca de</a>
-          </li>
-        </ul>
-        {{/if}}
-    </div>
-  </nav>
-</div>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
 
-<script>
-  startday = new Date();
-  window.onload = function () {
-    window.setTimeout('getDate()', 1);
-  }
-</script>
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <img src="/css/img/logoredondo.png" height="40" class="mr-2" alt="Logo" style="border-radius: 50%;" />
+      <span class="ml-2 font-weight-bold"></span>
+    </a>
 
-
-{{!-- <nav class="navbar navbar-expand-lg navbar-dark p-2 bg-black">
-  <h4 style="color:red;""> Inspección de Obras </h4>
-  <div class=" container">
-    <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        {{#if user}}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            Inspecciones
+      {{#if user}}
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="turnosDropdown" data-toggle="dropdown">
+            <i class="fas fa-calendar-alt me-1"></i> Audiencias
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/notes">All Notes</a>
-            <a class="dropdown-item" href="/notes/add">Add A Note</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/audiencia/listado">Fechas Audiencias</a>
+            {{!-- <a class="dropdown-item" href="/mesaentrada/Estadisticas">Estadísticas</a> --}}
+          </div>
+        </li>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="turnosDropdown" data-toggle="dropdown">
+            <i class="fas fa-clock me-1"></i> Turnos
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/mesaentrada/listado">Turnos Clientes</a>
+            <a class="dropdown-item" href="/">Turnos Abogados</a>
+            {{!-- <a class="dropdown-item" href="/mesaentrada/Estadisticas">Estadísticas</a> --}}
+          </div>
+        </li>
+        {{!-- Turnos --}}
+        {{!-- Clientes --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="clientesDropdown" data-toggle="dropdown">
+            <i class="fas fa-list-alt me-1"></i> Listados
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/clientes/listado">Lista de Clientes</a>
+            <a class="dropdown-item" href="/abogados/listado">Lista de Abogados</a>
+            <a class="dropdown-item" href="/expedientes/listado">Lista Expedientes</a>
+            <a class="dropdown-item" href="/juzgados/listado">Listado Juzgados</a>
+            
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="clientesDropdown" data-toggle="dropdown">
+            <i class="fas fa-plus-circle me-1"></i> Agregar
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/clientes/add">Agregar Cliente</a>
+            <a class="dropdown-item" href="/expedientes/add">Agregar Expediente</a>
+            <a class="dropdown-item" href="/abogados/add">Agregar Abogado</a>
+            <a class="dropdown-item" href="/juzgados/add">Agregar Juzgado</a>
+
+          </div>
+        </li> 
+        {{!-- Cobros --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="cobrosDropdown" data-toggle="dropdown">
+            <i class="fas fa-money-check-alt me-1"></i> Cobros
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/">A Clientes</a>
+            <a class="dropdown-item" href="/">A Profesionales</a>
+            <a class="dropdown-item" href="/">A Asociados</a>
+            <a class="dropdown-item" href="/">Ver Tasa Judicial/Sellados</a>
+            <a class="dropdown-item" href="/">Agregar Tasa</a>
+          </div>
+        </li>
+
+        {{!-- Agenda --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="agendaDropdown" data-toggle="dropdown">
+            <i class="fas fa-book me-1"></i> Agenda
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/">Registro Actuaciones</a>       
+          </div>
+        </li>
+
+        {{!-- Estadísticas --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-success" href="#" id="estadisticaDropdown" data-toggle="dropdown">
+            <i class="fas fa-chart-bar me-1"></i> Estadísticas
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/">Medidas Cautelares</a>
+            <a class="dropdown-item" href="/">Sentencias Definitivas</a>
+            <a class="dropdown-item" href="/">Mediaciones</a>
+            <a class="dropdown-item" href="/">Audiencias</a>
+          </div>
+        </li>
+        {{!-- Admin --}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="adminDropdown" data-toggle="dropdown">
+            <i class="fas fa-user-cog me-1"></i> Admin
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/users/11vvsOpmo90W">Crear Usuario</a>
+            <a class="dropdown-item" href="/usuario/list">Usuario Actual</a>
+            <a class="dropdown-item" href="/usuarios">Listar Usuarios</a>
+            <a class="dropdown-item" href="/Inspectores">Listar Inspectores</a>
+            <a class="dropdown-item" href="/marcarborradosennoall">Crear Campos Borrado</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/users/logout">Logout</a>
-          </ul>
+            <span class="dropdown-header text-danger">Borrados</span>
+            <a class="dropdown-item" href="/audiencias/borradolistado">Audiencias</a>
+            <a class="dropdown-item" href="/mesaentrada/borradolistado">Mesa Entrada</a>
+            <a class="dropdown-item" href="/clientes/borradolistado">Clientes</a>
+            <a class="dropdown-item" href="/expedientes/borradolistado">Expedientes</a>
+          </div>
         </li>
-        {{else}}
-        <li class="nav-item">
-          <a class="nav-link" href="/users/signin">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/signup">Register</a>
-        </li>
-        {{/if}}
+
       </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link text-danger font-weight-bold" href="/users/logout">CerrarSesion</a>
+          
+        </li>
+      </ul>
+
+      {{else}}
+
+      {{!-- Usuario no autenticado --}}
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link text-warning font-weight-bold" href="/users/signin">INGRESAR</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/About">Acerca de</a>
+        </li>
+      </ul>
+
+      {{/if}}
     </div>
-    </div>
-</nav> --}}
+  </div>
+</nav>

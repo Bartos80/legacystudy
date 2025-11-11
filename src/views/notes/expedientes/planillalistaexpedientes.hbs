@@ -1,0 +1,106 @@
+<div class="container my-5">
+
+    <!-- Encabezado + botones -->
+    <div
+        class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center gap-3 mb-4">
+        <h5 class="fw-bold text-primary text-uppercase m-0">📋 Listado de expedientes</h5>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+            <a href="/expedientes/add" class="btn btn-success btn-sm mr-4">+ Agregar Expediente</a>
+            <a href="/expedientes/listado" class="btn btn-outline-warning btn-sm">↻ Recargar</a>
+        </div>
+    </div>
+
+    <!-- Formularios de búsqueda -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-md-3">
+            <form action="/expedientes/findjuzgado" method="POST">
+                <input type="search" name="juzgado" id="juzgado" class="form-control"
+                    placeholder="Buscar Juzgado..." />
+                <button title="Buscar Juzgado" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
+                    type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <form action="/expedientes/findnumexpediente" method="POST">
+                <input type="search" name="numexpediente" class="form-control" placeholder="Buscar N° Expediente..." />
+                <button title="Buscar N° Expediente" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
+                    type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <form action="/expedientes/findestado" method="POST">
+                <input type="search" name="estado" class="form-control"
+                    placeholder="Buscar por Estado..." />
+                <button title="Buscar Estado" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
+                    type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <form action="/expedientes/findcliente" method="POST">
+                <input type="search" name="cliente" class="form-control"
+                    placeholder="Buscar Cliente..." />
+                <button title="Buscar Cliente" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
+                    type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla responsiva de expedientes -->
+    {{#if expedientes.length}}
+    <div class="table-responsive rounded shadow-sm border">
+        <table class="table table-striped table-bordered align-middle text-nowrap">
+            <thead class="table-primary text-dark text-center">
+                <tr>
+                    <th>N° Expediente</th>
+                    <th>Caratulas</th>
+                    <th>Partes</th>
+                    <th>Estado</th>
+                    <th>Ult.Notificación</th>                    
+                    <th>Opciones</th>
+                    <th>+Más</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each expedientes}}
+                <tr>
+                    
+                    <td>{{ numexpediente }}</td>
+                    <td class="text-capitalize">{{ caratula }}</td>
+                    <td>{{ partes }}</td>
+                    <td class="text-capitalize">{{ estado }}</td>
+                    <td class="text-capitalize">{{ ultimanotificacion }}</td>
+                    <td>
+                        <div class="d-flex flex-column gap-1">
+                            {{!-- <a href="/expedientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+
+                                Expediente</a> --}}                                
+                            <a href="/expedientes/expedientejuzgado/add/{{_id}}" class="btn btn-outline-success btn-sm w-100">+Juzgado</a>    
+                            <a href="/expedientes/expedientecliente/add/{{_id}}" class="btn btn-outline-success btn-sm w-100">+Cliente</a>
+                            <a href="/expedientes/expedienteabogado/add/{{_id}}" class="btn btn-outline-success btn-sm w-100">+Abogado</a>                            
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column gap-1">
+                            {{!-- <a href="/expedientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+
+                                Expediente</a> --}}
+                            <a href="/expedientes/list/{{_id}}" class="btn btn-outline-info btn-sm w-100">+Info</a>
+                        </div>
+                        <div class="d-flex flex-column gap-1">
+                            <a href="/expedientes/edit/{{_id}}" class="btn btn-outline-warning btn-sm w-100">Editar</a>
+                            <form action="/expedientes/marcadelete/{{_id}}?_method=PUT" method="POST"
+                                onsubmit="return confirm('¿Desea enviar a la papelera?')">
+                                <button class="btn btn-outline-danger btn-sm w-100" type="submit">Papelera</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <div class="alert alert-warning text-center mt-5" role="alert">
+        🚫 No Hay expedientes por mostrar - Pulse Recargar.
+    </div>
+    {{/if}}
+</div>
