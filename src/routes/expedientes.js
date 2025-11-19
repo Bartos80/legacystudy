@@ -146,10 +146,10 @@ router.get('/movimientoexpediente/add/:id', isAuthenticated, async (req, res) =>
 // anda con 2 tablas y en una crea nuevo y en otra actualiza
 router.put('/notes/newestadoexpediente', isAuthenticated, async (req, res) => {
     // new estado expediente
-    const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, tipo, ultimanotificacion, partes, estado, motivoentsal, user, name
+    const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, tipo, ultimanotificacion, partes, actor, demandado, estado, motivoentsal, user, name
     } = req.body;
     const newExpedentrsalida = new Expedentrsalida({
-        borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, tipo, ultimanotificacion, partes, estado, motivoentsal, user, name
+        borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente, tipo, ultimanotificacion, partes, actor, demandado, estado, motivoentsal, user, name
     })
     newExpedentrsalida.user = req.user.id;
     newExpedentrsalida.name = req.user.name;
@@ -193,12 +193,12 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
 
 router.post('/notes/newexpedientes', isAuthenticated, async (req, res) => {
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        caratula, tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        caratula, tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, fotoexpediente,
         idcliente, idabogado, idjuzgado
     } = req.body;
     const newExpediente = new Expediente({
         borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        caratula, tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente,
+        caratula, tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, fotoexpediente,
         idcliente, idabogado, idjuzgado
     })
     newExpediente.user = req.user.id;
@@ -1109,10 +1109,10 @@ router.post('/expedientes/borradofindestado', isAuthenticated, async (req, res) 
 
 router.put('/notes/editexpediente/:id', isAuthenticated, async (req, res) => {
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, caratula, dateexp,  partes, estado, user, name, fotoexpediente, } = req.body
+        tipo, ultimanotificacion, caratula, dateexp,  partes, actor, demandado, estado, user, name, fotoexpediente, } = req.body
     await Expediente.findByIdAndUpdate(req.params.id, {
         borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, estado, user, name, fotoexpediente, caratula, dateexp,  
+        tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, fotoexpediente, caratula, dateexp,  
     });
     req.flash('success_msg', 'Expediente actualizado')
     res.redirect('/expedientes/listado');

@@ -79,6 +79,16 @@ ExpedienteSchema = new Schema({
     require: false,
     default: "No Posee Información",
   },
+  actor: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
+  demandado: {
+    type: String,
+    require: false,
+    default: "No Posee Información",
+  },
   estado: {
     type: String,
     require: false,

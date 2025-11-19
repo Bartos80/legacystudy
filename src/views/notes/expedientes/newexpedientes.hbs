@@ -84,14 +84,28 @@
               <!-- Partes -->
               <div class="mb-3">
                 <label for="partes" class="form-label">Partes</label>
-                <input type="text" id="partes" name="partes" class="form-control" onkeyup="ShowName('partes')"
+                <input type="text" id="partes" name="partes" class="form-control" 
                   placeholder="Ej: Juan Pérez c/ María López">
+              </div>
+
+              <div class="mb-3">
+                <label for="actor" class="form-label">Actor</label>
+                <input type="text" id="actor" name="actor" class="form-control" 
+                  placeholder="Actor">
+              </div>
+
+              <div class="mb-3">
+                <label for="demandado" class="form-label">Demandado</label>
+                <input type="text" id="demandado" name="demandado" class="form-control" 
+                  placeholder="Demandado">
               </div>
 
               <!-- Estado -->
               <div class="form-group mb-3">
                 <label for="estado" class="form-label">Estado del Expediente</label>
-                <select name="estado" id="estado" class="form-select" required>
+                <input type="text" id="estado" name="estado" class="form-control" 
+                  placeholder="Estado del Expediente">
+                {{!-- <select name="estado" id="estado" class="form-select" required>
                   <option></option>
                   <option>Etapa Postulatoria o de Inicio</option>
                   <option>Etapa Probatoria</option>
@@ -99,7 +113,7 @@
                   <option>Etapa Impugnativa y Ejecutoria</option>
                   <option>Estados Comunes y Transitorios</option>
                   <option>Archivado</option>
-                </select>
+                </select> --}}
               </div>
 
               <!-- Foto expediente (deshabilitado) -->

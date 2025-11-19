@@ -43,8 +43,6 @@ const UserSchema = new Schema({
     type: Date, 
     default: Date.now 
   },
-  
-
 });
 
 // encriptar las contraseñas con los sig metodos
