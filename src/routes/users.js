@@ -61,7 +61,7 @@ async function createAdminIfNoUsers() {
 }
 
 // router.get ('/users/signup', (req, res) => {
-router.get ('/users/11vvsOpmo90W', (req, res) => {    
+router.get ('/users/11vvsOpmo90W', isAuthenticated, (req, res) => {    
     const rolusuario = req.user.rolusuario;
     //console.log ("ROL USUARIO",rolusuario) //Inspector
     if (rolusuario == "Administrador" || rolusuario == "Programador" ) {
@@ -75,11 +75,11 @@ router.get ('/users/11vvsOpmo90W', (req, res) => {
 });
 
 // *** cuando se borra el registro admin **
-router.get ('/users/11vvsOpmo90W-MAD', (req, res) => {
+router.get ('/users/11vvsOpmo90W-MAD', isAuthenticated,  (req, res) => {
     res.render ('users/signup');
 });
 
-router.post('/users/signup', async (req, res) =>{
+router.post('/users/signup', isAuthenticated, async (req, res) =>{
     const { estudioempresa, rolusuario, name, celular, email, dni, codigousuario, funcion, password, confirm_password, date} = req.body;
     const errors = [];
     if(rolusuario.length<=0 || name.length<=0 || email.length<=0 || dni.length<=0 || password.length<=0 || confirm_password.length<=0){
