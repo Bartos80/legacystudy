@@ -6,7 +6,11 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 ExpedienteclienteSchema = new Schema({
-  idexpedientecliente:{
+  idestudio: {
+    type: Number,
+    unique: true
+  },
+  idexpedientecliente: {
     type: Number,
     // unique: true,
   },
@@ -24,17 +28,17 @@ ExpedienteclienteSchema = new Schema({
     type: String,
     required: false,
     default: "Sin Datos",
-  },  
+  },
   idexpediente: {
     type: String,
     require: false,
     default: "No Posee Información",
   },
-  numexpediente:{
+  numexpediente: {
     type: String,
     require: true,
   },
-    caratula: {
+  caratula: {
     type: String,
     require: false,
     default: "No Posee Información",
@@ -43,15 +47,15 @@ ExpedienteclienteSchema = new Schema({
     type: String,
     require: false,
     default: "No",
-  }, 
+  },
   idcliente: {
     type: String,
     require: true,
   },
-    nyacliente: {
+  nyacliente: {
     type: String,
     require: true,
-  }, 
+  },
   dnicliente: {
     type: String,
     require: true,
@@ -59,12 +63,12 @@ ExpedienteclienteSchema = new Schema({
   fechaentradacliente: {
     type: String,
     default: Date.now
-  },  
+  },
   observaciones: {
     type: String,
     require: false,
     default: "Sin Observaciones"
-  },    
+  },
   user: {
     type: String,
     require: false,
@@ -82,10 +86,10 @@ ExpedienteclienteSchema = new Schema({
 });
 
 ExpedienteSchema.plugin(AutoIncrement, {
-    inc_field: 'idexpedientecliente', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
-    start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
-    reference_fields: [],   // Opcional: Campos para crear secuencias independientes
-    id: 'ExpedienteCliente_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
+  inc_field: 'idexpedientecliente', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+  start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
+  reference_fields: [],   // Opcional: Campos para crear secuencias independientes
+  id: 'ExpedienteCliente_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
 module.exports = mongoose.model("Expedientecliente", ExpedienteclienteSchema);

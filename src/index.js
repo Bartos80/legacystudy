@@ -4,8 +4,7 @@ const multer = require('multer');
 //const uuid = require('uuid/v4');
 const path = require('path');
 const exphbs = require("express-handlebars");
-
-//const methodOverride = require('method-override');
+const methodOverride = require('method-override'); // sive para edit en los .hbs y marcadelete sino no anda
 
 const session = require('express-session');
 const flash = require ('connect-flash'); // modulo para enviar mensajes de advertencia
@@ -35,8 +34,7 @@ app.set ('view engine', '.hbs');
 
 //midlewares
 app.use(express.urlencoded({extended: false}));
-
-//app.use(methodOverride('_method'));
+app.use(methodOverride('_method'));
 
 app.use(session({
     secret:'mysecretapp',
@@ -103,6 +101,7 @@ app.use(require('./routes/users.js'));
 app.use(require('./routes/mesaentrada.js'));
 app.use(require('./routes/expedientes.js'));
 app.use(require('./routes/estadisticas.js'));
+app.use(require('./routes/estudios.js'));
 app.use(require('./routes/clientes.js'));
 app.use(require('./routes/audiencias.js'));
 app.use(require('./routes/abogados.js'));

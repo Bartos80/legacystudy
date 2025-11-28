@@ -21,7 +21,7 @@ router.get('/estadisticas/list/:id', isAuthenticated, async (req, res) => {
 router.get('/estadisticas', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const estadisticas = await Estadistica.find({ borrado: "No" }).lean().sort({ estadisticanum: 'asc' });
         res.render('notes/allestadistica', { estadisticas });
     } else {
@@ -35,7 +35,7 @@ router.get('/estadisticas', isAuthenticated, async (req, res) => {
 router.get('/estadisticas/listado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         //const estadisticas = await Estadistica.find({ borrado: "No" }).lean().sort({ date: 'asc' });
         //const tablamultas = await Multas.find({ $and: [{ impreso: 'No' }, { apercibimientoprofesional: 'Si' }] }).lean().sort({ propietario: 'desc' });
         //const multas = await Multas.find({ $and: [{ impreso: "No" }, { apercibimientoprofesional: "Si" }] }).lean().sort({ numexpediente: 'desc' }); // temporal poner el d arriba despues
@@ -68,7 +68,7 @@ router.get('/estadisticas/listado', isAuthenticated, async (req, res) => {
 
 router.get('/estadisticas/add', isAuthenticated, (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         res.render('notes/newestadisticas');
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA ESTADISTICAS')

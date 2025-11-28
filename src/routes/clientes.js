@@ -18,7 +18,7 @@ const Expedentrsalida = require('../models/expedentrsalida')
 router.get('/clientes/listado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         // res.send('Notes from data base');
         // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
         const clientes = await Clientes.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });

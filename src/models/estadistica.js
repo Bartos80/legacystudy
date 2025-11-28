@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose; // aca defino esquema de base de datos
 
 const EstadisticaSchema = new Schema({
+        idestudio: {
+                type: Number,
+                unique: true
+        },
         borrado: {
                 type: String,
                 required: true,

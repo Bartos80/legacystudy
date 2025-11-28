@@ -6,6 +6,10 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 ExpedienteabogadoSchema = new Schema({
+  idestudio: {
+        type: Number,
+        unique: true
+    },
   idexpedienteabogado: {
     type: Number,
     // unique: true  

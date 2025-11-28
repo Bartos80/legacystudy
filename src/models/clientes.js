@@ -5,6 +5,10 @@ const { Schema } = mongoose;
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 ClientesSchema = new Schema({
+  idestudio: {
+        type: Number,
+        unique: true
+    },
   // Campo Autoincremental
   idcliente: {
     type: Number, // El tipo debe ser Number

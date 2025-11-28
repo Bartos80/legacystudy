@@ -22,7 +22,7 @@ const expedientejuzgado = require('../models/expedientejuzgado')
 
 router.get('/juzgados/listado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario === "Administrador") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         try {
             // const juzgados = await Juzgados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });;            
             // res.render('juzgados/planillalistajuzgado', { juzgados });
@@ -42,7 +42,7 @@ router.get('/juzgados/listado', isAuthenticated, async (req, res) => {
 router.get('/juzgados/borradolistado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         // res.send('Notes from data base');
         // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
         const juzgados = await Juzgados.find({ borrado: "Si" }).lean().limit(30).sort({ date: 'desc' });

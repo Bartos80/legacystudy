@@ -3,7 +3,15 @@ const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new Schema({
+  idestudio: {
+    type: Number,
+    unique: true
+  },
   estudioempresa: {
+    type: String,
+    require: false,
+  },
+  idestudio: {
     type: String,
     require: false,
   },
@@ -25,9 +33,11 @@ const UserSchema = new Schema({
     require: false,
     default: "NoPosee",
   },
-  rolusuario: 
-  { type: String, 
-    require: false }
+  rolusuario:
+  {
+    type: String,
+    require: false
+  }
   ,
   celular: {
     type: String,
@@ -39,9 +49,9 @@ const UserSchema = new Schema({
   },
   password: { type: String, require: false },
   confirm_password: { type: String, require: false },
-  date: { 
-    type: Date, 
-    default: Date.now 
+  date: {
+    type: Date,
+    default: Date.now
   },
 });
 

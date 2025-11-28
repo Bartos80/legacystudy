@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose; // aca defino esquema de base de datos
 
 const NoteSchema = new Schema({
+        idestudio: {
+                type: Number,
+                unique: true
+        },
         borrado: {
                 type: String,
                 required: true,
@@ -183,7 +187,7 @@ const NoteSchema = new Schema({
                 type: String,
                 require: false,
                 default: "No Posee Información"
-        },        
+        },
         // este user sirve para vincular las cuentas
         user: {
                 type: String,

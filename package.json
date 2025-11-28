@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "build": "echo \"no build needed\"",
     "dev": "nodemon src/index.js"
   },
@@ -21,8 +21,6 @@
     "express-ejs-layouts": "^2.5.0",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
-    "flash": "^1.1.0",
-    "handlebars": "^4.7.8",
     "html-pdf": "^3.0.1",
     "i": "^0.3.7",
     "jquery": "^3.6.4",
@@ -43,8 +41,7 @@
     "react-router-dom": "^6.8.0",
     "reactstrap": "^9.1.5",
     "select2": "^4.1.0-rc.0",
-    "uuid": "^3.3.2",
-    "views": "^1.0.2"
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

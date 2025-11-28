@@ -1,78 +1,61 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// Hacer el Campo autoincremental - Primary Key
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const AbogadosSchema = new Schema({
+const EstudioSchema = new Schema({
     idestudio: {
         type: Number,
         unique: true
     },
-    // Campo Autoincremental
-    idabogado: {
-        type: Number, // El tipo debe ser Number
-        unique: true  // Debe ser único
-    },
     borrado: {
         type: String,
-        required: true,
+        required: false,
         default: "No",
     },
     userborrado: {
         type: String,
-        required: true,
+        required: false,
         default: "Sin Datos",
     },
     fechaborrado: {
         type: String,
-        required: true,
+        required: false,
         default: "Sin Datos",
     },
-    //matricula seria el id unico
-    matriculaabogado: {
+    numestudio: {
         type: String,
         require: false,
         default: "NoPosee"
     },
-    nyaabogado: {
+    direstudio: {
         type: String,
         require: true
     },
-    dniabogado: {
+    telestudio: {
         type: String,
         require: true
     },
-    direccionabogado: {
+    emailestudio: {
         type: String,
         require: false
     },
-    celularabogado: {
+    paisestudio: {
         type: String,
         require: true,
         default: "No Declarado"
     },
-    emailabogado: {
+    provinciaestudio: {
         type: String,
         require: true,
         default: "No Declarado"
     },
-    provinciaabogado: {
+    localidadestudio: {
         type: String,
         require: true,
         default: "No Declarado"
     },
-    localidadabogado: {
-        type: String,
-        require: true,
-        default: "No Declarado"
-    },
-    emailvinculadoabogadoestudio: {
-        type: String,
-        require: true,
-        default: "No Declarado"
-    },
-    observacionesabogado: {
+    observacionesestudio: {
         type: String,
         require: true,
         default: "No Declarado"
@@ -83,11 +66,11 @@ const AbogadosSchema = new Schema({
     }
 });
 
-AbogadosSchema.plugin(AutoIncrement, {
-    inc_field: 'idabogado',
-    start_seq: 1,
-    reference_fields: [],
-    id: 'abogado_seq_counter'
+EstudioSchema.plugin(AutoIncrement, {
+    inc_field: 'idestudio', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+    start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
+    reference_fields: [],   // Opcional: Campos para crear secuencias independientes
+    id: 'estudio_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
-module.exports = mongoose.model("Abogados", AbogadosSchema);
+module.exports = mongoose.model("Estudio", EstudioSchema);

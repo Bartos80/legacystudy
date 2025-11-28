@@ -16,7 +16,7 @@ const Abogados = require('../models/abogados') //** SI O SI LLAMAR AL MODEL Q US
 
 router.get('/abogados/listado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Abogado") {        
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {        
         const abogados = await Abogados.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         res.render('notes/abogados/planillalistaabogados', { abogados });    
     } else {
@@ -28,7 +28,7 @@ router.get('/abogados/listado', isAuthenticated, async (req, res) => {
 router.get('/abogados/borradolistado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         // res.send('Notes from data base');
         // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
         const abogados = await Abogados.find({ borrado: "Si" }).lean().limit(30).sort({ date: 'desc' });

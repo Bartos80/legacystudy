@@ -64,12 +64,12 @@ router.post('/notes/mesaentrada/newmesaentradas/:id', isAuthenticated, async (re
 router.get('/mesaentrada', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Mesa-Entrada") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         // res.send('Notes from data base');
         // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
         const mesaentradas = await Mesaentrada.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         res.render('notes/allmesaentrada', { mesaentradas });
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario === "Administrador" || rolusuario === "Programador") {
         const mesaentradas = await Mesaentrada.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         res.render('notes/mesaentrada/allmesaentrada', { mesaentradas });
     } else {
@@ -334,7 +334,7 @@ router.get('/mesaentrada/listado', isAuthenticated, async (req, res) => {
 router.get('/mesaentrada/borradolistado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         const mesaentradas = await Mesaentrada.find({ borrado: "Si" }).limit(30).lean().sort({ dateturno: 'desc' });
         res.render('notes/borrados/borradolistmesaentrada', { mesaentradas });
     } else {
@@ -375,14 +375,14 @@ router.post('/mesaentrada/findsector', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     const { sector } = req.body;
     const mesaentradas = await Mesaentrada.find({ $and: [{ borrado: "No" }, { sector: { $regex: sector, $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
-    if (rolusuario == "Mesa-Entrada") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
         } else {
             res.render('notes/findmesaentrada', { mesaentradas })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
@@ -398,14 +398,14 @@ router.post('/mesaentrada/findiniciador', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     const { nomyape } = req.body;
     const mesaentradas = await Mesaentrada.find({ $and: [{ borrado: "No" }, { nomyape: { $regex: nomyape, $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
-    if (rolusuario == "Mesa-Entrada") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
         } else {
             res.render('notes/findmesaentrada', { mesaentradas })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
@@ -421,14 +421,14 @@ router.post('/mesaentrada/findlistasector', isAuthenticated, async (req, res) =>
     const rolusuario = req.user.rolusuario;
     const { sector } = req.body;
     const mesaentradas = await Mesaentrada.find({ $and: [{ borrado: "No" }, { sector: { $regex: sector, $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
-    if (rolusuario == "Mesa-Entrada") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
         } else {
             res.render('notes/planillalistaturnero', { mesaentradas })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
@@ -444,14 +444,14 @@ router.post('/mesaentrada/findlistainiciador', isAuthenticated, async (req, res)
     const rolusuario = req.user.rolusuario;
     const { nomyape } = req.body;
     const mesaentradas = await Mesaentrada.find({ $and: [{ borrado: "No" }, { nomyape: { $regex: nomyape, $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
-    if (rolusuario == "Mesa-Entrada") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
         } else {
             res.render('notes/planillalistaturnero', { mesaentradas })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allmesaentrada");
@@ -500,14 +500,14 @@ router.post('/mesaentrada/findlistaexpediente', isAuthenticated, async (req, res
     const rolusuario = req.user.rolusuario;
     const { numexpediente } = req.body;
     const mesaentradas = await Mesaentrada.find({ $and: [{ borrado: "No" }, { numexpediente: { $regex: numexpediente, $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
-    if (rolusuario == "Mesa-Entrada") {
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Expediente')
             return res.render("notes/allmesaentrada");
         } else {
             res.render('notes/planillalistaturnero', { mesaentradas })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario === "Administrador" || rolusuario === "Programador") {
         if (!mesaentradas) {
             req.flash('success_msg', 'cargue Expediente')
             return res.render("notes/allmesaentrada");

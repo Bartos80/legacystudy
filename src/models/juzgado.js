@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const JuzgadoSchema = new Schema({
+    idestudio: {
+        type: Number,
+        unique: true
+    },
     idjuzgado: {
         type: Number,
         unique: true

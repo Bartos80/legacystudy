@@ -40,7 +40,7 @@ router.put('/expedientes/listadoborradosenno', isAuthenticated, async (req, res)
 router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
     try {
         const rolusuario = req.user.rolusuario;
-        if (rolusuario === "Administrador") {
+        if (rolusuario === "Administrador" || rolusuario === "Programador") {
             // **1. Optimización con .populate('idcliente')**
             var expedientestabla = await Expediente.find({ borrado: "No" })
                 .lean()
