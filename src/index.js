@@ -4,7 +4,9 @@ const multer = require('multer');
 //const uuid = require('uuid/v4');
 const path = require('path');
 const exphbs = require("express-handlebars");
+
 //const methodOverride = require('method-override');
+
 const session = require('express-session');
 const flash = require ('connect-flash'); // modulo para enviar mensajes de advertencia
 const passport = require('passport');
@@ -33,7 +35,9 @@ app.set ('view engine', '.hbs');
 
 //midlewares
 app.use(express.urlencoded({extended: false}));
+
 //app.use(methodOverride('_method'));
+
 app.use(session({
     secret:'mysecretapp',
     resave: true,
