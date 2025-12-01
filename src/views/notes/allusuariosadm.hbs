@@ -17,7 +17,7 @@
       👥 Sección de Usuarios - Administrador
     </h5>
     <div class="d-flex flex-wrap gap-2 mt-2">
-      <a href="/users/signup" class="btn btn-success btn-sm mr-4">+ Nuevo Usuario</a>
+      {{!-- <a href="/users/signup" class="btn btn-success btn-sm mr-4">+ Crear Usuario</a> --}}
       <a href="/usuarios" class="btn btn-outline-dark btn-sm">↻ Recargar Listado</a>
     </div>
   </div>
@@ -48,11 +48,11 @@
               <td>
                 <div class="d-flex justify-content-center flex-wrap gap-1">
                   <a href="/usuario/list/{{_id}}" class="btn btn-outline-info btn-sm">+ Info</a>
-                  {{!-- <a href="/usuario/edit/{{_id}}" class="btn btn-outline-warning btn-sm">Editar</a> --}}
-                  {{!-- <form action="/usuarios/delete/{{_id}}?_method=DELETE" method="POST"
+                  <a href="/usuario/edit/{{_id}}" class="btn btn-outline-warning btn-sm">Editar</a>
+                  <form action="/usuarios/delete/{{_id}}?_method=DELETE" method="POST"
                     onsubmit="return confirm('¿Desea borrar definitivamente al usuario?')">
                     <button class="btn btn-outline-danger btn-sm" type="submit">Borrar</button>
-                  </form> --}}
+                  </form>
                 </div>
               </td>
             </tr>

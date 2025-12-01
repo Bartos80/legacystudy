@@ -39,7 +39,7 @@ router.get('/marcarborradosennoall', isAuthenticated, async (req, res) => {
 router.get('/tickets/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         res.render('notes/newtickets');
         //res.render('notes/allusuariosadm', { usuarios });
@@ -52,7 +52,7 @@ router.get('/tickets/add', isAuthenticated, async (req, res) => {
 router.get('/notes/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         res.render('notes/inspecciones/newnotes');
         //res.render('notes/allusuariosadm', { usuarios });
@@ -65,7 +65,7 @@ router.get('/notes/add', isAuthenticated, async (req, res) => {
 router.get('/intimaciones/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         res.render('notes/newintimaciones');
         //res.render('notes/allusuariosadm', { usuarios });
@@ -78,7 +78,7 @@ router.get('/intimaciones/add', isAuthenticated, async (req, res) => {
 router.get('/intimaciones/add/:id', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
         const intimacion = await Intimacion.findById(req.params.id).lean();
         res.render('notes/newintimaciones', { intimacion });
     } else {
@@ -90,7 +90,7 @@ router.get('/intimaciones/add/:id', isAuthenticated, async (req, res) => {
 router.get('/infracciones/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         res.render('notes/newinfracciones');
         //res.render('notes/allusuariosadm', { usuarios });
@@ -102,7 +102,7 @@ router.get('/infracciones/add', isAuthenticated, async (req, res) => {
 
 // router.get('/estadisticas/add', isAuthenticated, (req, res) => {
 //     const rolusuario = req.user.rolusuario;
-//     if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+//     if (rolusuario == "Administrador" || rolusuario == "Programador") {
 //         res.render('notes/newestadisticas');
 //     } else {
 //         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA ESTADISTICAS')
@@ -112,7 +112,7 @@ router.get('/infracciones/add', isAuthenticated, async (req, res) => {
 
 router.post('/notes/newtickets', isAuthenticated, async (req, res) => {
 
-    const { 
+    const {
         plataforma, numticket, iniciador, ubicacion, celular, email,
         adrema, directordeobra, destinodeobra, superficieterreno, superficieaconstruir,
         supsubptabja, supsubptaaltaymas, zona, observaciones, permisoobra, actainfraccion,
@@ -411,7 +411,7 @@ router.post('/notes/newinfracciones', isAuthenticated, async (req, res) => {
 router.get('/usuarios', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         res.render('notes/allusuariosadm', { usuarios });
     } else {
@@ -438,7 +438,7 @@ router.get('/ticket/listado', isAuthenticated, async (req, res) => {
     if (rolusuario == "Inspector") {
         const ticket = await Ticket.find().limit(500).lean().sort({ date: 'desc' });;
         res.render('notes/planillalistaticket', { ticket });
-    } else if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const ticket = await Ticket.find().limit(500).lean().sort({ date: 'desc' });
         res.render('notes/planillalistaticketadm', { ticket });
     } else {
@@ -454,12 +454,12 @@ router.get('/movimientoticketcoord/add/:id', isAuthenticated, async (req, res) =
     const usuarios = await Users.find().lean().sort({ date: 'desc' });
     var inspectoresname = []
     var inspectorescodigo = []
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
-        for (var inspectores of inspectorestabla) {           
-           inspectoresname.push(inspectores.name)            
-           inspectorescodigo.push(inspectores.codigoinspector)
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
+        for (var inspectores of inspectorestabla) {
+            inspectoresname.push(inspectores.name)
+            inspectorescodigo.push(inspectores.codigoinspector)
         }
-        res.render('notes/inspecciones/expticket/movimientoticketcood.hbs', {ticket, inspectoresname, inspectorescodigo});;
+        res.render('notes/inspecciones/expticket/movimientoticketcood.hbs', { ticket, inspectoresname, inspectorescodigo });;
         //res.render('notes/allusuariosadm', { usuarios });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA TICKETs')
@@ -468,9 +468,9 @@ router.get('/movimientoticketcoord/add/:id', isAuthenticated, async (req, res) =
 });
 
 router.get('/ticket/coordinados/listresultado/:id', isAuthenticated, async (req, res) => {
-    var ticketcoordinado = await Ticket.findById(req.params.id).lean()    
+    var ticketcoordinado = await Ticket.findById(req.params.id).lean()
     var idticket = ticketcoordinado._id
-    var ticketcoordresultadotabla = await Ticketcoordresultado.find({ $and: [{ borrado: "No" }, { idticket: idticket }] }).lean().sort({date: 'desc'});
+    var ticketcoordresultadotabla = await Ticketcoordresultado.find({ $and: [{ borrado: "No" }, { idticket: idticket }] }).lean().sort({ date: 'desc' });
 
     for (var ticketcoordresultado of ticketcoordresultadotabla) {
         //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
@@ -540,7 +540,7 @@ router.get('/notes', isAuthenticated, async (req, res) => { // (INSPECCIONES)
     // res.send('Notes from data base');
     // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const notes = await Note.find().lean().sort({ numinspeccion: 'desc' });
         res.render('notes/inspecciones/allnotesadm', { notes });
     } else if (rolusuario == "Inspector") {
@@ -555,7 +555,7 @@ router.get('/notes', isAuthenticated, async (req, res) => { // (INSPECCIONES)
 router.get('/notes/listado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const inspeccions = await Note.find().lean().sort({ date: 'desc' });
         res.render('notes/inspecciones/planillalistainspeccionadm', { inspeccions });
     } else if (rolusuario == "Inspector") {
@@ -570,7 +570,7 @@ router.get('/notes/listado', isAuthenticated, async (req, res) => {
 router.get('/intimaciones', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const intimacions = await Intimacion.find().lean().sort({ date: 'desc' });
         res.render('notes/allintimadm', { intimacions });
     } else if (rolusuario == "Inspector") {
@@ -585,7 +585,7 @@ router.get('/intimaciones', isAuthenticated, async (req, res) => {
 router.get('/intimaciones/listado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const intimacions = await Intimacion.find().lean().sort({ date: 'desc' });
         res.render('notes/planillalistaintimacion', { intimacions });
     } else if (rolusuario == "Inspector") {
@@ -600,7 +600,7 @@ router.get('/intimaciones/listado', isAuthenticated, async (req, res) => {
 router.get('/infracciones', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const infraccions = await Infraccion.find().lean().sort({ date: 'desc' });
         res.render('notes/allinfraccadm', { infraccions });
     } else if (rolusuario == "Inspector") {
@@ -615,7 +615,7 @@ router.get('/infracciones', isAuthenticated, async (req, res) => {
 router.get('/infracciones/listado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const infracciones = await Infraccion.find().lean().sort({ date: 'desc' });
         res.render('notes/planillalistainfraccion', { infracciones });
     } else if (rolusuario == "Inspector") {
@@ -630,7 +630,7 @@ router.get('/infracciones/listado', isAuthenticated, async (req, res) => {
 // router.get('/estadisticas', isAuthenticated, async (req, res) => {
 //     // res.send('Notes from data base');
 //     const rolusuario = req.user.rolusuario;
-//     if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+//     if (rolusuario == "Administrador" || rolusuario == "Programador") {
 //         const estadisticas = await Estadistica.find().lean().sort({ estadisticanum: 'asc' });
 //         res.render('notes/allestadistica', { estadisticas });
 //     } else {
@@ -656,8 +656,14 @@ router.get('/usuarios', isAuthenticated, async (req, res) => {
 // ***** Aca los GET para EDITAR ******
 
 router.get('/usuario/edit/:id', isAuthenticated, async (req, res) => {
-    const usuarios = await Users.findById(req.params.id).lean();
-    res.render('users/editusuarios', { usuarios })
+    const rolusuario = req.user.rolusuario;
+    if (rolusuario == "Programador") {
+        const usuarios = await Users.findById(req.params.id).lean();
+        res.render('users/editusuarios', { usuarios })
+    } else {
+        req.flash('success_msg', 'NO TIENE PERMISO AREA EDIT USUARIOS')
+        return res.redirect('/usuarios/list');
+    }
 });
 
 router.get('/tickets/edit/:id', isAuthenticated, async (req, res) => {
@@ -730,7 +736,7 @@ router.post('/ticket/findlistaticket', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     const { numticket } = req.body;
     const ticket = await Ticket.find({ numticket: { $regex: numticket, $options: "i" } }).lean().sort({ date: 'desc' })
-    if (rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Programador") {
         if (!ticket) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/planillalistaticket");
@@ -760,7 +766,7 @@ router.post('/ticket/findlistainiciador', isAuthenticated, async (req, res) => {
         } else {
             res.render('notes/planillalistaticket', { ticket })
         }
-    } else if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!ticket) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/planillalistaticketadm");
@@ -783,7 +789,7 @@ router.post('/ticket/findlistaadrema', isAuthenticated, async (req, res) => {
         } else {
             res.render('notes/planillalistaticket', { ticket })
         }
-    } else if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!ticket) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/planillalistaticketadm");
@@ -806,7 +812,7 @@ router.post('/ticket/findlistadireccion', isAuthenticated, async (req, res) => {
         } else {
             res.render('notes/planillalistaticket', { ticket })
         }
-    } else if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!ticket) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/planillalistaticketadm");
@@ -829,7 +835,7 @@ router.post('/ticket/findlistafechainsp', isAuthenticated, async (req, res) => {
         } else {
             res.render('notes/planillalistaticket', { ticket })
         }
-    } else if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!ticket) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/planillalistaticketadm");
@@ -1078,9 +1084,10 @@ router.put('/notes/editaddintimacion/:id', isAuthenticated, async (req, res) => 
 // **** SECTOR EDITAR ****
 
 router.put('/users/editusuarios/:id', isAuthenticated, async (req, res) => {
-    const { name, dni, codigoinspector, funcion, email, rolusuario } = req.body
+    // const { name, dni, codigoinspector, funcion, email, rolusuario } = req.body
+    const { idestudio, numestudio, rolusuario, name, celular, email, dni, codigousuario, funcion}  = req.body
     await Users.findByIdAndUpdate(req.params.id, {
-        name, dni, codigoinspector, funcion, email, rolusuario
+         idestudio, numestudio, rolusuario, name, celular, email, dni, codigousuario, funcion
     });
     req.flash('success_msg', 'Usuario Actualizado')
     res.redirect('/usuarios');
@@ -1153,16 +1160,37 @@ router.put('/notes/editinfraccion/:id', isAuthenticated, async (req, res) => {
 
 // **** SECTOR DELETE ****
 
+// router.delete('/usuarios/delete/:id', isAuthenticated, async (req, res) => {
+
+//     var usuarios = await Users.find().lean().sort();
+//     if (usuarios.length > 1) {
+//         await Users.findByIdAndDelete(req.params.id);
+//         req.flash('success_msg', 'Usuario Eliminado')
+//         res.redirect('/usuarios')
+//     }
+//     else {
+//         req.flash('success_msg', 'No puede eliminar usuario único')
+//         res.redirect('/usuarios')
+//     }
+// });
+
 router.delete('/usuarios/delete/:id', isAuthenticated, async (req, res) => {
-    var usuarios = await Users.find().lean().sort();
-    if (usuarios.length > 1) {
+    const rolusuario = req.user.rolusuario;
+    var usuarios = await User.find().lean().sort();
+    if (rolusuario === "Programador" && usuarios.length > 1) {
+
+        // if (usuarios.length > 1) {
         await Users.findByIdAndDelete(req.params.id);
-        req.flash('success_msg', 'Usuario Eliminado')
+        req.flash('success_msg', 'Usuario Eliminado Definitivamente')
         res.redirect('/usuarios')
-    }
-    else {
-        req.flash('success_msg', 'No puede eliminar usuario único')
-        res.redirect('/usuarios')
+        // }
+        // else {
+        //     req.flash('success_msg', 'No puede eliminar usuario único')
+        //     res.redirect('/usuarios')
+        // }
+    } else {
+        req.flash('success_msg', 'No tiene permiso para Eliminar Usuario - Contacte al Programador');
+        return res.redirect('/usuarios');
     }
 });
 
@@ -1196,7 +1224,7 @@ router.get('/infracciones/Estadistica', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     var contador = 0;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Jefe-Inspectores" || rolusuario == "Administrador") {
+    if (rolusuario == "Programador" || rolusuario == "Administrador") {
         const infracciones = await Infraccion.find().lean().sort({ date: 'desc' });
         for (let i = 0; i < infracciones.length; i++) {
             contador = contador + 1
@@ -1214,7 +1242,7 @@ router.get('/actuaciones/listado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
     var planiregactuainftabla = {};
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores" || rolusuario == "Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador" || rolusuario == "Inspectores") {
         planiregactuainftabla = await Planiregactuainf.find({ borrado: { $ne: 'Si' } }).limit(150).lean().sort({ fechainiciotramite: 'desc' });
         for (var planiregactuainf of planiregactuainftabla) {
             //llamo funciones para nombres mayusculas y fechas ordenadar            
@@ -1240,7 +1268,7 @@ router.get('/actuaciones/listadonombre', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
     var planiregactuainftabla = {};
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores" || rolusuario == "Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador" || rolusuario == "Inspectores") {
         planiregactuainftabla = await Planiregactuainf.find({ borrado: { $ne: 'Si' } }).limit(150).lean().sort({ propietario: 'asc' });
         for (var planiregactuainf of planiregactuainftabla) {
             //llamo funciones para nombres mayusculas y fechas ordenadar            
@@ -1266,7 +1294,7 @@ router.get('/actuaciones/listadocreacion', isAuthenticated, async (req, res) => 
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
     var planiregactuainftabla = {};
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores" || rolusuario == "Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador" || rolusuario == "Inspectores") {
         planiregactuainftabla = await Planiregactuainf.find({ borrado: { $ne: 'Si' } }).limit(150).lean().sort({ date: 'desc' });
         for (var planiregactuainf of planiregactuainftabla) {
             //llamo funciones para nombres mayusculas y fechas ordenadar            
@@ -1292,7 +1320,7 @@ router.get('/actuaciones/borradolistado', isAuthenticated, async (req, res) => {
     // res.send('Notes from data base');
     const rolusuario = req.user.rolusuario;
     var planiregactuainftabla = {};
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         planiregactuainftabla = await Planiregactuainf.find({ borrado: { $ne: 'No' } }).limit(50).lean().sort({ fechainiciotramite: 'desc' });
         for (var planiregactuainf of planiregactuainftabla) {
             //llamo funciones para nombres mayusculas y fechas ordenadar            
@@ -1304,7 +1332,7 @@ router.get('/actuaciones/borradolistado', isAuthenticated, async (req, res) => {
         // necesito igualar para que se copie el cambio
         planiregactuainf = planiregactuainftabla
         //console.log(planiregactuainf)
-        res.render('notes/borrados/borradolistaactuacion', { planiregactuainf });    
+        res.render('notes/borrados/borradolistaactuacion', { planiregactuainf });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA INTIMACIONES')
         return res.redirect('/');
@@ -1317,9 +1345,9 @@ router.get('/actuaciones/list/:id', isAuthenticated, async (req, res) => {
 });
 
 router.post('/actuaciones/findfecha', isAuthenticated, async (req, res) => {
-    const { fechainiciotramite } = req.body;      
+    const { fechainiciotramite } = req.body;
     const fechatramite = funcionesimportantes.ordenarfechaalrevez(fechainiciotramite);
-    const planiregactuainftabla = await Planiregactuainf.find({ fechainiciotramite: { $regex: fechatramite, $options: "i" }, borrado: { $ne: 'Si' }    }).lean().sort({ date: 'desc' });;
+    const planiregactuainftabla = await Planiregactuainf.find({ fechainiciotramite: { $regex: fechatramite, $options: "i" }, borrado: { $ne: 'Si' } }).lean().sort({ date: 'desc' });;
     if (!planiregactuainftabla) {
         req.flash('success_msg', 'cargue una Fecha')
         return res.render("notes/inspecciones/infracciones/listactuacionesadm");
@@ -1339,7 +1367,7 @@ router.post('/actuaciones/findfecha', isAuthenticated, async (req, res) => {
 
 router.post('/actuaciones/findiniciador', isAuthenticated, async (req, res) => {
     const { propietario } = req.body;
-    const planiregactuainftabla = await Planiregactuainf.find({ propietario: { $regex: propietario, $options: "i" }, borrado: { $ne: 'Si' }  }).lean().sort({ adrema: 'desc' });;
+    const planiregactuainftabla = await Planiregactuainf.find({ propietario: { $regex: propietario, $options: "i" }, borrado: { $ne: 'Si' } }).lean().sort({ adrema: 'desc' });;
     if (!planiregactuainftabla) {
         req.flash('success_msg', 'cargue un Nº de Adrema')
         return res.render("notes/inspecciones/infracciones/listactuacionesadm");
@@ -1373,7 +1401,7 @@ router.post('/actuaciones/borrado/findiniciador', isAuthenticated, async (req, r
         }
         // necesito igualar para que se copie el cambio
         planiregactuainf = planiregactuainftabla
-        res.render('notes/borrados/borradolistaactuacion', { planiregactuainf });  
+        res.render('notes/borrados/borradolistaactuacion', { planiregactuainf });
     }
 });
 
@@ -1413,14 +1441,14 @@ router.post('/actuaciones/borrado/findcuitdni', isAuthenticated, async (req, res
         }
         // necesito igualar para que se copie el cambio
         planiregactuainf = planiregactuainftabla
-        res.render('notes/borrados/borradolistaactuacion', { planiregactuainf });  
+        res.render('notes/borrados/borradolistaactuacion', { planiregactuainf });
     }
 });
 
 
 router.post('/actuaciones/findadrema', isAuthenticated, async (req, res) => {
     const { adrema } = req.body;
-    const planiregactuainftabla = await Planiregactuainf.find({ adrema: { $regex: adrema, $options: "i" }, borrado: { $ne: 'Si' }  }).lean().sort({ adrema: 'desc' });;
+    const planiregactuainftabla = await Planiregactuainf.find({ adrema: { $regex: adrema, $options: "i" }, borrado: { $ne: 'Si' } }).lean().sort({ adrema: 'desc' });;
     if (!planiregactuainftabla) {
         req.flash('success_msg', 'cargue un Nº de Adrema')
         return res.render("notes/inspecciones/infracciones/listactuaciones");
@@ -1440,7 +1468,7 @@ router.post('/actuaciones/findadrema', isAuthenticated, async (req, res) => {
 
 router.post('/actuaciones/findinspector', isAuthenticated, async (req, res) => {
     const { inspector } = req.body;
-    const planiregactuainftabla = await Planiregactuainf.find({ inspector: { $regex: inspector, $options: "i" }, borrado: { $ne: 'Si' }  }).lean().sort({ adrema: 'desc' });;
+    const planiregactuainftabla = await Planiregactuainf.find({ inspector: { $regex: inspector, $options: "i" }, borrado: { $ne: 'Si' } }).lean().sort({ adrema: 'desc' });;
     if (!planiregactuainftabla) {
         req.flash('success_msg', 'cargue un Nº de Adrema')
         return res.render("notes/inspecciones/infracciones/listactuaciones");
@@ -1461,7 +1489,7 @@ router.post('/actuaciones/findinspector', isAuthenticated, async (req, res) => {
 router.get('/actuaciones/add', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Inspector" || rolusuario == "Programador") {
         const usuarios = await Users.find().lean().sort({ date: 'desc' });
         res.render('notes/inspecciones/infracciones/newactuaciones', usuarios);
         //res.render('notes/allusuariosadm', { usuarios });
@@ -1545,11 +1573,11 @@ router.put('/actuaciones/marcadelete/:id', isAuthenticated, async (req, res) => 
 
 router.delete('/actuaciones/delete/:id', isAuthenticated, async (req, res) => {
     await Planiregactuainf.findByIdAndDelete(req.params.id);
-    req.flash('success_msg', 'Actuación Eliminado')    
+    req.flash('success_msg', 'Actuación Eliminado')
     res.redirect('/actuaciones/borradolistado')
 });
 
-router.put('/actuacion/marcadeleterestaurar/:id', isAuthenticated, async (req, res) => {    
+router.put('/actuacion/marcadeleterestaurar/:id', isAuthenticated, async (req, res) => {
     //Busco el id y le sumo 1 a veces impreso
     const borrado = "No";
     const fechaborrado = "Restaurado";
@@ -1568,7 +1596,7 @@ router.get('/actuaciones/Estadisticas', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     var contador = 0;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Jefe-Inspectores" || rolusuario == "Administrador") {
+    if (rolusuario == "Programador" || rolusuario == "Administrador") {
         const planiregactuainftabla = await Planiregactuainf.find().lean().limit(30).sort({ date: 'desc' });
         for (var planiregactuainf of planiregactuainftabla) {
             // permite mostrar en las tablas la fecha sola y ordenada
@@ -1615,7 +1643,7 @@ router.post('/actuaciones/sacarestadistica', isAuthenticated, async (req, res) =
     //console.log("ROL USUARIO", rolusuario) //Inspector
     var planiregactuainftabla = {};
     var planiregactuainf = {};
-    if (rolusuario == "Administrador" || rolusuario == "Jefe-Inspectores") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
         var contador = 0;
         if (propietario) {
@@ -1626,7 +1654,7 @@ router.post('/actuaciones/sacarestadistica', isAuthenticated, async (req, res) =
             //     dni = ""
             // }
             var cuitdni = propietario;
-            planiregactuainftabla = await Planiregactuainf.find({ $or: [{ propietario: { $regex: propietario, $options: "i" } }, { cuitdni: cuitdni }], $and :[{borrado: { $ne: 'Si' }}]}).lean().sort({ date: 'desc' });
+            planiregactuainftabla = await Planiregactuainf.find({ $or: [{ propietario: { $regex: propietario, $options: "i" } }, { cuitdni: cuitdni }], $and: [{ borrado: { $ne: 'Si' } }] }).lean().sort({ date: 'desc' });
             planiregactuainf = planiregactuainftabla
             for (let i = 0; i < planiregactuainf.length; i++) {
                 contador = contador + 1
@@ -1634,7 +1662,7 @@ router.post('/actuaciones/sacarestadistica', isAuthenticated, async (req, res) =
             //res.render('notes/inspecciones/infracciones/estadisticasactuacion', { planiregactuainf, contador });
         } else if (adrema) {
             var expediente = adrema;
-            planiregactuainftabla = await Planiregactuainf.find({ $or: [{ adrema: { $regex: adrema, $options: "i" } }, { expediente: { $regex: expediente, $options: "i" } }], $and :[{borrado: { $ne: 'Si' }}] }).lean().sort({ date: 'desc' });
+            planiregactuainftabla = await Planiregactuainf.find({ $or: [{ adrema: { $regex: adrema, $options: "i" } }, { expediente: { $regex: expediente, $options: "i" } }], $and: [{ borrado: { $ne: 'Si' } }] }).lean().sort({ date: 'desc' });
             planiregactuainf = planiregactuainftabla
             for (let i = 0; i < planiregactuainf.length; i++) {
                 contador = contador + 1
@@ -1651,14 +1679,14 @@ router.post('/actuaciones/sacarestadistica', isAuthenticated, async (req, res) =
             if ((desde && hasta)) {
                 var d = new Date(hasta); //D= 2023-07-25T00:00:00.000Z
                 const hastad = d.setDate(d.getDate() + 1); //HASTAD= 1690243200000  
-                planiregactuainftabla = await Planiregactuainf.find({ $and: [{ fechainiciotramite: { $gte: desde, $lte: hastad } }, { inspector: { $regex: inspector, $options: "i" }}, {borrado: { $ne: 'Si' }}] }).lean().sort({ date: 'desc' });
+                planiregactuainftabla = await Planiregactuainf.find({ $and: [{ fechainiciotramite: { $gte: desde, $lte: hastad } }, { inspector: { $regex: inspector, $options: "i" } }, { borrado: { $ne: 'Si' } }] }).lean().sort({ date: 'desc' });
                 planiregactuainf = planiregactuainftabla
                 for (let i = 0; i < planiregactuainf.length; i++) {
                     contador = contador + 1
                 }
                 //res.render('notes/inspecciones/infracciones/estadisticasactuacion', { planiregactuainf, contador });
             } else {
-                planiregactuainftabla = await Planiregactuainf.find( {$and: [{inspector: { $regex: inspector, $options: "i" }}, {borrado: { $ne: 'Si' }}]}).lean().sort({ date: 'desc' });
+                planiregactuainftabla = await Planiregactuainf.find({ $and: [{ inspector: { $regex: inspector, $options: "i" } }, { borrado: { $ne: 'Si' } }] }).lean().sort({ date: 'desc' });
                 planiregactuainf = planiregactuainftabla
                 for (let i = 0; i < planiregactuainf.length; i++) {
                     contador = contador + 1
@@ -1670,7 +1698,7 @@ router.post('/actuaciones/sacarestadistica', isAuthenticated, async (req, res) =
             // console.log("HASTA", hasta)
             var d = new Date(hasta); //D= 2023-07-25T00:00:00.000Z
             const hastad = d.setDate(d.getDate() + 1); //HASTAD= 1690243200000        
-            planiregactuainftabla = await Planiregactuainf.find({ fechainiciotramite: { $gte: desde, $lte: hastad } }, {borrado: { $ne: 'Si' }}).lean().sort({ fechainiciotramite: 'desc' });
+            planiregactuainftabla = await Planiregactuainf.find({ fechainiciotramite: { $gte: desde, $lte: hastad } }, { borrado: { $ne: 'Si' } }).lean().sort({ fechainiciotramite: 'desc' });
             //.find( "SelectedDate": {'$gte': SelectedDate1,'$lt': SelectedDate2}})
             //.find({ desde: { $regex: date, $options: "i" } }).lean().sort({ date: 'desc' });            
             // necesito igualar para que se copie el cambio
@@ -1746,7 +1774,7 @@ router.post('/actuaciones/descargarestadisticaactu', isAuthenticated, async (req
                     var diastring = dia + "-"
                 }
                 const ano = fecha.getFullYear(
-                    
+
                 )
                 //const fullyear = fecha.toLocaleDateString();
                 const fullyear = diastring + mes + ano

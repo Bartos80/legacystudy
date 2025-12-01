@@ -26,9 +26,10 @@
       select.appendChild(option);
     });
   }
-
-  cargar();
+  //cargar();
 </script>
+
+
 
 <div class="row justify-content-center">
   <div class="col-md-6">
@@ -37,130 +38,97 @@
         <h4 class="fw-bold text-dark mb-0">Registro de Usuarios</h4>
       </div>
       <div class="card-body">
-        <form action="/users/signup" method="POST" novalidate>
+        <form action="/users/signup" method="POST"> {{!-- novalidate SIRVE PARA Q LSO INPUT NO ANDE REQUIRED--}}
+
+          <div>
+            <label for="selectEstudio">Seleccione Empresa/estudio:</label>
+            <select id="selectEstudio" name="selectEstudio" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+              <option value="Sin estudio" disabled>-- Elegir studio --</option>
+              {{#each estudios}}
+              <option value="{{idestudio}}|{{numestudio}}|{{paisestudio}}|{{provinciaestudio}}|{{localidadestudio}}">
+                {{numestudio}}
+              </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div hidden>
+            {{!-- <label for="idestudio">ID Juzgado: {{idestudio}}</label> --}}
+            <input type="text" id="idestudio" name="idestudio">
+          </div>
+          <div hidden>
+            {{!-- <label for="numestudio">N° Juzgado: {{numestudio}}</label> --}}
+            <input type="text" id="numestudio" name="numestudio">
+          </div>
+
+          <br>
+
           <div class="form-group mb-3">
             <label for="rolusuario" class="form-label">Rol de Usuario</label>
             <select name="rolusuario" id="rolusuario" class="form-select" required>
               <option selected disabled>Seleccione un rol</option>
               <option>Programador</option>
               <option>Administrador</option>
-              <option>Abogado/a</option>
+              <option>Abogado</option>
               <option>Secretario/a</option>
+              <option>Administrativo/a</option>
               <option>Visitante</option>
             </select>
           </div>
 
-          <div class="form-group mb-3">
-            <label for="estudioempresa" class="form-label">Estudio / Empresa</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="estudioempresa" 
-              name="estudioempresa"
-              onkeyup="ShowName();" 
-              value="{{estudioempresa}}" 
-              placeholder="Nombre de estudio o empresa"
-            />
-          </div>
+          {{!-- <div class="form-group mb-3">
+            <label for="numestudio" class="form-label">Estudio / Empresa</label>
+            <input type="text" class="form-control" id="numestudio" name="numestudio" onkeyup="ShowName();"
+              value="{{numestudio}}" placeholder="Nombre de estudio o empresa" />
+          </div> --}}
 
           <div class="form-group mb-3">
             <label for="name" class="form-label">Nombre completo</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="name" 
-              name="name" 
-              onkeyup="ShowName();" 
-              value="{{name}}" 
-              required 
-              placeholder="Nombre y Apellido" 
-            />
+            <input type="text" class="form-control" id="name" name="name" onkeyup="ShowName();" value="{{name}}"
+              placeholder="Nombre y Apellido" required />
           </div>
 
           <div class="form-group mb-3">
             <label for="dni" class="form-label">DNI</label>
-            <input 
-              type="number" 
-              class="form-control" 
-              id="dni" 
-              name="dni" 
-              value="{{dni}}" 
-              placeholder="Documento Nacional de Identidad"
-            />
+            <input type="number" class="form-control" id="dni" name="dni" value="{{dni}}"
+              placeholder="Documento Nacional de Identidad" required />
           </div>
 
           <div class="form-group mb-3">
             <label for="codigousuario" class="form-label">Código de Usuario</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="codigousuario" 
-              name="codigousuario" 
-              value="{{codigousuario}}" 
-              placeholder="Código interno de usuario"
-            />
+            <input type="text" class="form-control" id="codigousuario" name="codigousuario" value="{{codigousuario}}"
+              placeholder="Código interno de usuario" required />
           </div>
 
           <div class="form-group mb-3">
             <label for="funcion" class="form-label">Función</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="funcion" 
-              name="funcion" 
-              value="{{funcion}}" 
-              placeholder="Ejemplo: Abogado, Secretaria"
-            />
+            <input type="text" class="form-control" id="funcion" name="funcion" value="{{funcion}}"
+              placeholder="Ejemplo: Abogado, Secretaria" required />
           </div>
 
           <div class="form-group mb-3">
             <label for="celular" class="form-label">Teléfono / Celular</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="celular" 
-              name="celular" 
-              value="{{celular}}" 
-              placeholder="Ej: 11 2345 6789"
-            />
+            <input type="text" class="form-control" id="celular" name="celular" value="{{celular}}"
+              placeholder="Ej: 11 2345 6789" required />
           </div>
 
           <div class="form-group mb-3">
             <label for="email" class="form-label">Correo electrónico</label>
-            <input 
-              type="email" 
-              class="form-control" 
-              id="email" 
-              name="email" 
-              onkeyup="ponerminuscula()" 
-              value="{{email}}" 
-              placeholder="ejemplo@email.com"
-              required
-            />
+            <input type="email" class="form-control" id="email" name="email" onkeyup="ponerminuscula()"
+              value="{{email}}" placeholder="ejemplo@email.com" required />
           </div>
 
           <div class="form-group mb-3">
             <label for="password" class="form-label">Contraseña</label>
-            <input 
-              type="password" 
-              class="form-control" 
-              id="password" 
-              name="password" 
-              placeholder="Contraseña segura"
-              required
-            />
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña segura"
+              required />
           </div>
 
           <div class="form-group mb-3">
             <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
-            <input 
-              type="password" 
-              class="form-control" 
-              id="confirm_password" 
-              name="confirm_password" 
-              placeholder="Repetir contraseña"
-              required
-            />
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+              placeholder="Repetir contraseña" required />
           </div>
 
           <div class="d-grid mb-3">
@@ -177,3 +145,23 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  const selectEstudio = document.getElementById('selectEstudio');
+  const idestudio = document.getElementById('idestudio');
+  const numestudio = document.getElementById('numestudio');
+
+  selectEstudio.addEventListener('change', function () {
+    const valorCompleto = this.value;
+    if (valorCompleto === "") {
+      idestudio.value = "";
+      numestudio.value = "";
+      return;
+    }
+    const partes = valorCompleto.split('|');
+    idestudio.value = partes[0] || '';
+    numestudio.value = partes[1] || '';
+
+  });
+</script>

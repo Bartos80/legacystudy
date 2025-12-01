@@ -109,12 +109,12 @@ router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
 router.get('/audiencia', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Audiencias") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         // res.send('Notes from data base');
         // const notes = await Note.find({user : req.user.id}).lean().sort({numinspeccion:'desc'}); //para que muestre notas de un solo user
         const audiencias = await Audiencia.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         res.render('notes/allaudiencia', { audiencias });
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const audiencias = await Audiencia.find({ borrado: "No" }).lean().limit(30).sort({ date: 'desc' });
         res.render('notes/allaudiencia', { audiencias });
     } else {
@@ -332,7 +332,7 @@ router.post('/audiencia/sacarestadistica', isAuthenticated, async (req, res) => 
 router.get('/audiencia/listado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Audiencias" || rolusuario == "Administrador") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ horaaudiencia: 'desc' });
         for (var audiencias of audienciastabla) {
             //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
@@ -379,7 +379,7 @@ router.get('/audiencia/listado', isAuthenticated, async (req, res) => {
 router.get('/audiencias/borradolistado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
-    if (rolusuario == "Administrador") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         const audienciastabla = await Audiencia.find({ borrado: "Si" }).limit(30).lean().sort({ horaaudiencia: 'desc' });
         for (var audiencias of audienciastabla) {
             //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
@@ -549,14 +549,14 @@ router.post('/audiencia/findsector', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     const { sector } = req.body;
     const audiencias = await Audiencia.find({ $and: [{ borrado: "No" }, { sector: { $regex: sector, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    if (rolusuario == "Audiencias") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
         } else {
             res.render('notes/findaudiencia', { audiencias })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
@@ -572,14 +572,14 @@ router.post('/audiencia/findiniciador', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     const { nomyape } = req.body;
     const audiencias = await Audiencia.find({ $and: [{ borrado: "No" }, { nomyape: { $regex: nomyape, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    if (rolusuario == "Audiencias") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
         } else {
             res.render('notes/findaudiencia', { audiencias })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
@@ -595,14 +595,14 @@ router.post('/audiencia/findlistasector', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     const { sector } = req.body;
     const audiencias = await Audiencia.find({ $and: [{ borrado: "No" }, { sector: { $regex: sector, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    if (rolusuario == "Audiencias") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
         } else {
             res.render('notes/audiencias/planillalistaaudiencia', { audiencias })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
@@ -618,14 +618,14 @@ router.post('/audiencia/findlistainiciador', isAuthenticated, async (req, res) =
     const rolusuario = req.user.rolusuario;
     const { nomyape } = req.body;
     const audiencias = await Audiencia.find({ $and: [{ borrado: "No" }, { nomyape: { $regex: nomyape, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    if (rolusuario == "Audiencias") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
         } else {
             res.render('notes/audiencias/planillalistaaudiencia', { audiencias })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Nombre y Apellido')
             return res.render("notes/allaudiencia");
@@ -759,14 +759,14 @@ router.post('/audiencia/findlistaexpediente', isAuthenticated, async (req, res) 
     const rolusuario = req.user.rolusuario;
     const { numexpediente } = req.body;
     const audiencias = await Audiencia.find({ $and: [{ borrado: "No" }, { numexpediente: { $regex: numexpediente, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
-    if (rolusuario == "Audiencias") {
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Expediente')
             return res.render("notes/audiencias/planillalistaaudiencia");
         } else {
             res.render('notes/audiencias/planillalistaaudiencia', { audiencias })
         }
-    } else if (rolusuario == "Administrador") {
+    } else if (rolusuario == "Administrador" || rolusuario == "Programador") {
         if (!audiencias) {
             req.flash('success_msg', 'cargue Expediente')
             return res.render("notes/allaudiencia");
