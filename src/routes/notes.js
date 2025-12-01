@@ -662,7 +662,7 @@ router.get('/usuario/edit/:id', isAuthenticated, async (req, res) => {
         res.render('users/editusuarios', { usuarios })
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO AREA EDIT USUARIOS')
-        return res.redirect('/usuarios/list');
+        return res.redirect('/usuarios');
     }
 });
 
