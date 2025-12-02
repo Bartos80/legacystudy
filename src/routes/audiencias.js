@@ -463,7 +463,7 @@ router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
                     parsedDate: 0
                 }
             }
-        ]).lean().sort({ dateturno: 'desc' }); 
+        ]);
         
         // El campo 'dateturno' que se envía a la vista sigue siendo la cadena 'DD-MM-YYYY' original.
         
