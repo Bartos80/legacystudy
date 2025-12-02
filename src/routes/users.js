@@ -103,15 +103,15 @@ router.post('/users/signup', isAuthenticated, async (req, res) => {
     // if (rolusuario.length <= 0 || name.length <= 0 || email.length <= 0 || dni.length <= 0 || password.length <= 0 || confirm_password.length <= 0) {
     //     errors.push({ text: 'Todos los Datos deben ser Cargados' })
     // }
-    if (password != confirm_password) {
-        errors.push({ text: "Las contraseñas deben ser iguales" });
-        return res.redirect("/users/11vvsOpmo90W")
-    }
-    // if (password.length < 4) {
-    //     errors.push({ text: "Contraseña debe tener mas de 4 caracteres" });
+    // if (password != confirm_password) {
+    //     errors.push({ text: "Las contraseñas deben ser iguales" });
+    //     return res.redirect("/users/11vvsOpmo90W")
     // }
+    if (password.length < 4) {
+        errors.push({ text: "Contraseña debe tener mas de 4 caracteres" });
+    }
     if (errors.length > 0) {
-        res.render('users/signup', { errors, rolusuario, idestudio, numestudio, name, dni, codigousuario, funcion, celular, email, password, confirm_password, date });
+        res.render('users/11vvsOpmo90W', { errors, rolusuario, idestudio, numestudio, name, dni, codigousuario, funcion, celular, email, password, confirm_password, date });
     } else {
         const emailUser = await User.findOne({ email: email });
         if (emailUser) {
@@ -120,13 +120,20 @@ router.post('/users/signup', isAuthenticated, async (req, res) => {
             return res.redirect("/users/11vvsOpmo90W");
             // res.render('users/signup', {errors, name, email, password, confirm_password});
         }
+        // if (password === confirm_password) {
         const newUser = new User({ rolusuario, idestudio, numestudio, name, dni, codigousuario, funcion, celular, email, password, date });
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt); //sin el await no anda
         await newUser.save();
         req.flash('success_msg', 'Nuevo Usuario Registrado');
         res.redirect('/usuarios');
-    }
+        // } else {
+        //     return res.render('/users/11vvsOpmo90W', { 
+        //     error: 'Las contraseñas no coinciden.', 
+        //     // Vuelve a enviar otros datos del formulario si es necesario
+        // });
+    // }
+}
 });
 
 router.get('/users/logout', function (req, res, next) {

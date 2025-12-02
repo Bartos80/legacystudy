@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose; // aca defino esquema de base de datos
 
-const ExpedcoordinadoSchema = new Schema({
-    idestudio: {
-        type: Number,
-        unique: true
-    },
+const ExpedcoordinadoSchema = new Schema({    
     borrado: {
         type: String,
         required: true,

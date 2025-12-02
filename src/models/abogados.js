@@ -5,14 +5,14 @@ const { Schema } = mongoose;
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const AbogadosSchema = new Schema({
-    idestudio: {
+    idabogado: {
         type: Number,
         unique: true
     },
     // Campo Autoincremental
-    idabogado: {
+    idestudio: {
         type: Number, // El tipo debe ser Number
-        unique: true  // Debe ser único
+        required: false  // Debe ser único
     },
     borrado: {
         type: String,

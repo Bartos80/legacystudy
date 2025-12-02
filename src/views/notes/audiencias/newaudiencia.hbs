@@ -26,9 +26,22 @@
         <form action="/audiencias/newaudiencia" method="POST">
 
           <!-- Juzgado -->
-          <div class="mb-3">
+          {{!-- <div class="mb-3">
             <label for="juzgado" class="form-label">Juzgado</label>
-            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Ej: Juzgado Civil Nº 3" required>
+            <input type="text" id="juzgado" name="juzgado" class="form-control" placeholder="Ej: Juzgado Civil Nº 3"
+              required>
+          </div> --}}
+          <div>
+            <label for="selectJuzgado">Seleccione un Juzgado:</label>
+            <select id="selectJuzgado" name="selectJuzgado" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+              <option value="Sin Juzgado" disabled>-- Sin Juzgado --</option>
+              {{#each juzgado}}
+              <option value="{{idjuzgado}}|{{numjuzgado}}|{{paisjuzgado}}|{{provinciajuzgado}}|{{localidadjuzgado}}">
+                {{numjuzgado}}
+              </option>
+              {{/each}}
+            </select>
           </div>
 
           <!-- Nº Expediente -->
@@ -55,16 +68,18 @@
           <!-- Caratula -->
           <div class="mb-3">
             <label for="caratula" class="form-label">Carátula</label>
-            <input type="text" id="caratula" name="caratula" class="form-control" placeholder="Carátula del Expediente" required>
+            <input type="text" id="caratula" name="caratula" class="form-control" placeholder="Carátula del Expediente"
+              required>
           </div>
 
           <!-- Secretaría -->
           <div class="mb-3">
             <label for="secretaria" class="form-label">Secretaría</label>
-            <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Ej: Secretaría B" required>
+            <input type="text" id="secretaria" name="secretaria" class="form-control" placeholder="Ej: Secretaría B"
+              required>
           </div>
 
-          <!-- Fecha Audiencia -->          
+          <!-- Fecha Audiencia -->
           <div class="mb-3">
             <label for="dateturno" class="form-label">Fecha Audiencia</label>
             <input type="date" id="dateturno" name="dateturno" class="form-control" required>
@@ -73,13 +88,14 @@
           <!-- Hora Audiencia -->
           <div class="mb-3">
             <label for="horaaudiencia" class="form-label">Hora Audiencia</label>
-            <input type="time" id="horaaudiencia" name="horaaudiencia" class="form-control" placeholder="Ej: 10:00 AM" required>
+            <input type="time" id="horaaudiencia" name="horaaudiencia" class="form-control" placeholder="Ej: 10:00 AM"
+              required>
           </div>
 
           <div class="form-group">
-                    Observaciones:
-                    <input type="text" style="font-weight: bold; color:green" minlength="0" maxlength="50"
-                        name="observaciones" class="form-control"  placeholder="Observaciones"></input>
+            Observaciones:
+            <input type="text" style="font-weight: bold; color:green" minlength="0" maxlength="50" name="observaciones"
+              class="form-control" placeholder="Observaciones"></input>
           </div>
           <!-- Foto expediente (deshabilitado) -->
           {{!-- <div class="mb-3">
@@ -102,3 +118,30 @@
     </div>
   </div>
 </div>
+
+<script>
+  const selectJuzgado = document.getElementById('selectJuzgado');
+  const idjuzgado = document.getElementById('idjuzgado');
+  const numjuzgado = document.getElementById('numjuzgado');
+  const paisjuzgado = document.getElementById('paisjuzgado');
+  const provinciajuzgado = document.getElementById('provinciajuzgado');
+  const localidadjuzgado = document.getElementById('localidadjuzgado');
+
+  selectJuzgado.addEventListener('change', function () {
+    const valorCompleto = this.value;
+    if (valorCompleto === "") {
+      idjuzgado.value = "";
+      numjuzgado.value = "";
+      paisjuzgado.value = "";
+      provinciajuzgado.value = "";
+      localidadjuzgado.value = "";
+      return;
+    }
+    const partes = valorCompleto.split('|');
+    idjuzgado.value = partes[0] || '';
+    numjuzgado.value = partes[1] || '';
+    paisjuzgado.value = partes[2] || '';
+    provinciajuzgado.value = partes[3] || '';
+    localidadjuzgado.value = partes[4] || '';
+  });
+</script>

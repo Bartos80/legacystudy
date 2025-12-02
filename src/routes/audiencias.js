@@ -17,6 +17,7 @@ var pdfoptionsA4 = { format: 'A4' };
 
 // tengo que requerir los modelos para que mongoose me cree las tablas
 const Audiencia = require('../models/audiencia');
+const Juzgado = require('../models/juzgado');
 
 // **esto es para agregar campo borrado a todos los q no tienen borrado marcado**
 router.put('/audiencia/listadoborradosenno', isAuthenticated, async (req, res) => {
@@ -25,8 +26,10 @@ router.put('/audiencia/listadoborradosenno', isAuthenticated, async (req, res) =
     res.redirect('/audiencia/listado');
 });
 
-router.get('/audiencias/add', isAuthenticated, (req, res) => {
-    res.render('notes/audiencias/newaudiencia');
+router.get('/audiencias/add', isAuthenticated, async(req, res) => {
+    const juzgado = await Juzgado.find({ borrado: "No" }).lean();
+    console.log ("JKuzgados" , juzgado)
+    res.render('notes/audiencias/newaudiencia' , {juzgado});
 })
 
 router.get('/audiencias/add/:id', isAuthenticated, (req, res) => {
@@ -43,6 +46,7 @@ router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
     })
     newaudiencia.user = req.user.id;
     newaudiencia.name = req.user.name;
+    newaudiencia.idestudio = req.user.idestudio;
     await newaudiencia.save();
     req.flash('success_msg', 'Audiencia Agregada Exitosamente');
     res.redirect('/audiencia/listado');
@@ -372,6 +376,101 @@ router.get('/audiencia/listado', isAuthenticated, async (req, res) => {
         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA MESA DE ENTRADA')
+        return res.redirect('/');
+    }
+});
+
+// router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
+//     const rolusuario = req.user.rolusuario;
+//     //console.log("ROL USUARIO", rolusuario) //Inspector
+//     if (rolusuario == "Administrador" || rolusuario == "Programador") {
+//         const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ horaaudiencia: 'desc' });
+//         for (var audiencias of audienciastabla) {            
+//             var tipoint = audiencias.dateturno;
+//             if (tipoint != null) {
+//                 const fecha = new Date(audiencias.dateturno);
+//                 const dia = fecha.getDate() + 1;
+//                 var mes = 0
+//                 const calcmes = fecha.getMonth() + 1
+//                 if (calcmes < 10) {
+//                     mes = "0" + calcmes + "-"
+//                 } else {
+//                     mes = calcmes + "-"
+//                 }
+//                 if (dia > 0 && dia < 10) {
+//                     var diastring = "0" + dia + "-"
+//                 } else {
+//                     var diastring = dia + "-"
+//                 }
+//                 const ano = fecha.getFullYear()                
+//                 const fullyear = diastring + mes + ano                
+//                 audiencias.dateturno = fullyear;
+//             } else {
+//                 audiencias.dateturno = "----"
+//             }
+//             audiencias = audienciastabla
+//         }
+//         console.log("Audiencias", audiencias)
+//         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
+//     } else {
+//         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS')
+//         return res.redirect('/');
+//     }
+// });
+
+router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
+    const rolusuario = req.user.rolusuario;
+    
+    if (rolusuario === "Administrador" || rolusuario === "Programador") {        
+        // 1. Definir la fecha de corte: Hoy a las 00:00:00.000
+        const hoy = new Date();
+        // Esto es crucial: establece la hora a medianoche para comparar solo el día.
+        hoy.setHours(0, 0, 0, 0); 
+        // 2. Usar la pipeline de agregación de MongoDB para filtrar por fecha de string
+        const audienciastabla = await Audiencia.aggregate([
+            // Paso A: Convertir el string 'dateturno' a un objeto Date (solo para filtrar/ordenar)
+            {
+                $addFields: {
+                    parsedDate: {
+                        $dateFromString: {
+                            dateString: '$dateturno',
+                            format: '%d-%m-%Y', // Asegura el formato DD-MM-YYYY
+                            onError: null       // Maneja registros con fecha nula o inválida
+                        }
+                    }
+                }
+            },
+            // Paso B: Filtrar los documentos
+            {
+                $match: {
+                    borrado: "No",
+                    // CONDICIÓN CLAVE: parsedDate debe ser ESTRICTAMENTE MENOR ($lt) a hoy.
+                    // Esto incluye ayer y todos los días anteriores, excluyendo la fecha actual.
+                    parsedDate: { $lt: hoy } 
+                }
+            },
+            // Paso C: Ordenar por la fecha parseada (descendente: más recientes primero)
+            {
+                $sort: { parsedDate: -1 } 
+            },
+            // Paso D: Limitar la cantidad de resultados (como tenías originalmente)
+            {
+                $limit: 30
+            },
+            // Paso E (Opcional): Excluir el campo temporal 'parsedDate'
+            {
+                $project: {
+                    parsedDate: 0
+                }
+            }
+        ]).lean().sort({ dateturno: 'desc' }); 
+        
+        // El campo 'dateturno' que se envía a la vista sigue siendo la cadena 'DD-MM-YYYY' original.
+        
+        console.log("Audiencias Vencidas", audienciastabla);
+        return res.render('notes/audiencias/planillalistaaudiencia', { audiencias: audienciastabla });
+    } else {
+        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS');
         return res.redirect('/');
     }
 });

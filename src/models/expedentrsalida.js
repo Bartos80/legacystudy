@@ -3,11 +3,7 @@ const paginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose; // aca defino esquema de base de datos
 
-ExpedentrsalidaSchema = new Schema({
-  idestudio: {
-    type: Number,
-    unique: true
-  },
+ExpedentrsalidaSchema = new Schema({  
   borrado: {
     type: String,
     required: true,
