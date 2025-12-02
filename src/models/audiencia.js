@@ -27,8 +27,7 @@ const AudienciaSchema = new Schema({
         type: String,
         required: true,
         default:"Sin Datos",
-    },
-    
+    },    
     juzgado: {
         type: String,
         require: false,

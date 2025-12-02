@@ -9,7 +9,6 @@ ClientesSchema = new Schema({
         type: Number,
         unique: true
     },
-  // Campo Autoincremental
   idestudio: {
     type: Number,
     required: false,
