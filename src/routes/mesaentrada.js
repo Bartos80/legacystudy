@@ -42,6 +42,7 @@ router.post('/notes/newmesaentradas', isAuthenticated, async (req, res) => {
     })
     newMesaentrada.user = req.user.id;
     newMesaentrada.name = req.user.name;
+    newMesaentrada.idestudiouser = req.user.idestudiouser
     await newMesaentrada.save();
     req.flash('success_msg', 'Turno Agregado Exitosamente');
     res.redirect('/mesaentrada/listado');
@@ -56,6 +57,7 @@ router.post('/notes/mesaentrada/newmesaentradas/:id', isAuthenticated, async (re
     })
     newMesaentrada.user = req.user.id;
     newMesaentrada.name = req.user.name;
+    newMesaentrada.idestudiouser = req.user.idestudiouser
     await newMesaentrada.save();
     req.flash('success_msg', 'Turno Agregado Exitosamente');
     res.redirect('/mesaentrada/listado');

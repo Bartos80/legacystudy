@@ -7,6 +7,10 @@ const EstadisticaSchema = new Schema({
                 type: Number,
                 unique: true
         },
+            idestudio: {
+    type: String,
+    require: false,
+    },
         borrado: {
                 type: String,
                 required: true,

@@ -9,8 +9,12 @@ const AbogadosSchema = new Schema({
         type: Number,
         unique: true
     },
-    // Campo Autoincremental
     idestudio: {
+        type: String,
+        require: false,
+    },
+    // Campo Autoincremental
+    idestudiouser: {
         type: Number, // El tipo debe ser Number
         required: false  // Debe ser único
     },

@@ -10,7 +10,11 @@ ExpedienteSchema = new Schema({
     unique: true
   },
   idestudio: {
-    type: Number,
+    type: String,
+    require: false,
+  },
+  idestudiouser: {
+    type: String,
     required: false,
   },
   borrado: {

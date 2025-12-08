@@ -6,7 +6,12 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const EstudioSchema = new Schema({
     idestudio: {
         type: Number,
-        unique: true
+        unique: true,
+        sparse: true // <--- ¡Esta es la clave!
+    },
+    idestudiouser: {
+        type: String,
+        required: false,
     },
     borrado: {
         type: String,

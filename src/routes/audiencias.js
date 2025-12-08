@@ -46,7 +46,7 @@ router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
     })
     newaudiencia.user = req.user.id;
     newaudiencia.name = req.user.name;
-    newaudiencia.idestudio = req.user.idestudio;
+    newaudiencia.idestudiouser = req.user.idestudiouser
     await newaudiencia.save();
     req.flash('success_msg', 'Audiencia Agregada Exitosamente');
     res.redirect('/audiencia/listado');
@@ -99,6 +99,7 @@ router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
         });
         newaudiencia.user = req.user.id;
         newaudiencia.name = req.user.name;
+        newaudiencia.idestudiouser = req.user.idestudiouser
         await newaudiencia.save();
         req.flash('success_msg', 'Turno Agregado Exitosamente');
         res.redirect('/audiencia/listado');

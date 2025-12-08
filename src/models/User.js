@@ -18,6 +18,10 @@ const UserSchema = new Schema({
     type: String,
     require: false,
   },
+  idestudiouser: {
+    type: String,
+    require: false,
+  },
   name: {
     type: String,
     require: false,
@@ -70,10 +74,10 @@ UserSchema.methods.matchPassword = async function (password) {
 };
 
 UserSchema.plugin(AutoIncrement, {
-    inc_field: 'iduser', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
-    start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
-    reference_fields: [],   // Opcional: Campos para crear secuencias independientes
-    id: 'user_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
+  inc_field: 'iduser', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+  start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
+  reference_fields: [],   // Opcional: Campos para crear secuencias independientes
+  id: 'user_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
 module.exports = mongoose.model("User", UserSchema);

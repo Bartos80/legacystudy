@@ -12,24 +12,28 @@ const MesaentradaSchema = new Schema({
     },
     idestudio: {
         type: String,
-        required: true,
+        require: false,
     },
-    borrado:{
+    idestudiouser: {
         type: String,
         required: true,
-        default:"No",
     },
-    userborrado:{
+    borrado: {
         type: String,
         required: true,
-        default:"Sin Datos",
+        default: "No",
     },
-    fechaborrado:{
+    userborrado: {
         type: String,
         required: true,
-        default:"Sin Datos",
+        default: "Sin Datos",
     },
-    idmesaentrada: { 
+    fechaborrado: {
+        type: String,
+        required: true,
+        default: "Sin Datos",
+    },
+    idmesaentrada: {
         type: Number, // El tipo debe ser Number
         unique: true  // Debe ser único
     },
@@ -45,7 +49,7 @@ const MesaentradaSchema = new Schema({
         type: String,
         require: false
     },
-    horaingreso:{
+    horaingreso: {
         type: String,
         require: false
     },
@@ -94,7 +98,7 @@ const MesaentradaSchema = new Schema({
         default: "Administrador"
     },
     date: {
-        type: Date, 
+        type: Date,
         default: Date.now
     },
 });

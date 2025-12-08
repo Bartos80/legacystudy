@@ -8,8 +8,12 @@ const JuzgadoSchema = new Schema({
         type: Number,
         unique: true
     },
-    idestudio: {
-        type: Number,
+        idestudio: {
+    type: String,
+    require: false,
+    },
+    idestudiouser: {
+        type: String,
         required: false,
     },
     borrado: {

@@ -11,7 +11,11 @@ ExpedienteabogadoSchema = new Schema({
     type: Number,
     unique: true
   },
-  idestudio: {
+      idestudio: {
+    type: String,
+    require: false,
+    },
+  idestudiouser: {
     type: Number,
     required: false,
   },

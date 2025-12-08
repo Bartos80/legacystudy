@@ -4,7 +4,11 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 
 const NoteSchema = new Schema({
         idestudio: {
-                type: Number,
+                type: String,
+                require: false,
+        },
+        idestudiouser: {
+                type: String,
                 required: false,
         },
         borrado: {
