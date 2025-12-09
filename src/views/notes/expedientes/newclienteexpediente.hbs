@@ -1,148 +1,139 @@
 <script>
-  function ShowName(name) {
-    const input = document.getElementById(name);
-    const words = input.value.trim().split(" ");
-    const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
-    input.value = formatted;
-  }
-
-  function ponerMayuscula(id) {
-    const input = document.getElementById(id);
-    input.value = input.value.toUpperCase();
-  }
-
-  function ponerminuscula(id) {
-    const input = document.getElementById(id);
-    input.value = input.value.toLowerCase();
-  }
-
-  // Make sure this runs after the page loads, e.g., inside $(document).ready() if using jQuery
-  $(document).ready(function () {
-    $('#idcliente').select2({
-      placeholder: "Buscar Cliente...",
-      allowClear: true // Optional: allows the user to clear the selection
+    // Tu código JS original (ShowName, ponerMayuscula, ponerminuscula, Select2)
+    function ShowName(name) {
+        const input = document.getElementById(name);
+        const words = input.value.trim().split(" ");
+        const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+        input.value = formatted;
+    }
+    function ponerMayuscula(id) {
+        const input = document.getElementById(id);
+        input.value = input.value.toUpperCase();
+    }
+    function ponerminuscula(id) {
+        const input = document.getElementById(id);
+        input.value = input.value.toLowerCase();
+    }
+    // Asegúrate de que jQuery y Select2 estén cargados para este bloque.
+    $(document).ready(function () {
+        $('#selectCliente').select2({ // Usamos el ID 'selectCliente' aquí, no 'idcliente'
+            placeholder: "Buscar Cliente...",
+            allowClear: true,
+            theme: "bootstrap" // Usa el tema de Bootstrap para mejor integración visual
+        });
     });
-  });
 </script>
 
 <div class="container my-5">
-  <div class="col-md-8 mx-auto">
-    <div class="card shadow-sm border-0">
-      <div class="card-body p-4">
-        <h3 class="text-center text-primary mb-4 fw-bold">Expediente con Cliente</h3>
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow-lg border-0 rounded-4"> 
+            <div class="card-body p-5">
+                <h3 class="text-center text-primary mb-2 fw-bolder">Asociar Cliente a Expediente</h3>
+                <p class="text-center text-muted mb-4">Verifique la información del expediente antes de vincular.</p>
 
-        <form action="/notes/newexpedientecliente" method="POST">
+                <form action="/notes/newexpedientecliente" method="POST">
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
+                    <h5 class="mb-3 text-secondary fw-semibold border-bottom pb-2">📂 Detalles del Expediente</h5>
+                    <div class="row g-3 mb-4">
+                        
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">ID Expediente:</label>
+                            <p class="mb-0 text-dark fw-bold">{{expediente.idexpediente}}</p>
+                            <input hidden value="{{expediente.idexpediente}}" name="idexpediente">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">N° Expediente:</label>
+                            <p class="mb-0 text-dark fw-bold">{{expediente.numexpediente}}</p>
+                            <input hidden value="{{expediente.numexpediente}}" name="numexpediente">
+                        </div>
 
-            <div id="resultsContainer">
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">Carátula:</label>
+                            <p class="mb-0 text-dark text-truncate">{{expediente.caratula}}</p>
+                            <input hidden value="{{expediente.caratula}}" name="caratula">
+                        </div>
 
+                        <div class="col-12">
+                            <label class="form-label text-muted fw-semibold mb-0">Partes Involucradas:</label>
+                            <p class="mb-0 text-dark">{{expediente.partes}}</p>
+                            <input hidden value="{{expediente.partes}}" name="partes">
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
 
-              <!-- Nº Expediente -->
-              <div class="mb-3">
-                <label style=" color:rgb(193, 195, 197)">ID Expediente: {{expediente.idexpediente}}</label>
-                <input hidden id="idexpediente" value="{{expediente.idexpediente}}" name="idexpediente"
-                  class="form-control">
-              </div>
-              <div class="mb-3">
-                <label for="numexpediente" class="form-label">N° Expediente : {{expediente.numexpediente}}</label>
-                <input type="text" id="numexpediente" name="numexpediente" class="form-control"
-                  value="{{expediente.numexpediente}}" hidden>
-              </div>
+                    <h5 class="mb-3 text-success fw-semibold pb-2">👤 Selección del Cliente</h5>
+                    
+                    <div class="mb-4">
+                        <label for="selectCliente" class="form-label fw-bold">Buscar y Seleccionar Cliente:</label>
+                        <select id="selectCliente" name="selectCliente" class="form-select shadow-sm" style="width: 100%;">
+                            <option value="">-- Elija Cliente --</option>
+                            {{#each cliente}}
+                            <option value="{{idcliente}}|{{nyacliente}}|{{dnicliente}}">
+                                {{nyacliente}} (DNI: {{dnicliente}})
+                            </option>
+                            {{/each}}
+                        </select>
+                    </div>
 
-              <!-- Caratula -->
-              <div class="mb-3">
-                <label for="caratula" class="form-label">Carátula : {{expediente.caratula}}</label>
-                <input type="text" id="caratula" name="caratula" class="form-control" value="{{expediente.caratula}}"
-                  hidden>
-              </div>
+                    <input type="hidden" id="idcliente" name="idcliente" />
+                    <input type="hidden" id="nyacliente" name="nyacliente" />
+                    <input type="hidden" id="dnicliente" name="dnicliente" />
 
-              <!-- Tipo -->
-              <div class="mb-3">
-                <label for="partes" class="form-label">Partes: {{expediente.partes}} </label>
-                <input type="text" id="partes" name="partes" class="form-control" value="{{expediente.partes}}" hidden>
-              </div>
+                    <div id="cliente-info" class="alert alert-info py-2 my-4 d-none">
+                        Cliente Seleccionado: <strong id="display-nyacliente"></strong> (DNI: <span id="display-dnicliente"></span>)
+                    </div>
 
-              <div>
-                <label for="selectCliente">Seleccione Cliente:</label>
-                <select id="selectCliente" name="selectCliente"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-                  <option value="">-- Elija Cliente --</option>
-                  {{#each cliente}}
-                  <option value="{{idcliente}}|{{nyacliente}}|{{dnicliente}}">
-                    {{nyacliente}} DNI: {{dnicliente}}
-                  </option>
-                  {{/each}}
-                </select>
-              </div>
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                            <i class="fas fa-link me-2"></i> Guardar Cliente Vinculado
+                        </button>
+                    </div>
 
-              <br>
-
-              <div>
-                <label for="idcliente">idCliente: {{idcliente}}</label>
-                <input type="text" id="idcliente" name="idcliente">
-              </div>
-              <div>
-                <label for="nyacliente">Nombre y Apellido: {{nyacliente}}</label>
-                <input type="text" id="nyacliente" name="nyacliente">
-              </div>
-              <div>
-                <label for="dnicliente">DNI:</label>
-                <input type="text" id="dnicliente" name="dnicliente">
-              </div>
-
-              <p></p>
-              <div class="col-md-12">
-                <label class="form-label fw-semibold">Foto del Expediente</label><br />
-                <p style="color:white">-</p>
-                {{#if expediente.fotoexpediente}}
-                <img src="{{expediente.fotoexpediente}}" class="img-thumbnail mt-2" style="max-width: 200px;"
-                  alt="Foto del Expediente">
-                {{else}}
-                <p class="text-muted mt-2">Sin imagen disponible</p>
-                {{/if}}
-              </div>
-              <p style="color:white">-</p>
-
-              <!-- Botón guardar -->
-              <div class="d-grid mb-3">
-                <button type="submit" class="btn btn-primary">Guardar Cliente vinculado a Expediente</button>
-              </div>
-
-              <p></p>
-
-              <!-- Volver -->
-              <div class="text-center mt-4">
-                <a href="javascript:window.history.back()"
-                  class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
-                  style="font-weight: bold;">
-                  <i class="fas fa-times-circle"></i>
-                  Volver Atrás
-                </a>
-              </div>
-        </form>
-      </div>
+                    <div class="text-center mt-4">
+                        <a href="javascript:window.history.back()"
+                            class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm">
+                            <i class="fas fa-arrow-left"></i> Volver Atrás
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-  const selectCliente = document.getElementById('selectCliente');
-  const idCliente = document.getElementById('idcliente');
-  const inputNyacliente = document.getElementById('nyacliente');
-  const inputDnicliente = document.getElementById('dnicliente');
+    // Tu función original de manejo de cambio, pero mejorada para la UX.
+    const selectCliente = document.getElementById('selectCliente');
+    const idCliente = document.getElementById('idcliente');
+    const inputNyacliente = document.getElementById('nyacliente');
+    const inputDnicliente = document.getElementById('dnicliente');
+    const clienteInfoDiv = document.getElementById('cliente-info');
+    const displayNyacliente = document.getElementById('display-nyacliente');
+    const displayDnicliente = document.getElementById('display-dnicliente');
 
-  selectCliente.addEventListener('change', function () {
-    const valorCompleto = this.value;
-    if (valorCompleto === "") {
-      idCliente.value = "";
-      inputNyacliente.value = "";
-      inputDnicliente.value = "";
-      return;
-    }
-    const partes = valorCompleto.split('|');
-    idCliente.value = partes[0] || '';
-    inputNyacliente.value = partes[1] || '';
-    inputDnicliente.value = partes[2] || '';
-  });
+
+    selectCliente.addEventListener('change', function () {
+        const valorCompleto = this.value;
+        if (valorCompleto === "") {
+            // Limpiar y ocultar
+            idCliente.value = "";
+            inputNyacliente.value = "";
+            inputDnicliente.value = "";
+            clienteInfoDiv.classList.add('d-none');
+            return;
+        }
+
+        // Parsear y asignar
+        const partes = valorCompleto.split('|');
+        idCliente.value = partes[0] || '';
+        inputNyacliente.value = partes[1] || '';
+        inputDnicliente.value = partes[2] || '';
+
+        // Mostrar información al usuario
+        displayNyacliente.textContent = partes[1] || '';
+        displayDnicliente.textContent = partes[2] || '';
+        clienteInfoDiv.classList.remove('d-none');
+    });
 </script>
