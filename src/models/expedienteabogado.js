@@ -9,12 +9,13 @@ ExpedienteabogadoSchema = new Schema({
 
   idexpedienteabogado: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
   },
-      idestudio: {
-    type: String,
-    require: false,
-    },
+  // idestudio: {
+  //   type: String,
+  //   require: false,
+  // },
   idestudiouser: {
     type: Number,
     required: false,

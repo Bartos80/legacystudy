@@ -7,12 +7,13 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const AbogadosSchema = new Schema({
     idabogado: {
         type: Number,
-        unique: true
+        unique: true,
+        sparse: true // <--- ¡Esta es la clave!
     },
-    idestudio: {
-        type: String,
-        require: false,
-    },
+    // idestudio: {
+    //     type: String,
+    //     require: false,
+    // },
     // Campo Autoincremental
     idestudiouser: {
         type: Number, // El tipo debe ser Number

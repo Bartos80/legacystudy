@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose; // aca defino esquema de base de datos
 
 const NoteSchema = new Schema({
-        idestudio: {
-                type: String,
-                require: false,
-        },
+        // idestudio: {
+        //         type: String,
+        //         require: false,
+        // },
         idestudiouser: {
-                type: String,
+                type: Number,
                 required: false,
         },
         borrado: {

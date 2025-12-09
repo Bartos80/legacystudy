@@ -5,12 +5,13 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 const EstadisticaSchema = new Schema({
         idestadistica: {
                 type: Number,
-                unique: true
+                unique: true,
+                sparse: true
         },
-            idestudio: {
-    type: String,
-    require: false,
-    },
+        // idestudio: {
+        //         type: String,
+        //         require: false,
+        // },
         borrado: {
                 type: String,
                 required: true,

@@ -7,12 +7,13 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const AudienciaSchema = new Schema({
     idaudiencia: {
         type: Number,
-        unique: true
+        unique: true,
+        sparse: true // <--- ¡Esta es la clave!
     },
-    idestudio: {
-    type: String,
-    require: false,
-    },
+    // idestudio: {
+    // type: String,
+    // require: false,
+    // },
     idestudiouser: { 
         type: Number, 
         require: false, 

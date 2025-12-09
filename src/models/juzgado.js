@@ -6,14 +6,15 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const JuzgadoSchema = new Schema({
     idjuzgado: {
         type: Number,
-        unique: true
+        unique: true,
+        sparse: true
     },
-        idestudio: {
-    type: String,
-    require: false,
-    },
+    // idestudio: {
+    //     type: String,
+    //     require: false,
+    // },
     idestudiouser: {
-        type: String,
+        type: Number,
         required: false,
     },
     borrado: {

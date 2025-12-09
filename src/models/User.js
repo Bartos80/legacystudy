@@ -8,18 +8,19 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const UserSchema = new Schema({
   iduser: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
   },
   numestudio: {
     type: String,
     require: false,
   },
   idestudio: {
-    type: String,
+    type: Number,
     require: false,
   },
   idestudiouser: {
-    type: String,
+    type: Number,
     require: false,
   },
   name: {

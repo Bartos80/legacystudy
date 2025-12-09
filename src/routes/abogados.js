@@ -59,7 +59,7 @@ router.post('/abogados/newAbogado', isAuthenticated, async (req, res) => {
     newabogados.idestudiouser = req.user.idestudiouser;
     await newabogados.save();
     req.flash('success_msg', 'Abogado Agregado Exitosamente');
-    res.redirect('notes/abogados/listado');
+    res.redirect('/abogados/listado');
 })
 
 router.get('/abogados/list/:id', isAuthenticated, async (req, res) => {
