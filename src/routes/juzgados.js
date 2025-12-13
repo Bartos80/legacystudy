@@ -70,6 +70,7 @@ router.post('/juzgados/newJuzgado', isAuthenticated, async (req, res) => {
     })
     newJuzgados.user = req.user.id;
     newJuzgados.name = req.user.name;
+    newJuzgados.idestudiouser = req.user.idestudiouser
     await newJuzgados.save();
     req.flash('success_msg', 'Juzgado Agregado Exitosamente');
     res.redirect('/juzgados/listado');

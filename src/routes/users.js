@@ -124,6 +124,7 @@ router.post('/users/signup', isAuthenticated, async (req, res) => {
         const newUser = new User({ rolusuario, idestudio, numestudio, name, dni, codigousuario, funcion, celular, email, password, date });
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt); //sin el await no anda
+        newUser.idestudiouser = newUser.idestudio;
         await newUser.save();
         req.flash('success_msg', 'Nuevo Usuario Registrado');
         res.redirect('/usuarios');

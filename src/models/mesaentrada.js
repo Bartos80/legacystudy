@@ -8,28 +8,33 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const MesaentradaSchema = new Schema({
     idmesaentrada: {
         type: Number,
-        unique: true
+        unique: true,
+        sparse: true
     },
-    idestudio: {
-        type: String,
+    // idestudio: {
+    //     type: String,
+    //     require: false,
+    // },
+    idestudiouser: {
+        type: Number,
         required: true,
     },
-    borrado:{
+    borrado: {
         type: String,
         required: true,
-        default:"No",
+        default: "No",
     },
-    userborrado:{
+    userborrado: {
         type: String,
         required: true,
-        default:"Sin Datos",
+        default: "Sin Datos",
     },
-    fechaborrado:{
+    fechaborrado: {
         type: String,
         required: true,
-        default:"Sin Datos",
+        default: "Sin Datos",
     },
-    idmesaentrada: { 
+    idmesaentrada: {
         type: Number, // El tipo debe ser Number
         unique: true  // Debe ser único
     },
@@ -45,7 +50,7 @@ const MesaentradaSchema = new Schema({
         type: String,
         require: false
     },
-    horaingreso:{
+    horaingreso: {
         type: String,
         require: false
     },
@@ -94,7 +99,7 @@ const MesaentradaSchema = new Schema({
         default: "Administrador"
     },
     date: {
-        type: Date, 
+        type: Date,
         default: Date.now
     },
 });

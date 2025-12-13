@@ -1,95 +1,140 @@
 <div class="container my-5">
 
-    <!-- Encabezado + botones -->
     <div
-        class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center gap-3 mb-4">
-        <h5 class="fw-bold text-primary text-uppercase m-0">📋 Listado de expedientes</h5>
-        <div class="d-flex flex-wrap gap-2 mt-2">
-            <a href="/expedientes/add" class="btn btn-success btn-sm mr-4">+ Agregar Expediente</a>
-            <a href="/expedientes/listado" class="btn btn-outline-warning btn-sm">↻ Recargar</a>
+        class="d-flex justify-content-between flex-column flex-md-row align-items-start align-items-md-center gap-3 mb-4 border-bottom pb-3">
+
+        <h3 class="fw-bolder text-primary m-0 d-flex align-items-center">
+            <i class="fas fa-folder-open me-2"></i> Listado de Expedientes
+        </h3>
+
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/expedientes/add" class="btn btn-success d-flex align-items-center fw-bold shadow-sm">
+                <i class="fas fa-plus me-1"></i> Agregar Expediente
+            </a>
+            <a href="/expedientes/listado" class="btn btn-outline-secondary d-flex align-items-center shadow-sm">
+                <i class="fas fa-sync-alt me-1"></i> Recargar
+            </a>
         </div>
     </div>
 
-    <!-- Formularios de búsqueda -->
-    <div class="row g-3 mb-4">
+    <div class="row g-4 mb-5 p-4 border rounded-3 bg-white shadow-sm">        
         <div class="col-sm-6 col-md-3">
+            <label for="juzgado" class="form-label small fw-semibold text-muted mb-1">Buscar Juzgado</label>
             <form action="/expedientes/findjuzgado" method="POST">
-                <input type="search" name="juzgado" id="juzgado" class="form-control"
-                    placeholder="Buscar Juzgado..." />
-                <button title="Buscar Juzgado" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
-                    type="submit">Buscar</button>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-landmark"></i></span>
+                    <input type="search" name="juzgado" id="juzgado" class="form-control"
+                        placeholder="Escriba aquí..." />
+                    <button title="Buscar Juzgado" class="btn btn-primary" type="submit">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </form>
         </div>
+
         <div class="col-sm-6 col-md-3">
+            <label for="numexpediente" class="form-label small fw-semibold text-muted mb-1">N° Expediente</label>
             <form action="/expedientes/findnumexpediente" method="POST">
-                <input type="search" name="numexpediente" class="form-control" placeholder="Buscar N° Expediente..." />
-                <button title="Buscar N° Expediente" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
-                    type="submit">Buscar</button>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                    <input type="search" name="numexpediente" id="numexpediente" class="form-control"
+                        placeholder="Escriba aquí..." />
+                    <button title="Buscar N° Expediente" class="btn btn-primary" type="submit">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </form>
         </div>
+
         <div class="col-sm-6 col-md-3">
+            <label for="estado" class="form-label small fw-semibold text-muted mb-1">Buscar por Estado</label>
             <form action="/expedientes/findestado" method="POST">
-                <input type="search" name="estado" class="form-control"
-                    placeholder="Buscar por Estado..." />
-                <button title="Buscar Estado" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
-                    type="submit">Buscar</button>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-cogs"></i></span>
+                    <input type="search" name="estado" id="estado" class="form-control" placeholder="Escriba aquí..." />
+                    <button title="Buscar Estado" class="btn btn-primary" type="submit">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </form>
         </div>
+
         <div class="col-sm-6 col-md-3">
+            <label for="cliente" class="form-label small fw-semibold text-muted mb-1">Buscar Cliente</label>
             <form action="/expedientes/findcliente" method="POST">
-                <input type="search" name="cliente" class="form-control"
-                    placeholder="Buscar Cliente..." />
-                <button title="Buscar Cliente" class="btn btn-outline-secondary w-100 mt-2 btn-sm"
-                    type="submit">Buscar</button>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                    <input type="search" name="cliente" id="cliente" class="form-control"
+                        placeholder="Escriba aquí..." />
+                    <button title="Buscar Cliente" class="btn btn-primary" type="submit">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
-    <!-- Tabla responsiva de expedientes -->
     {{#if expedientes.length}}
-    <div class="table-responsive rounded shadow-sm border">
-        <table class="table table-striped table-bordered align-middle text-nowrap">
-            <thead class="table-primary text-dark text-center">
+    <div class="table-responsive rounded-3 shadow-lg border">
+        <table class="table table-striped table-hover align-middle text-nowrap mb-0">
+            <thead class="table-primary text-dark text-center fw-bold">
                 <tr>
                     <th>N° Expediente</th>
-                    <th>Caratulas</th>
+                    <th>Carátula</th>
                     <th>Partes</th>
                     <th>Estado</th>
-                    <th>Ult.Notificación</th>                    
-                    <th>Opciones</th>
-                    <th>+Más</th>
+                    <th>Última Notificación</th>
+                    <th class="text-center">Vincular</th>
+                    <th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each expedientes}}
                 <tr>
-                    
-                    <td>{{ numexpediente }}</td>
-                    <td class="text-capitalize">{{ caratula }}</td>
-                    <td>{{ partes }}</td>
-                    <td class="text-capitalize">{{ estado }}</td>
-                    <td class="text-capitalize">{{ ultimanotificacion }}</td>
-                    <td>
-                        <div class="d-flex flex-column gap-1">
-                            {{!-- <a href="/expedientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+
-                                Expediente</a> --}}                                
-                            <a href="/expedientes/expedientejuzgado/add/{{_id}}" class="btn btn-outline-success btn-sm w-100">+Juzgado</a>    
-                            <a href="/expedientes/expedientecliente/add/{{_id}}" class="btn btn-outline-success btn-sm w-100">+Cliente</a>
-                            <a href="/expedientes/expedienteabogado/add/{{_id}}" class="btn btn-outline-success btn-sm w-100">+Abogado</a>                            
+                    <td class="fw-bold text-center">{{ numexpediente }}</td>
+                    <td class="text-capitalize text-truncate" style="max-width: 250px;">{{ caratula }}</td>
+                    <td class="text-capitalize">{{ partes }}</td>
 
+                    <td class="text-center">
+                        <span class="badge bg-secondary">{{ estado }}</span>
+                    </td>
+
+                    <td class="text-capitalize text-muted">{{ ultimanotificacion }}</td>
+
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <a href="/expedientes/expedientejuzgado/add/{{_id}}" class="btn btn-outline-info btn-sm"
+                                title="Vincular Juzgado">
+                                <i class="fas fa-landmark"></i>
+                            </a>
+                            <a href="/expedientes/expedientecliente/add/{{_id}}" class="btn btn-outline-success btn-sm"
+                                title="Vincular Cliente">
+                                <i class="fas fa-user-plus"></i>
+                            </a>
+                            <a href="/expedientes/expedienteabogado/add/{{_id}}" class="btn btn-outline-warning btn-sm"
+                                title="Vincular Abogado">
+                                <i class="fas fa-gavel"></i>
+                            </a>
                         </div>
                     </td>
-                    <td>
-                        <div class="d-flex flex-column gap-1">
-                            {{!-- <a href="/expedientes/add/{{_id}}" class="btn btn-outline-danger btn-sm w-100">+
-                                Expediente</a> --}}
-                            <a href="/expedientes/list/{{_id}}" class="btn btn-outline-info btn-sm w-100">+Info</a>
-                        </div>
-                        <div class="d-flex flex-column gap-1">
-                            <a href="/expedientes/edit/{{_id}}" class="btn btn-outline-warning btn-sm w-100">Editar</a>
+
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+
+                            <a href="/expedientes/list/{{_id}}" class="btn btn-info btn-sm" title="Ver Detalles">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+
+                            <a href="/expedientes/edit/{{_id}}" class="btn btn-warning btn-sm"
+                                title="Editar Expediente">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
                             <form action="/expedientes/marcadelete/{{_id}}?_method=PUT" method="POST"
                                 onsubmit="return confirm('¿Desea enviar a la papelera?')">
-                                <button class="btn btn-outline-danger btn-sm w-100" type="submit">Papelera</button>
+                                <button class="btn btn-danger btn-sm" type="submit" title="Mover a Papelera">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </form>
                         </div>
                     </td>
@@ -99,8 +144,8 @@
         </table>
     </div>
     {{else}}
-    <div class="alert alert-warning text-center mt-5" role="alert">
-        🚫 No Hay expedientes por mostrar - Pulse Recargar.
+    <div class="alert alert-info text-center mt-5 shadow-sm" role="alert">
+        🚫 **¡Sin Expedientes!** No hay expedientes por mostrar. Pulse el botón Recargar.
     </div>
     {{/if}}
 </div>

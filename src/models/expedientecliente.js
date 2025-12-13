@@ -5,14 +5,19 @@ const { Schema } = mongoose; // aca defino esquema de base de datos
 // Hacer el Campo autoincremental - Primary Key
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-ExpedienteclienteSchema = new Schema({  
+ExpedienteclienteSchema = new Schema({
   idexpedientecliente: {
-    type: Number,    
-    unique: true,
-  },
-  idestudio: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
+  },
+  // idestudio: {
+  //   type: String,
+  //   require: false,
+  // },
+  idestudiouser: {
+    type: Number,
+    required: false,
   },
   borrado: {
     type: String,

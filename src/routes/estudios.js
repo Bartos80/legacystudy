@@ -79,7 +79,7 @@ router.post('/estudios/newestudio', isAuthenticated, async (req, res) => {
                 provinciaestudio, localidadestudio, observacionesestudio
             })
             newestudios.user = req.user.id;
-            newestudios.name = req.user.name;
+            newestudios.name = req.user.name;            
             await newestudios.save();
             req.flash('success_msg', 'estudio Agregado Exitosamente');
             res.redirect('/estudios/listado');

@@ -7,9 +7,14 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 ExpedienteSchema = new Schema({
   idexpediente: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
   },
-  idestudio: {
+  // idestudio: {
+  //   type: String,
+  //   require: false,
+  // },
+  idestudiouser: {
     type: Number,
     required: false,
   },

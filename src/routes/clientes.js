@@ -63,6 +63,7 @@ router.post('/clientes/newcliente', isAuthenticated, async (req, res) => {
     })
     newClientes.user = req.user.id;
     newClientes.name = req.user.name;
+    newClientes.idestudiouser = req.user.idestudiouser
     await newClientes.save();
     req.flash('success_msg', 'Cliente Agregado Exitosamente');
     res.redirect('/clientes/listado');

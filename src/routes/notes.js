@@ -131,6 +131,7 @@ router.post('/notes/newtickets', isAuthenticated, async (req, res) => {
     newTicket.iniciador = mayu
     newTicket.user = req.user.id;
     newTicket.name = req.user.name;
+    newTicket.idestudiouser = req.user.idestudiouser
     await newTicket.save();
     req.flash('success_msg', 'Ticket Agregado Exitosamente');
     res.redirect('/ticket/listado');
@@ -187,6 +188,7 @@ router.post('/notes/newnotes', isAuthenticated, async (req, res) => {
     }
     newNote.user = req.user.id;
     newNote.name = req.user.name;
+    newNote.idestudiouser = req.user.idestudiouser
     await newNote.save();
     req.flash('success_msg', 'Inspección Agregado Exitosamente');
     // console.log (newNote)
@@ -244,6 +246,7 @@ router.post('/notes/newintimaciones', isAuthenticated, async (req, res) => {
     }
     newIntimacion.user = req.user.id;
     newIntimacion.name = req.user.name;
+    newIntimacion.idestudiouser = req.user.idestudiouser
     await newIntimacion.save();
     req.flash('success_msg', 'Intimación Agregada Exitosamente');
     res.redirect('/intimaciones');
@@ -298,6 +301,7 @@ router.post('/notes/newintimaciones/:id', isAuthenticated, async (req, res) => {
     }
     newIntimacion.user = req.user.id;
     newIntimacion.name = req.user.name;
+    newIntimacion.idestudiouser = req.user.idestudiouser
     await newIntimacion.save();
     req.flash('success_msg', 'Intimación Agregada Exitosamente');
     res.redirect('/intimaciones');
@@ -363,6 +367,7 @@ router.post('/notes/newinfracciones', isAuthenticated, async (req, res) => {
     }
     newInfraccion.user = req.user.id;
     newInfraccion.name = req.user.name;
+    newInfraccion.idestudiouser = req.user.idestudiouser
     await newInfraccion.save();
     req.flash('success_msg', 'Infracción Agregada Exitosamente');
     // console.log (newNote)
@@ -1549,6 +1554,7 @@ router.post('/actuaciones/newactuacion', isAuthenticated, async (req, res) => {
     }
     newActuacion.user = req.user.id;
     newActuacion.name = req.user.name;
+    newActuacion.idestudiouser = req.user.idestudiouser
     await newActuacion.save();
     req.flash('success_msg', 'Actuación Agregada Exitosamente');
     res.redirect('/actuaciones/listado');

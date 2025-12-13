@@ -1,134 +1,148 @@
+<script> 
+    // Funciones de formato (mantenerlas fuera de document.ready si no dependen de jQuery)
+    function ShowName(name) {
+        const input = document.getElementById(name);
+        const words = input.value.trim().split(" ");
+        const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+        input.value = formatted;
+    }
+    function ponerMayuscula(id) {
+        const input = document.getElementById(id);
+        input.value = input.value.toUpperCase();
+    }
+    function ponerminuscula(id) {
+        const input = document.getElementById(id);
+        input.value = input.value.toLowerCase();
+    }
+
+    // Inicialización de Select2 (Asegúrate de que jQuery y Select2 estén cargados)
+    $(document).ready(function () {
+        $('#selectJuzgado').select2({
+            placeholder: "Buscar Juzgado...",
+            allowClear: true,
+            theme: "bootstrap" // Usa el tema de Bootstrap para mejor integración visual
+        });
+    });
+</script>
+
 <div class="container my-5">
-  <div class="col-md-8 mx-auto">
-    <div class="card shadow-sm border-0">
-      <div class="card-body p-4">
-        <h3 class="text-center text-primary mb-4 fw-bold">Expediente con Juzgado</h3>
-        <form action="/notes/newexpedientejuzgado" method="POST">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
-            <div id="resultsContainer">
-              <!-- Nº Expediente -->
-              <div class="mb-3">
-                <label style=" color:rgb(193, 195, 197)">ID Expediente: {{expediente.idexpediente}}</label>
-                <input hidden id="idexpediente" value="{{expediente.idexpediente}}" name="idexpediente"
-                  class="form-control">
-              </div>
-              <div class="mb-3">
-                <label for="numexpediente" class="form-label">N° Expediente : {{expediente.numexpediente}}</label>
-                <input type="text" id="numexpediente" name="numexpediente" class="form-control"
-                  value="{{expediente.numexpediente}}" hidden>
-              </div>
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow-lg border-0 rounded-4"> 
+            <div class="card-body p-5">
+                <h3 class="text-center text-primary mb-2 fw-bolder">Vincular Juzgado al Expediente</h3>
+                <p class="text-center text-muted mb-4">Confirme la información del expediente y seleccione el juzgado.</p>
 
-              <!-- Caratula -->
-              <div class="mb-3">
-                <label for="caratula" class="form-label">Carátula : {{expediente.caratula}}</label>
-                <input type="text" id="caratula" name="caratula" class="form-control" value="{{expediente.caratula}}"
-                  hidden>
-              </div>
+                <form action="/notes/newexpedientejuzgado" method="POST">
 
-              <!-- Tipo -->
-              <div class="mb-3">
-                <label for="partes" class="form-label">Partes: {{expediente.partes}} </label>
-                <input type="text" id="partes" name="partes" class="form-control" value="{{expediente.partes}}" hidden>
-              </div>
+                    <h5 class="mb-3 text-secondary fw-semibold border-bottom pb-2">📂 Detalles del Expediente</h5>
+                    <div class="row g-3 mb-4">
+                        
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">ID Expediente:</label>
+                            <p class="mb-0 text-dark fw-bold">{{expediente.idexpediente}}</p>
+                            <input hidden value="{{expediente.idexpediente}}" name="idexpediente">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">N° Expediente:</label>
+                            <p class="mb-0 text-dark fw-bold">{{expediente.numexpediente}}</p>
+                            <input hidden value="{{expediente.numexpediente}}" name="numexpediente">
+                        </div>
 
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">Carátula:</label>
+                            <p class="mb-0 text-dark text-truncate">{{expediente.caratula}}</p>
+                            <input hidden value="{{expediente.caratula}}" name="caratula">
+                        </div>
 
-              <div>
-                <label for="selectJuzgado">Seleccione un Juzgado:</label>
-                <select id="selectJuzgado" name="selectJuzgado"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-                  <option value="Sin Juzgado" disabled>-- Sin Juzgado --</option>
-                  {{#each juzgado}}
-                  <option value="{{idjuzgado}}|{{numjuzgado}}|{{paisjuzgado}}|{{provinciajuzgado}}|{{localidadjuzgado}}">
-                    {{numjuzgado}}
-                  </option>
-                  {{/each}}
-                </select>
-              </div>
+                        <div class="col-12">
+                            <label class="form-label text-muted fw-semibold mb-0">Partes Involucradas:</label>
+                            <p class="mb-0 text-dark">{{expediente.partes}}</p>
+                            <input hidden value="{{expediente.partes}}" name="partes">
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
 
-              <br>
+                    <h5 class="mb-3 text-info fw-semibold pb-2">🏛️ Selección del Juzgado</h5>
+                    
+                    <div class="mb-4">
+                        <label for="selectJuzgado" class="form-label fw-bold">Buscar y Seleccionar Juzgado:</label>
+                        <select id="selectJuzgado" name="selectJuzgado" class="form-select shadow-sm" style="width: 100%;">
+                            <option value="">-- Elija un Juzgado --</option>
+                            {{#each juzgado}}
+                            <option value="{{idjuzgado}}|{{numjuzgado}}|{{paisjuzgado}}|{{provinciajuzgado}}|{{localidadjuzgado}}">
+                                Juzgado N° {{numjuzgado}} ({{localidadjuzgado}}, {{provinciajuzgado}})
+                            </option>
+                            {{/each}}
+                        </select>
+                    </div>
 
-              <div>
-                <label for="idjuzgado">ID Juzgado: {{idjuzgado}}</label>
-                <input type="text" id="idjuzgado" name="idjuzgado" >
-              </div>
-              <div>
-                <label for="numjuzgado">N° Juzgado: {{numjuzgado}}</label>
-                <input  type="text" id="numjuzgado" name="numjuzgado" >
-              </div>
-              <div>
-                <label for="paisjuzgado">País:</label>
-                <input type="text" id="paisjuzgado" name="paisjuzgado" >
-              </div>
-              <div>
-                <label for="provinciajuzgado">Provincia:</label>
-                <input type="text" id="provinciajuzgado" name="provinciajuzgado" >
-              </div>
-              <div>
-                <label for="localidadjuzgado">Localidad:</label>
-                <input type="text" id="localidadjuzgado" name="localidadjuzgado" >
-              </div>
-              <p></p>
-              <div class="d-grid mb-3">
-                <button type="submit" class="btn btn-primary">Guardar Juzgado vinculado a Expediente</button>
-              </div>
+                    <input type="hidden" id="idjuzgado" name="idjuzgado" />
+                    <input type="hidden" id="numjuzgado" name="numjuzgado" />
+                    <input type="hidden" id="paisjuzgado" name="paisjuzgado" />
+                    <input type="hidden" id="provinciajuzgado" name="provinciajuzgado" />
+                    <input type="hidden" id="localidadjuzgado" name="localidadjuzgado" />
 
-              <p></p>
-              <div class="col-md-12">
-                <label class="form-label fw-semibold">Foto del Expediente</label><br />
-                {{#if expediente.fotoexpediente}}
-                <img src="{{expediente.fotoexpediente}}" class="img-thumbnail mt-2" style="max-width: 200px;"
-                  alt="Foto del Expediente">
-                {{else}}
-                <p class="text-muted mt-2">Sin imagen disponible</p>
-                {{/if}}
-              </div>
-              <p></p>
+                    <div id="juzgado-info" class="alert alert-info py-2 my-4 d-none">
+                        Juzgado Seleccionado: 
+                        <strong id="display-numjuzgado"></strong>
+                        (Ubicación: <span id="display-ubicacion"></span>)
+                    </div>
 
-              <!-- Botón guardar -->
-              <div class="d-grid mb-3">
-                <button type="submit" class="btn btn-primary">Guardar Juzgado vinculado a Expediente</button>
-              </div>
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-info btn-lg shadow-sm text-white">
+                            <i class="fas fa-landmark me-2"></i> Guardar Juzgado Vinculado
+                        </button>
+                    </div>
 
-              <p></p>
-
-              <!-- Volver -->
-              <div class="text-center mt-4">
-                <a href="javascript:window.history.back()"
-                  class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
-                  style="font-weight: bold;">
-                  <i class="fas fa-times-circle"></i>
-                  Volver Atrás
-                </a>
-              </div>
-        </form>
-      </div>
+                    <div class="text-center mt-4">
+                        <a href="javascript:window.history.back()"
+                            class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm">
+                            <i class="fas fa-arrow-left"></i> Volver Atrás
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script> 
-  const selectJuzgado = document.getElementById('selectJuzgado');
-  const idjuzgado = document.getElementById('idjuzgado'); 
-  const numjuzgado = document.getElementById('numjuzgado'); 
-  const paisjuzgado = document.getElementById('paisjuzgado');
-  const provinciajuzgado = document.getElementById('provinciajuzgado');
-  const localidadjuzgado = document.getElementById('localidadjuzgado');
+    const selectJuzgado = document.getElementById('selectJuzgado');
+    const idJuzgado = document.getElementById('idjuzgado'); 
+    const numJuzgado = document.getElementById('numjuzgado'); 
+    const paisJuzgado = document.getElementById('paisjuzgado');
+    const provinciaJuzgado = document.getElementById('provinciajuzgado');
+    const localidadJuzgado = document.getElementById('localidadjuzgado');
+    const juzgadoInfoDiv = document.getElementById('juzgado-info');
+    const displayNumJuzgado = document.getElementById('display-numjuzgado');
+    const displayUbicacion = document.getElementById('display-ubicacion');
 
-  selectJuzgado.addEventListener('change', function () {
-    const valorCompleto = this.value;
-    if (valorCompleto === "") {
-      idjuzgado.value = "";
-      numjuzgado.value = "";
-      paisjuzgado.value = "";
-      provinciajuzgado.value = "";
-      localidadjuzgado.value = "";
-      return;
-    } 
-    const partes = valorCompleto.split('|');
-    idjuzgado.value = partes[0] || ''; 
-    numjuzgado.value = partes[1] || ''; 
-    paisjuzgado.value = partes[2] || '';   
-    provinciajuzgado.value = partes[3] || ''; 
-    localidadjuzgado.value = partes[4] || ''; 
-  });
+    selectJuzgado.addEventListener('change', function () {
+        const valorCompleto = this.value;
+        if (valorCompleto === "" || valorCompleto === "Sin Juzgado") {
+            // Limpiar y ocultar, si se elige la opción vacía o 'Sin Juzgado' (aunque la opción vacía es mejor)
+            idJuzgado.value = "";
+            numJuzgado.value = "";
+            paisJuzgado.value = "";
+            provinciaJuzgado.value = "";
+            localidadJuzgado.value = "";
+            juzgadoInfoDiv.classList.add('d-none');
+            return;
+        } 
+        
+        // Parsear y asignar
+        const partes = valorCompleto.split('|');
+        idJuzgado.value = partes[0] || ''; 
+        numJuzgado.value = partes[1] || ''; 
+        paisJuzgado.value = partes[2] || '';   
+        provinciaJuzgado.value = partes[3] || ''; 
+        localidadJuzgado.value = partes[4] || ''; 
+        
+        // Mostrar información al usuario
+        displayNumJuzgado.textContent = 'N° ' + (partes[1] || 'N/A');
+        displayUbicacion.textContent = (partes[4] || 'N/A') + ', ' + (partes[3] || 'N/A') + ', ' + (partes[2] || 'N/A');
+        juzgadoInfoDiv.classList.remove('d-none');
+    });
 </script>

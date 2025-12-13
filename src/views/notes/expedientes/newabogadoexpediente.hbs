@@ -1,159 +1,147 @@
 <script>
-  function ShowName(name) {
-    const input = document.getElementById(name);
-    const words = input.value.trim().split(" ");
-    const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
-    input.value = formatted;
-  }
+    // Funciones de formato (mantenerlas fuera de document.ready si no dependen de jQuery)
+    function ShowName(name) {
+        const input = document.getElementById(name);
+        const words = input.value.trim().split(" ");
+        const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+        input.value = formatted;
+    }
+    function ponerMayuscula(id) {
+        const input = document.getElementById(id);
+        input.value = input.value.toUpperCase();
+    }
+    function ponerminuscula(id) {
+        const input = document.getElementById(id);
+        input.value = input.value.toLowerCase();
+    }
 
-  function ponerMayuscula(id) {
-    const input = document.getElementById(id);
-    input.value = input.value.toUpperCase();
-  }
-
-  function ponerminuscula(id) {
-    const input = document.getElementById(id);
-    input.value = input.value.toLowerCase();
-  }
-
-  // Make sure this runs after the page loads, e.g., inside $(document).ready() if using jQuery
-  $(document).ready(function () {
-    $('#idcliente').select2({
-      placeholder: "Buscar Cliente...",
-      allowClear: true // Optional: allows the user to clear the selection
+    // Inicialización de Select2 (Asegúrate de que jQuery y Select2 estén cargados)
+    $(document).ready(function () {
+        // Se cambió '#idcliente' (del código original) a '#selectAbogado' (el ID correcto del select)
+        $('#selectAbogado').select2({
+            placeholder: "Buscar Abogado...",
+            allowClear: true,
+            theme: "bootstrap" // Usa el tema de Bootstrap para mejor integración visual
+        });
     });
-  });
-
 </script>
 
 <div class="container my-5">
-  <div class="col-md-8 mx-auto">
-    <div class="card shadow-sm border-0">
-      <div class="card-body p-4">
-        <h3 class="text-center text-primary mb-4 fw-bold">Expediente con Abogados</h3>
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow-lg border-0 rounded-4"> 
+            <div class="card-body p-5">
+                <h3 class="text-center text-primary mb-2 fw-bolder">Asociar Abogado al Expediente</h3>
+                <p class="text-center text-muted mb-4">Verifique los detalles del expediente antes de realizar la vinculación.</p>
 
-        <form action="/notes/newexpedienteabogado" method="POST">
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
+                <form action="/notes/newexpedienteabogado" method="POST">
 
-            <div id="resultsContainer">
+                    <h5 class="mb-3 text-secondary fw-semibold border-bottom pb-2">📂 Detalles del Expediente</h5>
+                    <div class="row g-3 mb-4">
+                        
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">ID Expediente:</label>
+                            <p class="mb-0 text-dark fw-bold">{{expediente.idexpediente}}</p>
+                            <input hidden value="{{expediente.idexpediente}}" name="idexpediente">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">N° Expediente:</label>
+                            <p class="mb-0 text-dark fw-bold">{{expediente.numexpediente}}</p>
+                            <input hidden value="{{expediente.numexpediente}}" name="numexpediente">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold mb-0">Carátula:</label>
+                            <p class="mb-0 text-dark text-truncate">{{expediente.caratula}}</p>
+                            <input hidden value="{{expediente.caratula}}" name="caratula">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label text-muted fw-semibold mb-0">Partes Involucradas:</label>
+                            <p class="mb-0 text-dark">{{expediente.partes}}</p>
+                            <input hidden value="{{expediente.partes}}" name="partes">
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+
+                    <h5 class="mb-3 text-success fw-semibold pb-2">⚖️ Selección del Abogado</h5>
+                    
+                    <div class="mb-4">
+                        <label for="selectAbogado" class="form-label fw-bold">Buscar y Seleccionar Abogado:</label>
+                        <select id="selectAbogado" name="selectAbogado" class="form-select shadow-sm" style="width: 100%;">
+                            <option value="">-- Elija un abogado --</option>
+                            {{#each abogado}}
+                            <option value="{{idabogado}}|{{nyaabogado}}|{{dniabogado}}|{{matriculaabogado}}">
+                                {{nyaabogado}} (Matrícula: {{matriculaabogado}})
+                            </option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                    <input type="hidden" id="idabogado" name="idabogado" />
+                    <input type="hidden" id="nyaabogado" name="nyaabogado" />
+                    <input type="hidden" id="dniabogado" name="dniabogado" />
+                    <input type="hidden" id="matriculaabogado" name="matriculaabogado" />
 
 
-              <!-- Nº Expediente -->
-              <div class="mb-3">
-                <label style=" color:rgb(193, 195, 197)">ID Expediente: {{expediente.idexpediente}}</label>
-                <input hidden id="idexpediente" value="{{expediente.idexpediente}}" name="idexpediente"
-                  class="form-control">
-              </div>
-              <div class="mb-3">
-                <label for="numexpediente" class="form-label">N° Expediente : {{expediente.numexpediente}}</label>
-                <input type="text" id="numexpediente" name="numexpediente" class="form-control"
-                  value="{{expediente.numexpediente}}" hidden>
-              </div>
+                    <div id="abogado-info" class="alert alert-success py-2 my-4 d-none">
+                        Abogado Seleccionado: 
+                        <strong id="display-nyaabogado"></strong>
+                        (Matrícula: <span id="display-matriculaabogado"></span>)
+                    </div>
 
-              <!-- Caratula -->
-              <div class="mb-3">
-                <label for="caratula" class="form-label">Carátula : {{expediente.caratula}}</label>
-                <input type="text" id="caratula" name="caratula" class="form-control" value="{{expediente.caratula}}"
-                  hidden>
-              </div>
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm">
+                            <i class="fas fa-gavel me-2"></i> Guardar Abogado Vinculado
+                        </button>
+                    </div>
 
-              <!-- Tipo -->
-              <div class="mb-3">
-                <label for="partes" class="form-label">Partes: {{expediente.partes}} </label>
-                <input type="text" id="partes" name="partes" class="form-control" value="{{expediente.partes}}" hidden>
-              </div>
-              
-              <div>
-                <label for="selectAbogado">Seleccione Abogado:</label>
-                <select id="selectAbogado" name="selectAbogado"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-                  <option value="">-- Elija un abogado --</option>
-                  {{#each abogado}}
-                  <option value="{{idabogado}}|{{nyaabogado}}|{{dniabogado}}|{{matriculaabogado}}">
-                    {{nyaabogado}}
-                  </option>
-                  {{/each}}
-                </select>
-              </div>
-
-              <br>              
-
-              <div>
-                <label for="idabogado">ID abogado: {{idabogado}}</label>
-                <input type="text" id="idabogado" name="idabogado" >
-              </div>
-              <div>
-                <label for="nyaabogado">Nombre y Apellido: {{nyaabogado}}</label>
-                <input type="text" id="nyaabogado" name="nyaabogado" >
-              </div>
-              <div>
-                <label for="dniabogado">D.N.I.  {{dniabogado}}</label>
-                <input type="text" id="dniabogado" name="dniabogado" >
-              </div>
-              <div>
-                <label for="matriculaabogado">Matricula: {{matriculaabogado}}</label>
-                <input type="text" id="matriculaabogado" name="matriculaabogado" >
-              </div>             
-              <p></p>
-              <div class="d-grid mb-3">
-                <button type="submit" class="btn btn-primary">Guardar abogado vinculado a Expediente</button>
-              </div>
-
-              <p></p>
-              <div class="col-md-12">
-                <label class="form-label fw-semibold">Foto del Expediente</label><br />
-                {{#if expediente.fotoexpediente}}
-                <img src="{{expediente.fotoexpediente}}" class="img-thumbnail mt-2" style="max-width: 200px;"
-                  alt="Foto del Expediente">
-                {{else}}
-                <p class="text-muted mt-2">Sin imagen disponible</p>
-                {{/if}}
-              </div>
-              <p></p>
-
-              <!-- Botón guardar -->
-              <div class="d-grid mb-3">
-                <button type="submit" class="btn btn-primary">Guardar Abogado vinculado a Expediente</button>
-              </div>
-
-              <p></p>
-
-              <!-- Volver -->
-              <div class="text-center mt-4">
-                <a href="javascript:window.history.back()"
-                  class="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm"
-                  style="font-weight: bold;">
-                  <i class="fas fa-times-circle"></i>
-                  Volver Atrás
-                </a>
-              </div>
-        </form>
-      </div>
+                    <div class="text-center mt-4">
+                        <a href="javascript:window.history.back()"
+                            class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 px-4 py-2 shadow-sm">
+                            <i class="fas fa-arrow-left"></i> Volver Atrás
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-<script> 
-  const selectAbogado = document.getElementById('selectAbogado');
-  const idAbogado = document.getElementById('idabogado'); 
-  const nyaAbogado = document.getElementById('nyaabogado');
-  const dniAbogado = document.getElementById('dniabogado');
-  const matriculaAbogado = document.getElementById('matriculaabogado');
+<script>
+    const selectAbogado = document.getElementById('selectAbogado');
+    const idAbogado = document.getElementById('idabogado');
+    const nyaAbogado = document.getElementById('nyaabogado');
+    const dniAbogado = document.getElementById('dniabogado');
+    const matriculaAbogado = document.getElementById('matriculaabogado');
+    const abogadoInfoDiv = document.getElementById('abogado-info');
+    const displayNyaAbogado = document.getElementById('display-nyaabogado');
+    const displayMatriculaAbogado = document.getElementById('display-matriculaabogado');
 
-  selectAbogado.addEventListener('change', function () {
-    const valorCompleto = this.value;
-    if (valorCompleto === "") {
-      idAbogado.value = "";
-      nyaAbogado.value = "";
-      dniAbogado.value = "";
-      matriculaAbogado.value = "";
-      return;
-    } 
-    const partes = valorCompleto.split('|');
-    idAbogado.value = partes[0] || ''; 
-    nyaAbogado.value = partes[1] || '';   
-    dniAbogado.value = partes[2] || ''; 
-    matriculaAbogado.value = partes[3] || ''; 
-  });
+
+    selectAbogado.addEventListener('change', function () {
+        const valorCompleto = this.value;
+        if (valorCompleto === "") {
+            // Limpiar y ocultar
+            idAbogado.value = "";
+            nyaAbogado.value = "";
+            dniAbogado.value = "";
+            matriculaAbogado.value = "";
+            abogadoInfoDiv.classList.add('d-none');
+            return;
+        }
+
+        // Parsear y asignar
+        const partes = valorCompleto.split('|');
+        idAbogado.value = partes[0] || '';
+        nyaAbogado.value = partes[1] || '';
+        dniAbogado.value = partes[2] || '';
+        matriculaAbogado.value = partes[3] || '';
+
+        // Mostrar información al usuario
+        displayNyaAbogado.textContent = partes[1] || '';
+        displayMatriculaAbogado.textContent = partes[3] || '';
+        abogadoInfoDiv.classList.remove('d-none');
+    });
 </script>
