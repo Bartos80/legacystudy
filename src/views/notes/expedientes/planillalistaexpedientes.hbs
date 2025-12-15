@@ -92,14 +92,13 @@
                 {{#each expedientes}}
                 <tr>
                     <td class="fw-bold text-center">{{ numexpediente }}</td>
-                    <td class="text-capitalize text-truncate" style="max-width: 250px;">{{ caratula }}</td>
-                    <td class="text-capitalize">{{ partes }}</td>
-
-                    <td class="text-center">
+                    <td class="text-capitalize text-truncate" style="max-width: 180px;">{{ caratula }}</td>
+                    <td class="text-capitalize text-truncate" style="max-width: 180px;">{{ partes }}</td>
+                    <td class="text-capitalize text-truncate" style="max-width: 180px;">{{ estado }}</td>
+                    {{!-- <td class="text-center">
                         <span class="badge bg-secondary">{{ estado }}</span>
-                    </td>
-
-                    <td class="text-capitalize text-muted">{{ ultimanotificacion }}</td>
+                    </td> --}}
+                    <td class="text-capitalize text-center">{{ ultimanotificacion }}</td>
 
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-1">

@@ -61,7 +61,6 @@ router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
                     const ano = fecha.getFullYear();
                     expedientes.ultimanotificacion = `${dia}-${mes}-${ano}`;
                     expedientes.idcliente = expedientes.idcliente[0.1]
-
                 } else {
                     expedientes.ultimanotificacion = "----";
                 }
@@ -73,12 +72,9 @@ router.get('/expedientes/listado', isAuthenticated, async (req, res) => {
                         expedientes.idjuzgado = "----";
                     }
                 }
-
                 expedientes = expedientestabla;
             }
-
             res.render('notes/expedientes/planillalistaexpedientes', { expedientes: expedientestabla });
-
         } else {
             req.flash('success_msg', 'NO TIENE PERMISO PARA AREA EXPEDIENTES')
             return res.redirect('/');
@@ -193,12 +189,12 @@ router.get('/notes/add/:id', isAuthenticated, async (req, res) => {
 
 router.post('/notes/newexpedientes', isAuthenticated, async (req, res) => {
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        caratula, tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, 
+        caratula, tipo, ultimanotificacion, partes, actor, demandado, estado, user, name,
         idestudio, idestudiouser, fotoexpediente, idcliente, idabogado, idjuzgado
     } = req.body;
     const newExpediente = new Expediente({
         idestudiouser, borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        caratula, tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, 
+        caratula, tipo, ultimanotificacion, partes, actor, demandado, estado, user, name,
         idestudio, idestudiouser, fotoexpediente, idcliente, idabogado, idjuzgado
     })
     newExpediente.user = req.user.id;
@@ -966,7 +962,22 @@ router.get('/expedientes/edit/:id', isAuthenticated, async (req, res) => {
 router.get('/expedientes/list/:id', isAuthenticated, async (req, res) => {
     const expediente = await Expediente.findById(req.params.id).lean()
     const idexpediente = expediente.idexpediente;
-    const expedientejuzgado = await Expedientejuzgado.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()    
+
+    // Formato de Fecha Corregido y Limpiado
+    if (expediente.ultimanotificacion) {
+        const fecha = new Date(expediente.ultimanotificacion);
+        // Uso de .padStart para formato DD-MM-YYYY limpio
+        const dia = String(fecha.getDate() + 1).padStart(2, '0'); // +1 día puede deberse a la conversión de zona horaria
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const ano = fecha.getFullYear();
+        expediente.ultimanotificacion = `${dia}-${mes}-${ano}`;
+        expediente.idcliente = expediente.idcliente[0.1]
+    } else {
+        expediente.ultimanotificacion = "----";
+    }
+
+
+    const expedientejuzgado = await Expedientejuzgado.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()
     const expedienteabogado = await Expedienteabogado.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()
     const expedientecliente = await Expedientecliente.find({ $and: [{ idexpediente: idexpediente }, { borrado: "No" }] }).lean()
     res.render('notes/expedientes/listexpediente', { expediente, expedientejuzgado, expedienteabogado, expedientecliente })
@@ -1110,10 +1121,10 @@ router.post('/expedientes/borradofindestado', isAuthenticated, async (req, res) 
 
 router.put('/notes/editexpediente/:id', isAuthenticated, async (req, res) => {
     const { borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, caratula, dateexp,  partes, actor, demandado, estado, user, name, fotoexpediente, } = req.body
+        tipo, ultimanotificacion, caratula, dateexp, partes, actor, demandado, estado, user, name, fotoexpediente, } = req.body
     await Expediente.findByIdAndUpdate(req.params.id, {
         borrado, userborrado, fechaborrado, juzgado, secretaria, numexpediente,
-        tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, fotoexpediente, caratula, dateexp,  
+        tipo, ultimanotificacion, partes, actor, demandado, estado, user, name, fotoexpediente, caratula, dateexp,
     });
     req.flash('success_msg', 'Expediente actualizado')
     res.redirect('/expedientes/listado');
@@ -1185,11 +1196,11 @@ router.get('/expedientes/expedientejuzgado/add/:id', isAuthenticated, async (req
 });
 
 router.post('/notes/newexpedientejuzgado', isAuthenticated, async (req, res) => {
-    const { idestudiouser, borrado, userborrado, fechaborrado, idjuzgadoexpediente, bajajuzgado, idjuzgado, numjuzgado, paisjuzgado, provinciajuzgado, 
+    const { idestudiouser, borrado, userborrado, fechaborrado, idjuzgadoexpediente, bajajuzgado, idjuzgado, numjuzgado, paisjuzgado, provinciajuzgado,
         localidadjuzgado, idexpediente, numexpediente, caratula, estado
     } = req.body;
     const newExpedientejuzgado = new Expedientejuzgado({
-        idestudiouser, borrado, userborrado, fechaborrado, idjuzgadoexpediente, bajajuzgado, idjuzgado, numjuzgado, paisjuzgado, provinciajuzgado, 
+        idestudiouser, borrado, userborrado, fechaborrado, idjuzgadoexpediente, bajajuzgado, idjuzgado, numjuzgado, paisjuzgado, provinciajuzgado,
         localidadjuzgado, idexpediente, numexpediente, caratula, estado
     });
     newExpedientejuzgado.user = req.user.id;
@@ -1208,10 +1219,10 @@ router.get('/expedientes/expedienteabogado/add/:id', isAuthenticated, async (req
 });
 
 router.post('/notes/newexpedienteabogado', isAuthenticated, async (req, res) => {
-    const { idestudiouser, borrado, userborrado, fechaborrado, bajaabogado, idabogado, nyaabogado, dniabogado, matriculaabogado, 
+    const { idestudiouser, borrado, userborrado, fechaborrado, bajaabogado, idabogado, nyaabogado, dniabogado, matriculaabogado,
         idexpediente, numexpediente, caratula, estado } = req.body;
     const newExpedienteabogado = new Expedienteabogado({
-        idestudiouser, borrado, userborrado, fechaborrado, bajaabogado, idabogado, nyaabogado, dniabogado, matriculaabogado, 
+        idestudiouser, borrado, userborrado, fechaborrado, bajaabogado, idabogado, nyaabogado, dniabogado, matriculaabogado,
         idexpediente, numexpediente, caratula, estado
     });
     newExpedienteabogado.user = req.user.id;

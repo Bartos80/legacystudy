@@ -15,7 +15,7 @@
           <div class="row g-4 mb-5 p-4 rounded-4" style="background-color: #f7f9fc; border: 1px solid #e9ecef;">
 
             <div class="col-md-12">
-              <h6 class="text-secondary border-bottom pb-1 mb-3">Identificación y Clasificación</h6>
+              <h6 class="text-Primary border-bottom pb-1 mb-3">Identificación y Clasificación</h6>
               <div class="row g-3">
 
                 {{!-- Los campos comentados se mantienen ocultos --}}
@@ -46,33 +46,31 @@
             </div>
 
             <div class="col-md-12 mt-4">
-              <h6 class="text-secondary border-bottom pb-1 mb-3">Estado y Fechas</h6>
-              <div class="row g-3">
-                <div class="col-md-6 col-lg-4">
-                  <label class="form-label fw-semibold mb-0">Última Notificación</label>
-                  <p class="mb-0 text-muted">{{expediente.ultimanotificacion}}</p>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <label class="form-label fw-semibold mb-0">Estado</label>
-                  <span class="badge bg-success fs-6">{{expediente.estado}}</span>
-                </div>
-
-                <div class="col-md-12 col-lg-4">
-                  <label class="form-label fw-semibold mb-0">Partes (Resumen)</label>
-                  <p class="mb-0 text-dark">{{expediente.partes}}</p>
-                </div>
+              <h6 class="text-Primary border-bottom pb-1 mb-3">Estado y Fechas</h6>
+              <div class="col-md-6 col-lg-4">
+                <label class="form-label fw-semibold mb-0">Última Notificación</label>
+                <p class="mb-0 text-muted">{{expediente.ultimanotificacion}}</p>
               </div>
             </div>
-
             <div class="col-md-12 mt-4">
-              <h6 class="text-secondary border-bottom pb-1 mb-3">Roles y Demandantes</h6>
+              <div class="col-md-6 col-lg-4">
+                <label class="form-label fw-semibold mb-0">Estado</label>
+                <span class="badge bg-success fs-6">{{expediente.estado}}</span>
+              </div>
+            </div>
+            <div class="col-md-12 mt-4">
+              <div class="col-md-12 col-lg-4">
+                <label class="form-label fw-semibold mb-0">Partes (Resumen)</label>
+                <p class="badge bg-success fs-6">{{expediente.partes}}</p>
+              </div>
+            </div>
+            <div class="col-md-12 mt-4">
+              <h6 class="text-Primary border-bottom pb-1 mb-3">Roles y Demandantes</h6>
               <div class="row g-3">
                 <div class="col-md-6">
                   <label class="form-label fw-semibold mb-0 text-success">Actor</label>
                   <p class="mb-0 text-dark fw-bold">{{expediente.actor}}</p>
                 </div>
-
                 <div class="col-md-6">
                   <label class="form-label fw-semibold mb-0 text-danger">Demandado</label>
                   <p class="mb-0 text-dark fw-bold">{{expediente.demandado}}</p>
@@ -113,12 +111,14 @@
                     <div class="d-flex justify-content-center gap-1">
                       <form action="/juzgados/marcabajajuzgado/{{_id}}?_method=PUT" method="POST"
                         onsubmit="return confirm('¿Desea Dar de Baja?')">
-                        <button class="btn btn-danger btn-sm" type="submit" title="Dar de Baja Juzgado" disabled><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-danger btn-sm" type="submit" title="Dar de Baja Juzgado" disabled><i
+                            class="fas fa-trash-alt"></i></button>
                         <input hidden id="idRetorno" name="idRetorno" value="{{expediente._id}}">
                       </form>
                       <form action="/juzgados/desmarcabajajuzgado/{{_id}}?_method=PUT" method="POST"
                         onsubmit="return confirm('¿Desea Recuperar?')">
-                        <button class="btn btn-success btn-sm" type="submit" title="Dar de Alta Juzgado" disabled><i class="fas fa-check"></i></button>
+                        <button class="btn btn-success btn-sm" type="submit" title="Dar de Alta Juzgado" disabled><i
+                            class="fas fa-check"></i></button>
                       </form>
                       <form action="/expedientes/marcadeleteexpedientesclientes/{{_id}}?_method=PUT" method="POST"
                         onsubmit="return confirm('¿Desea enviar a la papelera?')">
