@@ -26,10 +26,18 @@
         <form action="/notes/editaudiencia/{{audiencia._id}}?_method=PUT" method="POST">
 
           <!-- Juzgado -->
-          <div class="mb-3">
-            <label for="juzgado" class="form-label">Juzgado</label>
-            <input type="text" id="juzgado" name="juzgado" value="{{audiencia.juzgado}}" class="form-control"
+          {{!-- <div class="mb-3">
+            <label for="numjuzgado" class="form-label">Juzgado</label>
+            <input type="text" id="numjuzgado" name="numjuzgado" value="{{audiencia.numjuzgado}}" class="form-control"
               placeholder="Ej: Juzgado Civil Nº 3">
+              
+          </div> --}}
+          <div class="flex items-center justify-between mb-2">
+              <label for="selectJuzgado" class="block text-sm font-medium text-gray-700">Ingrese N° Juzgado:</label>
+              <input type="text" value="{{audiencia.numjuzgado}}" 
+              inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+              id="numjuzgado" name="numjuzgado" placeholder="Numero de Juzgado..."
+              class="hidden w-full mt-2 px-4 py-2 border border-blue-400 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-blue-50" required>
           </div>
 
           <!-- Nº Expediente -->
@@ -55,6 +63,7 @@
               <option>Pre-paralizado</option>
               <option>Paralizado</option>
               <option>Archivado</option>
+              <option>Otro...</option>
             </select>
           </div>
 

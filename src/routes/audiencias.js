@@ -26,10 +26,10 @@ router.put('/audiencia/listadoborradosenno', isAuthenticated, async (req, res) =
     res.redirect('/audiencia/listado');
 });
 
-router.get('/audiencias/add', isAuthenticated, async(req, res) => {
+router.get('/audiencias/add', isAuthenticated, async (req, res) => {
     const juzgado = await Juzgado.find({ borrado: "No" }).lean();
-    console.log ("JKuzgados" , juzgado)
-    res.render('notes/audiencias/newaudiencia' , {juzgado});
+    console.log("JKuzgados", juzgado)
+    res.render('notes/audiencias/newaudiencia', { juzgado });
 })
 
 router.get('/audiencias/add/:id', isAuthenticated, (req, res) => {
@@ -37,16 +37,17 @@ router.get('/audiencias/add/:id', isAuthenticated, (req, res) => {
 })
 
 router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
-    const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+    const idestudiouser = req.user.idestudio
+    const { idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones, user, name, date
     } = req.body;
     const newaudiencia = new Audiencia({
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+        idjuzgado, idestudiouser, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones, user, name, date
     })
     newaudiencia.user = req.user.id;
     newaudiencia.name = req.user.name;
-    newaudiencia.idestudiouser = req.user.idestudiouser
+    newaudiencia.idestudiouser = idestudiouser
     await newaudiencia.save();
     req.flash('success_msg', 'Audiencia Agregada Exitosamente');
     res.redirect('/audiencia/listado');
@@ -67,12 +68,12 @@ router.post('/audiencias/newaudiencia', isAuthenticated, async (req, res) => {
 // })
 router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
     const {
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria,
+        idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria,
         ultimanotificacion, horaaudiencia, dateturno, observaciones,
         user, name, date
     } = req.body;
     const errors = [];
-    if (!juzgado) {
+    if (!idjuzgado) {
         errors.push({ text: 'Por favor, ingrese el Juzgado.' });
     }
     if (!numexpediente) {
@@ -88,13 +89,13 @@ router.post('/notes/newaudiencia/:id', isAuthenticated, async (req, res) => {
         errors.forEach(error => req.flash('error_msg', error.text));
         return res.render('ruta/donde/esta/el/formulario', {
             errors,
-            juzgado, numexpediente, estadoexpediente, caratula, secretaria,
+            idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria,
             ultimanotificacion, horaaudiencia, dateturno, observaciones
         });
     }
     try {
         const newaudiencia = new Audiencia({
-            juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion,
+            idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion,
             horaaudiencia, dateturno, observaciones, user, name, date
         });
         newaudiencia.user = req.user.id;
@@ -186,7 +187,7 @@ router.post('/audiencia/descargarestadisticamesa', isAuthenticated, async (req, 
             //     contador += 1
         }
     } else if (juzgado) {
-        tablaaudiencia = await Audiencia.find({ juzgado: { $regex: juzgado, $options: "i" } }).lean();
+        tablaaudiencia = await Audiencia.find({ numjuzgado: { $regex: juzgado, $options: "i" } }).lean();
         filtro = juzgado;
         tipofiltro = "por Juzgado interviniente"
         ///contador = 0
@@ -198,17 +199,17 @@ router.post('/audiencia/descargarestadisticamesa', isAuthenticated, async (req, 
         // Y concatenar las multas 
         if (audiencia.juzgado == "Inspección Obras") {
             contio += 1
-        } else if (audiencia.juzgado == "Obras Particulares") {
+        } else if (audiencia.numjuzgado == "Obras Particulares") {
             contop += 1
-        } else if (audiencia.juzgado == "Visado") {
+        } else if (audiencia.numjuzgado == "Visado") {
             contvis += 1
-        } else if (audiencia.juzgado == "Sub Secretaria") {
+        } else if (audiencia.numjuzgado == "Sub Secretaria") {
             contsub += 1
         }
         contador += 1
         tabla += `<tr>   
         <td>-</td> 
-    <td style="text-transform: lowercase;">${audiencia.juzgado}</td>
+    <td style="text-transform: lowercase;">${audiencia.numjuzgado}</td>
     <td style="text-transform: lowercase;">${audiencia.numexpediente}</td>
     <td style="text-transform: lowercase;">${audiencia.nomyape}</td>
     <td style="text-transform: lowercase;">${audiencia.dni}</td>
@@ -381,97 +382,109 @@ router.get('/audiencia/listado', isAuthenticated, async (req, res) => {
     }
 });
 
-// router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
-//     const rolusuario = req.user.rolusuario;
-//     //console.log("ROL USUARIO", rolusuario) //Inspector
-//     if (rolusuario == "Administrador" || rolusuario == "Programador") {
-//         const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ horaaudiencia: 'desc' });
-//         for (var audiencias of audienciastabla) {            
-//             var tipoint = audiencias.dateturno;
-//             if (tipoint != null) {
-//                 const fecha = new Date(audiencias.dateturno);
-//                 const dia = fecha.getDate() + 1;
-//                 var mes = 0
-//                 const calcmes = fecha.getMonth() + 1
-//                 if (calcmes < 10) {
-//                     mes = "0" + calcmes + "-"
-//                 } else {
-//                     mes = calcmes + "-"
-//                 }
-//                 if (dia > 0 && dia < 10) {
-//                     var diastring = "0" + dia + "-"
-//                 } else {
-//                     var diastring = dia + "-"
-//                 }
-//                 const ano = fecha.getFullYear()                
-//                 const fullyear = diastring + mes + ano                
-//                 audiencias.dateturno = fullyear;
-//             } else {
-//                 audiencias.dateturno = "----"
-//             }
-//             audiencias = audienciastabla
-//         }
-//         console.log("Audiencias", audiencias)
-//         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
-//     } else {
-//         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS')
-//         return res.redirect('/');
-//     }
-// });
-
 router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
-    
-    if (rolusuario === "Administrador" || rolusuario === "Programador") {        
-        // 1. Definir la fecha de corte: Hoy a las 00:00:00.000
-        const hoy = new Date();
-        // Esto es crucial: establece la hora a medianoche para comparar solo el día.
-        hoy.setHours(0, 0, 0, 0); 
-        // 2. Usar la pipeline de agregación de MongoDB para filtrar por fecha de string
-        const audienciastabla = await Audiencia.aggregate([
-            // Paso A: Convertir el string 'dateturno' a un objeto Date (solo para filtrar/ordenar)
-            {
-                $addFields: {
-                    parsedDate: {
-                        $dateFromString: {
-                            dateString: '$dateturno',
-                            format: '%d-%m-%Y', // Asegura el formato DD-MM-YYYY
-                            onError: null       // Maneja registros con fecha nula o inválida
-                        }
-                    }
+    //console.log("ROL USUARIO", rolusuario) //Inspector
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
+
+        const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ dateturno: 'desc' });
+
+        for (var audienciass of audienciastabla) {
+            var tipoint = audienciass.dateturno;
+            if (tipoint != null) {
+                const fecha = new Date(audienciass.dateturno);
+                const dia = fecha.getDate() + 1;
+                var mes = 0
+                const calcmes = fecha.getMonth() + 1
+                if (calcmes < 10) {
+                    mes = "0" + calcmes + "-"
+                } else {
+                    mes = calcmes + "-"
                 }
-            },
-            // Paso B: Filtrar los documentos
-            {
-                $match: {
-                    borrado: "No",
-                    // CONDICIÓN CLAVE: parsedDate debe ser ESTRICTAMENTE MENOR ($lt) a hoy.
-                    // Esto incluye ayer y todos los días anteriores, excluyendo la fecha actual.
-                    parsedDate: { $lt: hoy } 
+                if (dia > 0 && dia < 10) {
+                    var diastring = "0" + dia + "-"
+                } else {
+                    var diastring = dia + "-"
                 }
-            },
-            // Paso C: Ordenar por la fecha parseada (descendente: más recientes primero)
-            {
-                $sort: { parsedDate: -1 } 
-            },
-            // Paso D: Limitar la cantidad de resultados (como tenías originalmente)
-            {
-                $limit: 30
-            },
-            // Paso E (Opcional): Excluir el campo temporal 'parsedDate'
-            {
-                $project: {
-                    parsedDate: 0
-                }
+                const ano = fecha.getFullYear()
+                const fullyear = diastring + mes + ano
+                audienciass.dateturno = fullyear;
+            } else {
+                audienciass.dateturno = "----"
             }
-        ]);
-        
-        // El campo 'dateturno' que se envía a la vista sigue siendo la cadena 'DD-MM-YYYY' original.
-        
-        console.log("Audiencias Vencidas", audienciastabla);
-        return res.render('notes/audiencias/planillalistaaudiencia', { audiencias: audienciastabla });
+            audienciass = audienciastabla
+        }
+
+        //const hoy = new Date().toISOString().split('T')[0];
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const parseFecha = (fechaStr) => {
+            const [dia, mes, anio] = fechaStr.split('-').map(Number);
+            // El mes en JS es de 0 a 11, por eso restamos 1
+            return new Date(anio, mes - 1, dia);
+        };
+        const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy); // pasadasyHoy
+        audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+
+
+        console.log("Audiencias", audiencias)
+        res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
     } else {
-        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS');
+        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS')
+        return res.redirect('/');
+    }
+});
+
+router.get('/audiencia/listado/proximas', isAuthenticated, async (req, res) => {
+    const rolusuario = req.user.rolusuario;
+    //console.log("ROL USUARIO", rolusuario) //Inspector
+    if (rolusuario == "Administrador" || rolusuario == "Programador") {
+
+        const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ dateturno: 'desc' });
+
+        for (var audienciass of audienciastabla) {
+            var tipoint = audienciass.dateturno;
+            if (tipoint != null) {
+                const fecha = new Date(audienciass.dateturno);
+                const dia = fecha.getDate() + 1;
+                var mes = 0
+                const calcmes = fecha.getMonth() + 1
+                if (calcmes < 10) {
+                    mes = "0" + calcmes + "-"
+                } else {
+                    mes = calcmes + "-"
+                }
+                if (dia > 0 && dia < 10) {
+                    var diastring = "0" + dia + "-"
+                } else {
+                    var diastring = dia + "-"
+                }
+                const ano = fecha.getFullYear()
+                const fullyear = diastring + mes + ano
+                audienciass.dateturno = fullyear;
+            } else {
+                audienciass.dateturno = "----"
+            }
+            audienciass = audienciastabla
+        }
+
+        //const hoy = new Date().toISOString().split('T')[0];
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const parseFecha = (fechaStr) => {
+            const [dia, mes, anio] = fechaStr.split('-').map(Number);
+            // El mes en JS es de 0 a 11, por eso restamos 1
+            return new Date(anio, mes - 1, dia);
+        };
+        //const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy);
+        const audiencias = audienciass.filter(a => parseFecha(a.dateturno) >= hoy); //hoy y futuras
+        audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+
+
+        console.log("Audiencias", audiencias)
+        res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
+    } else {
+        req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS')
         return res.redirect('/');
     }
 });
@@ -565,38 +578,38 @@ router.get('/audiencia/edit/:id', isAuthenticated, async (req, res) => {
     const audiencia = await Audiencia.findById(req.params.id).lean()
 
     var tipoint = audiencia.dateturno;
-            if (tipoint != null) {
-                const fecha = new Date(audiencia.dateturno);
-                const dia = fecha.getDate() + 1;
-                var mes = 0
-                const calcmes = fecha.getMonth() + 1
-                if (calcmes < 10) {
-                    mes = "0" + calcmes + "-"
-                } else {
-                    mes = calcmes + "-"
-                }
-                if (dia > 0 && dia < 10) {
-                    var diastring = "0" + dia + "-"
-                } else {
-                    var diastring = dia + "-"
-                }
-                const ano = fecha.getFullYear()
-                //const fullyear = fecha.toLocaleDateString();
-                const fullyear = diastring + mes + ano
-                //const fullyear = fecha.toLocaleDateString();
-                audiencia.dateturno = fullyear;
-            } else {
-                audiencia.dateturno = "----"
-            }
+    if (tipoint != null) {
+        const fecha = new Date(audiencia.dateturno);
+        const dia = fecha.getDate() + 1;
+        var mes = 0
+        const calcmes = fecha.getMonth() + 1
+        if (calcmes < 10) {
+            mes = "0" + calcmes + "-"
+        } else {
+            mes = calcmes + "-"
+        }
+        if (dia > 0 && dia < 10) {
+            var diastring = "0" + dia + "-"
+        } else {
+            var diastring = dia + "-"
+        }
+        const ano = fecha.getFullYear()
+        //const fullyear = fecha.toLocaleDateString();
+        const fullyear = diastring + mes + ano
+        //const fullyear = fecha.toLocaleDateString();
+        audiencia.dateturno = fullyear;
+    } else {
+        audiencia.dateturno = "----"
+    }
     res.render('notes/audiencias/editaudiencia', { audiencia })
 });
 
 router.put('/notes/editaudiencia/:id', isAuthenticated, async (req, res) => {
-    const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+    const { idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones } = req.body;
 
     await Audiencia.findByIdAndUpdate(req.params.id, {
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+        idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones
     });
     req.flash('success_msg', 'Audiencia actualizada')
@@ -632,6 +645,7 @@ router.get('/audiencia/list/:id', isAuthenticated, async (req, res) => {
     }
     res.render('notes/audiencias/listaudiencia', { audiencia })
 });
+
 router.get('/audiencia/borradolist/:id', isAuthenticated, async (req, res) => {
     const audiencia = await Audiencia.findById(req.params.id).lean()
     // console.log(note.date);
@@ -774,8 +788,8 @@ router.post('/audiencia/findcaratula', isAuthenticated, async (req, res) => {
 });
 
 router.post('/audiencia/findjuzgado', isAuthenticated, async (req, res) => {
-    const { juzgado } = req.body;
-    const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { juzgado: { $regex: juzgado, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
+    const { numjuzgado } = req.body;
+    const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { juzgado: { $regex: numjuzgado, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
     for (var audiencias of audienciastabla) {
         var tipoint = audiencias.dateturno;
         if (tipoint != null) {
@@ -936,10 +950,10 @@ router.post('/audiencia/borradofindlistafechaentrada', isAuthenticated, async (r
 
 // **** AGREGAR TURNO A CLIENTE HABITUAL ****
 router.put('/notes/editaddaudiencia/:id', isAuthenticated, async (req, res) => {
-    const { juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+    const { idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones } = req.body
     await Audiencia.findByIdAndUpdate(req.params.id, {
-        juzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
+        idjuzgado, numjuzgado, numexpediente, estadoexpediente, caratula, secretaria, ultimanotificacion, horaaudiencia,
         dateturno, observaciones
     });
     req.flash('success_msg', 'Audiencia nuevo Agregada')

@@ -6,3 +6,50 @@
     padding:6px;
     margin:12px 0 12px 0;
 }
+
+/* El contenedor debe ser relativo para que el badge se posicione respecto a él */
+.nav-item-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link i {
+  font-size: 1.5rem; /* Tamaño del icono */
+  color: #333;
+}
+
+/* Estilo del círculo de notificación */
+.notification-badge {
+  position: absolute;
+  top: -5px;      /* Ajusta según necesites */
+  right: -5px;    /* Ajusta según necesites */
+  background-color: #ff4d4d; /* Rojo vibrante */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1;
+  min-width: 10px;
+  text-align: center;
+  border: 2px solid white; /* Le da un efecto de separación del fondo */
+}
+
+/* Contenedor para el icono */
+.position-relative {
+  position: relative;
+  display: inline-block;
+}
+
+/* El redondito de notificación */
+.badge-dot {
+  position: absolute;
+  top: -2px;      /* Ajusta la altura */
+  right: -2px;    /* Ajusta hacia los lados */
+  width: 10px;
+  height: 10px;
+  background-color: #ff3b3b; /* Rojo */
+  border: 2px solid #343a40; /* Color oscuro para que combine con bg-dark */
+  border-radius: 50%;
+  display: inline-block;
+}

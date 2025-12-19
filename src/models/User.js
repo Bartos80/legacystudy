@@ -11,14 +11,14 @@ const UserSchema = new Schema({
     unique: true,
     sparse: true
   },
-  numestudio: {
-    type: String,
-    require: false,
-  },
-  idestudio: {
+   idestudio: {
     type: Number,
     require: false,
   },
+  numestudio: {
+    type: String,
+    require: false,
+  }, 
   idestudiouser: {
     type: Number,
     require: false,

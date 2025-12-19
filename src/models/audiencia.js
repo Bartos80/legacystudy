@@ -8,15 +8,7 @@ const AudienciaSchema = new Schema({
     idaudiencia: {
         type: Number,
         unique: true,
-        sparse: true // <--- ¡Esta es la clave!
-    },
-    // idestudio: {
-    // type: String,
-    // require: false,
-    // },
-    idestudiouser: { 
-        type: Number, 
-        require: false, 
+        sparse: true
     },
     borrado:{
         type: String,
@@ -32,8 +24,13 @@ const AudienciaSchema = new Schema({
         type: String,
         required: true,
         default:"Sin Datos",
+    }, 
+    idjuzgado: {
+        type: String,
+        require: false,
+        default: "No Informó"
     },    
-    juzgado: {
+    numjuzgado: {
         type: String,
         require: false,
         default: "No Informó"
@@ -84,14 +81,18 @@ const AudienciaSchema = new Schema({
     date: {
         type: Date, 
         default: Date.now
-    },
+    },    
+    idestudiouser: { 
+        type: Number, 
+        require: false, 
+    }
 });
 
 AudienciaSchema.plugin(AutoIncrement, {
-    inc_field: 'idaudiencia', 
-    start_seq: 1,           
-    reference_fields: [],   
-    id: 'audiencia_seq_counter' 
+  inc_field: 'idaudiencia', // El nombre del campo a autoincrementar (debe coincidir con el campo definido arriba)
+  start_seq: 1,           // Opcional: El número donde empezar el conteo (por defecto es 1)
+  reference_fields: [],   // Opcional: Campos para crear secuencias independientes
+  id: 'audiencia_seq_counter' // Opcional: Nombre del contador en la colección 'counters' de MongoDB
 });
 
 module.exports = mongoose.model("Audiencias", AudienciaSchema);

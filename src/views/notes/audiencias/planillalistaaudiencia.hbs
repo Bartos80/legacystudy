@@ -27,6 +27,7 @@
   <!-- Botones de acción --> 
   <div class="d-flex justify-content-between align-items-center mb-3"> 
     <a href="/Audiencia/listado/vencidas" class="btn btn-outline-secondary">+ Audiencias vencidas</a>
+    <a href="/Audiencia/listado/proximas" class="btn btn-outline-secondary">+ Audiencias Próximas</a>
     <a href="/Audiencias/add" class="btn btn-success">+ Agregar Audiencia</a>
     <a href="/audiencia/listado" class="btn btn-outline-secondary btn-sm">↻ Recargar Listado</a>
   </div>
@@ -54,7 +55,7 @@
             <tbody>
               {{#each audiencias}}
               <tr class="text-center">
-                <td class="text-capitalize">{{ juzgado }}</td>
+                <td class="text-capitalize">{{ numjuzgado }}</td>
                 <td>{{ numexpediente }}</td>
                 <td>{{ estadoexpediente }}</td>
                 <td>{{ caratula }}</td>
