@@ -339,7 +339,7 @@ router.get('/audiencia/listado', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
     if (rolusuario == "Administrador" || rolusuario == "Programador") {
-        const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ horaaudiencia: 'desc' });
+        const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ dateturno: 'desc' });
         for (var audiencias of audienciastabla) {
             //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
             //expedcoordresultado.fechaintimacion = expedcoordresultadotabla.fechaintimacion;       
@@ -374,7 +374,15 @@ router.get('/audiencia/listado', isAuthenticated, async (req, res) => {
             //console.log("expedcoordresultado", audiencias);
             //console.log("expedcoordresultadotabla", expedcoordresultadotabla);
         }
-        //res.render('notes/inspecciones/listexpcordintvenc', { expedcoordresultado });
+        // const parseFecha = (fechaStr) => {
+        //     const [dia, mes, anio] = fechaStr.split('-').map(Number);
+        //     // El mes en JS es de 0 a 11, por eso restamos 1
+        //     return new Date(anio, mes - 1, dia);
+        // };
+        // const audienciass = audiencias.filter(a => parseFecha(a.dateturno))
+        // audienciass.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+        // //res.render('notes/inspecciones/listexpcordintvenc', { expedcoordresultado });
+        // audiencias = audienciass
         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA MESA DE ENTRADA')
@@ -424,10 +432,10 @@ router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
             return new Date(anio, mes - 1, dia);
         };
         const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy); // pasadasyHoy
-        audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+        // audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
 
 
-        console.log("Audiencias", audiencias)
+        // console.log("Audiencias", audiencias)
         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS')
@@ -478,7 +486,7 @@ router.get('/audiencia/listado/proximas', isAuthenticated, async (req, res) => {
         };
         //const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy);
         const audiencias = audienciass.filter(a => parseFecha(a.dateturno) >= hoy); //hoy y futuras
-        audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+        //audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
 
 
         console.log("Audiencias", audiencias)

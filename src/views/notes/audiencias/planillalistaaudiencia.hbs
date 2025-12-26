@@ -1,35 +1,42 @@
 <div class="container my-4">
   <!-- Filtros de búsqueda -->
-  <div class="row g-3 mb-4">
-    <div class="col-md-4">
+  <div class="row g-3 mb-3">
+    <div class="col-md-3">
       <form action="/Audiencia/findjuzgado" method="POST">
-        <input type="search" class="form-control" name="juzgado" placeholder="Buscar por Juzgado..." />
-        <button class="btn btn-outline-primary w-100 mt-2" type="submit">Buscar por Juzgado</button>
+        <input type="search" class="form-control" name="juzgado" placeholder="Buscar x Juzgado..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
       </form>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <form action="/audiencia/findexpediente" method="POST">
         <input type="search" class="form-control" name="numexpediente"
-          placeholder="Buscar por Número de Expediente..." />
-        <button class="btn btn-outline-primary w-100 mt-2" type="submit">Buscar Expediente</button>
+          placeholder="Buscar x Expediente..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
       </form>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <form action="/Audiencia/findcaratula" method="POST">
-        <input type="search" class="form-control" name="caratula" placeholder="Buscar por Carátula..." />
-        <button class="btn btn-outline-primary w-100 mt-2" type="submit">Buscar Carátula</button>
+        <input type="search" class="form-control" name="caratula" placeholder="Buscar x Carátula..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
+      </form>
+    </div>
+
+    <div class="col-md-3">
+      <form action="/Audiencia/findfecha" method="POST">
+        <input type="search" class="form-control" name="fecha" placeholder="Buscar por Fecha..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
       </form>
     </div>
   </div>
 
   <!-- Botones de acción --> 
   <div class="d-flex justify-content-between align-items-center mb-3"> 
-    <a href="/Audiencia/listado/vencidas" class="btn btn-outline-secondary">+ Audiencias vencidas</a>
-    <a href="/Audiencia/listado/proximas" class="btn btn-outline-secondary">+ Audiencias Próximas</a>
+    <a href="/Audiencia/listado/vencidas" class="btn btn-danger">+ Audiencias vencidas</a>
+    <a href="/Audiencia/listado/proximas" class="btn btn-warning">+ Audiencias Próximas</a>
     <a href="/Audiencias/add" class="btn btn-success">+ Agregar Audiencia</a>
-    <a href="/audiencia/listado" class="btn btn-outline-secondary btn-sm">↻ Recargar Listado</a>
+    <a href="/audiencia/listado" class="btn btn-outline-secondary btn-sm">↻ Recargar Listado Total</a>
   </div>
 
   <!-- Tabla de Audiencias -->
