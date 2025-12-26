@@ -900,14 +900,49 @@ router.post('/audiencia/findlistaexpediente', isAuthenticated, async (req, res) 
     }
 });
 
-router.post('/audiencia/findfechaentrada', isAuthenticated, async (req, res) => {
-    const { fechaingreso } = req.body;
-    const audiencias = await Audiencia.find({ $and: [{ borrado: "No" }, { fechaingreso: { $regex: fechaingreso, $options: "i" } }] }).lean().sort({ horaaudiencia: 'desc' })
+router.post('/audiencia/findfecha', isAuthenticated, async (req, res) => {
+    var { dateturno } = req.body;
+    var fechaRevertida = dateturno.split('-').reverse().join('-');
+    const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { dateturno: { $regex: fechaRevertida , $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
+    for (var audiencias of audienciastabla) {
+        //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
+        //expedcoordresultado.fechaintimacion = expedcoordresultadotabla.fechaintimacion;       
+
+        // permite mostrar en las tablas la fecha sola y ordenada
+        var tipoint = audiencias.dateturno;
+        if (tipoint != null) {
+            const fecha = new Date(audiencias.dateturno);
+            const dia = fecha.getDate() + 1;
+            var mes = 0
+            const calcmes = fecha.getMonth() + 1
+            if (calcmes < 10) {
+                mes = "0" + calcmes + "-"
+            } else {
+                mes = calcmes + "-"
+            }
+            if (dia > 0 && dia < 10) {
+                var diastring = "0" + dia + "-"
+            } else {
+                var diastring = dia + "-"
+            }
+            const ano = fecha.getFullYear()
+            //const fullyear = fecha.toLocaleDateString();
+            const fullyear = diastring + mes + ano
+            //const fullyear = fecha.toLocaleDateString();
+            audiencias.dateturno = fullyear;
+        } else {
+            audiencias.dateturno = "----"
+        }
+        // necesito igualar para que se copie el cambio
+        audiencias = audienciastabla
+        //console.log("expedcoordresultado", audiencias);
+        //console.log("expedcoordresultadotabla", expedcoordresultadotabla);
+    }
     if (!audiencias) {
         req.flash('success_msg', 'cargue Fecha Ingreso')
-        return res.render("notes/allaudiencia");
+        return res.render('notes/audiencias/planillalistaaudiencia')
     } else {
-        res.render('notes/findaudiencia', { audiencias })
+        res.render('notes/audiencias/planillalistaaudiencia', { audiencias })
     }
 });
 
