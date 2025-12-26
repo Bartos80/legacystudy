@@ -447,7 +447,7 @@ router.get('/audiencia/listado/proximas', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
     if (rolusuario == "Administrador" || rolusuario == "Programador") {
-        const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ dateturno: 'desc' });
+        const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ dateturno: 'asc' });
 
         for (var audienciass of audienciastabla) {
             var tipoint = audienciass.dateturno;
