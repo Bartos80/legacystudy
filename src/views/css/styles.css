@@ -53,3 +53,14 @@
   border-radius: 50%;
   display: inline-block;
 }
+
+/* Animación simple para que el badge de "HOY" parpadee suavemente */
+.pulse {
+    animation: shadow-pulse 2s infinite;
+}
+
+@keyframes shadow-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

@@ -447,7 +447,6 @@ router.get('/audiencia/listado/proximas', isAuthenticated, async (req, res) => {
     const rolusuario = req.user.rolusuario;
     //console.log("ROL USUARIO", rolusuario) //Inspector
     if (rolusuario == "Administrador" || rolusuario == "Programador") {
-
         const audienciastabla = await Audiencia.find({ borrado: "No" }).limit(30).lean().sort({ dateturno: 'desc' });
 
         for (var audienciass of audienciastabla) {
@@ -494,6 +493,50 @@ router.get('/audiencia/listado/proximas', isAuthenticated, async (req, res) => {
     } else {
         req.flash('success_msg', 'NO TIENE PERMISO PARA AREA AUDIENCIAS')
         return res.redirect('/');
+    }
+});
+
+
+router.get('/audiencia/notificaciones', isAuthenticated, async (req, res) => {
+    try {
+        const rolusuario = req.user.rolusuario;
+
+        if (rolusuario === "Administrador" || rolusuario === "Programador") {
+            // Obtenemos la fecha de hoy en formato YYYY-MM-DD
+            const hoyObj = new Date();
+            const hoyString = hoyObj.toISOString().split('T')[0]; // "2025-12-26" (ejemplo)            
+
+            // 1. Buscamos audiencias no borradas cuya fecha sea de hoy en adelante
+            // Nota: Es mejor filtrar directamente en la consulta de MongoDB por rendimiento
+            // Buscamos audiencias desde hoy en adelante
+            // Si dateturno es String, la comparación de strings "2026-01-12" >= "2025-12-26" funciona perfecto
+            const audiencias = await Audiencia.find({ 
+                borrado: "No",
+                dateturno: { $gte: hoyString } 
+            })
+            .sort({ dateturno: 1 }) 
+            .limit(5)
+            .lean();
+
+            // 2. Formateamos la fecha para que el frontend la lea fácil (DD-MM-YYYY)
+            // ... dentro de tu ruta /api/audiencias/notificaciones
+            const audienciasFormateadas = audiencias.map(a => {
+                // Invertimos de YYYY-MM-DD a DD-MM-YYYY para el usuario
+                const partes = a.dateturno.split('-');
+                const fechaLegible = `${partes[2]}-${partes[1]}-${partes[0]}`;
+                
+                return { 
+                    ...a, 
+                    fechaFormateada: fechaLegible,
+                    esHoy: a.dateturno === hoyString // Comparación directa de strings
+                };
+            });
+            res.json(audienciasFormateadas);
+        } else {
+            res.status(403).json({ mensaje: "No autorizado" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -903,7 +946,7 @@ router.post('/audiencia/findlistaexpediente', isAuthenticated, async (req, res) 
 router.post('/audiencia/findfecha', isAuthenticated, async (req, res) => {
     var { dateturno } = req.body;
     var fechaRevertida = dateturno.split('-').reverse().join('-');
-    const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { dateturno: { $regex: fechaRevertida , $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
+    const audienciastabla = await Audiencia.find({ $and: [{ borrado: "No" }, { dateturno: { $regex: fechaRevertida, $options: "i" } }] }).lean().sort({ dateturno: 'desc' })
     for (var audiencias of audienciastabla) {
         //var fechaintimacion = expedcoordresultadotabla.fechaintimacion;
         //expedcoordresultado.fechaintimacion = expedcoordresultadotabla.fechaintimacion;       

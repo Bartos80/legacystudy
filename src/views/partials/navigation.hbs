@@ -116,7 +116,9 @@
           </div>
         </li>
 
+
       </ul>
+
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
@@ -124,6 +126,34 @@
 
         </li>
       </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link text-success font-weight-bold" href="/users/logout"></a>
+
+        </li>
+      </ul>
+
+      {{!-- <ul class="navbar-nav ml-auto">
+        <li>
+          <div class="dropdown">
+            <button class="btn-notif">
+              🔔 <span id="notif-count" class="badge">0</span>
+            </button>
+          </div>
+        </li>
+      </ul> --}}
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" id="notifBtn" data-toggle="dropdown">
+          🔔 <span class="badge badge-danger" id="notif-count">0</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" id="notif-list">
+          <h6 class="dropdown-header">Audiencias Próximas</h6>
+          <div id="items-contenedor"></div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-center small" href="/audiencia/listado">Ver todas</a>
+        </div>
+      </li>
 
       {{else}}
 
@@ -141,3 +171,27 @@
     </div>
   </div>
 </nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const res = await fetch('/audiencia/notificaciones');
+    if (res.ok) {
+      const audiencias = await res.json();
+      const count = document.getElementById('notif-count');
+      const container = document.getElementById('items-contenedor');
+
+      count.innerText = audiencias.length;
+
+      if (audiencias.length > 0) {
+        container.innerHTML = audiencias.map(a => `
+                <a class="dropdown-item" href="/audiencia/detalle/${a._id}">
+                    <strong>${a.titulo || 'Audiencia'}</strong><br>
+                    <small class="text-muted">${a.fechaFormateada}</small>
+                </a>
+            `).join('');
+      } else {
+        container.innerHTML = '<p class="text-center small">No hay audiencias próximas</p>';
+      }
+    }
+  });
+</script>

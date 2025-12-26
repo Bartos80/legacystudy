@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
     if (!user){
         return done(null, false, {message: 'Usuario No existente!'});
     } else {
-        console.log('password', password)
+        //console.log('password', password)
         const match = await user.matchPassword(password); // user es de la instanscia d la clase const user linea 9
         console.log('match', match)
         if (match){
