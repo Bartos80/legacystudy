@@ -106,6 +106,7 @@ app.use(require('./routes/clientes.js'));
 app.use(require('./routes/audiencias.js'));
 app.use(require('./routes/abogados.js'));
 app.use(require('./routes/juzgados.js'));
+app.use(require('./routes/cobros.js'));
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));

@@ -431,9 +431,12 @@ router.get('/audiencia/listado/vencidas', isAuthenticated, async (req, res) => {
             // El mes en JS es de 0 a 11, por eso restamos 1
             return new Date(anio, mes - 1, dia);
         };
-        const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy); // pasadasyHoy
-        // audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
 
+        const audiencias = "";
+        if (audienciass) {
+            audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy); // pasadasyHoy
+            // audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+        }
 
         // console.log("Audiencias", audiencias)
         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
@@ -483,10 +486,12 @@ router.get('/audiencia/listado/proximas', isAuthenticated, async (req, res) => {
             // El mes en JS es de 0 a 11, por eso restamos 1
             return new Date(anio, mes - 1, dia);
         };
-        //const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy);
-        const audiencias = audienciass.filter(a => parseFecha(a.dateturno) >= hoy); //hoy y futuras
-        //audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
-
+        const audiencias = "";
+        if (audienciass) {
+            //const audiencias = audienciass.filter(a => parseFecha(a.dateturno) <= hoy);
+            audiencias = audienciass.filter(a => parseFecha(a.dateturno) >= hoy); //hoy y futuras
+            //audiencias.sort((a, b) => parseFecha(a.dateturno) - parseFecha(b.dateturno));
+        } 
 
         console.log("Audiencias", audiencias)
         res.render('notes/audiencias/planillalistaaudiencia', { audiencias });
@@ -510,13 +515,13 @@ router.get('/audiencia/notificaciones', isAuthenticated, async (req, res) => {
             // Nota: Es mejor filtrar directamente en la consulta de MongoDB por rendimiento
             // Buscamos audiencias desde hoy en adelante
             // Si dateturno es String, la comparación de strings "2026-01-12" >= "2025-12-26" funciona perfecto
-            const audiencias = await Audiencia.find({ 
+            const audiencias = await Audiencia.find({
                 borrado: "No",
-                dateturno: { $gte: hoyString } 
+                dateturno: { $gte: hoyString }
             })
-            .sort({ dateturno: 1 }) 
-            .limit(5)
-            .lean();
+                .sort({ dateturno: 1 })
+                .limit(5)
+                .lean();
 
             // 2. Formateamos la fecha para que el frontend la lea fácil (DD-MM-YYYY)
             // ... dentro de tu ruta /api/audiencias/notificaciones
@@ -524,9 +529,9 @@ router.get('/audiencia/notificaciones', isAuthenticated, async (req, res) => {
                 // Invertimos de YYYY-MM-DD a DD-MM-YYYY para el usuario
                 const partes = a.dateturno.split('-');
                 const fechaLegible = `${partes[2]}-${partes[1]}-${partes[0]}`;
-                
-                return { 
-                    ...a, 
+
+                return {
+                    ...a,
                     fechaFormateada: fechaLegible,
                     esHoy: a.dateturno === hoyString // Comparación directa de strings
                 };

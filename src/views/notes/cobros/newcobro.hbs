@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-header">
+        <h4>Registrar Nuevo Cobro</h4>
+    </div>
+    <div class="card-body">
+        <form action="/cobros/nuevo" method="POST">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Cliente / Asociados / etc.</label>
+                    <input type="text" name="clienteId" class="form-control" placeholder="Nombre y Apellido" required>
+                    {{!-- por si necesito llamar desde la tabla clientes --}}
+                    {{!-- <select name="clienteId" class="form-control" required>
+                        {{#each clientes}}
+                        <option value="{{this._id}}">{{this.nombre}} - {{this.causa}}</option>
+                        {{/each}}
+                    </select> --}}
+                </div>
+
+                <div class="col-md-3 form-group">
+                    <label>Monto a Cobrar</label>
+                    <input type="number" name="montoTotal" class="form-control" placeholder="0.00" step="0.01" required>
+                </div>
+
+                <div class="col-md-3 form-group">
+                    <label>Concepto</label>
+                    <select name="concepto" class="form-control">
+                        <option value="Honorarios">Honorarios</option>
+                        <option value="Gastos Judiciales">Gastos Judiciales</option>
+                        <option value="Consulta">Consulta</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-4 form-group">
+                    <label>Método de Pago</label>
+                    <select name="metodoPago" class="form-control">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia</option>
+                        <option value="Cheque">Cheque</option>
+                    </select>
+                </div>
+
+                <div class="col-md-8 form-group">
+                    <label>Notas / Observaciones</label>
+                    <input type="text" name="notas" class="form-control" placeholder="Ej: Pago de primera cuota">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-4 btn-block">
+                💾 Registrar Cobro
+            </button>
+        </form>
+    </div>
+</div>

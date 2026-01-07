@@ -26,12 +26,12 @@ const SALT_ROUNDS = 10; // Nivel de seguridad del hashing
 //createAdminIfNoUsers(); // Llamar a la función al cargar este módulo
 
 async function createAdminIfNoUsers() {
-    console.log('--- Iniciando verificación de usuarios en MongoDB ---');
+    //console.log('--- Iniciando verificación de usuarios en MongoDB ---');
     try {
         // 1. Contar el número de documentos en la colección 'users'
         const userCount = await User.countDocuments({});
         if (userCount === 0) {
-            console.log('¡Colección de usuarios vacía! Creando usuario Administrador por defecto...');
+            //console.log('¡Colección de usuarios vacía! Creando usuario Administrador por defecto...');
             const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD_RAW, SALT_ROUNDS);
             // 3. Crear (Insertar) el nuevo usuario Administrador usando el modelo Mongoose
             const newUser = await User.create({
@@ -84,7 +84,7 @@ router.get('/users/11vvsOpmo90W', isAuthenticated, async (req, res) => {
         // const estudio = Estudios.find().lean().sort({ date: 'desc' });; 
         const estudios = await Estudio.find({ borrado: "No" }).lean().sort({ numestudio: 'desc' });
         try {
-            console.log("estudios", estudios)
+            //console.log("estudios", estudios)
             res.render('users/signup', { estudios });
         } catch (error) {
             console.error("Error al obtener el listado de estudios:", error);

@@ -1,0 +1,86 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card shadow-lg border-primary">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0" style="font-weight: bold;">
+                        <i class="fas fa-user-circle"></i> Información Cobro
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    {{! The form remains a PUT method for potential future edits, though fields are disabled }}
+                    <form action="/cobro/list/{{cobro._id}}?_method=PUT" method="POST">
+                        <input type="hidden" name="_method" value="PUT">
+
+                        <div class="mb-3">
+                            <label for="numjuzgado" class="form-label fw-bold">Cliente:</label>
+                            <input onkeyup="ShowName();" type="text" class="form-control text-center" id="numjuzgado"
+                                name="numjuzgado" value="{{cobro.clienteId}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="numexpediente" class="form-label fw-bold">Concepto:</label>
+                            <input type="text" class="form-control text-center" id="numexpediente" name="numexpediente"
+                                value="{{cobro.concepto}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="metodoPago" class="form-label fw-bold">Metodo:</label>
+                            <input type="text" class="form-control text-center" id="estadoexpediente" name="estadoexpediente"
+                                value="{{cobro.metodoPago}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="montoTotal" class="form-label fw-bold">Monto:</label>
+                            <input type="text" class="form-control text-center" id="caratula" name="caratula"
+                                value="{{cobro.montoTotal}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="soloFecha" class="form-label fw-bold">Fecha Cobro:</label>
+                            <input id="soloFecha" type="text" class="form-control text-center"
+                                name="soloFecha" value="{{cobro.soloFecha}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="soloHora" class="form-label fw-bold">Hora Cobro:</label>
+                            <input onkeyup="ponerminuscula()" id="dateturno" type="text" class="form-control text-center"
+                                name="soloHora" value="{{cobro.soloHora}}" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="horacobro" class="form-label fw-bold">Hora Cobro:</label>
+                            <input type="text" class="form-control text-center" id="horacobro" name="horacobro"
+                                value="{{cobro.horacobro}} Hs"  disabled>
+                        </div>
+
+                        {{!-- <div class="mb-3">
+                            <label for="dateturno" class="form-label fw-bold">Fecha Saco Turno:</label>
+                            <input type="text" class="form-control text-center" id="dateturno" name="dateturno"
+                                value="{{cobro.dateturno}}" disabled>
+                        </div> --}}
+
+                        <div class="mb-3">
+                            <label for="observaciones" class="form-label fw-bold">Observaciones:</label>
+                            <input type="text" class="form-control text-center" id="observaciones" name="observaciones"
+                                placeholder="Sin observaciones" value="{{cobro.observaciones}}" disabled>
+                        </div>
+
+                        {{! --- Action Buttons --- }}
+                        <hr class="mt-4 mb-3">
+
+                        <a class="btn btn-warning w-100 fw-bold mb-3" href="/cobro/edit/{{cobro._id}}">
+                            <i class="fas fa-edit"></i> Editar Cobro
+                        </a>
+
+                        <div class="text-center">
+                            <a href="javascript:window.history.back();" class="text-primary text-decoration-none fw-bold">
+                                &laquo; Volver Atrás
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

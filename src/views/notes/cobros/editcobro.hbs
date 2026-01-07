@@ -1,0 +1,124 @@
+<script>
+  function ShowName(name) {
+    const input = document.getElementById(name);
+    const words = input.value.trim().split(" ");
+    const formatted = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+    input.value = formatted;
+  }
+
+  function ponerMayuscula(id) {
+    const input = document.getElementById(id);
+    input.value = input.value.toUpperCase();
+  }
+
+  function ponerminuscula(id) {
+    const input = document.getElementById(id);
+    input.value = input.value.toLowerCase();
+  }
+</script>
+
+<div class="container my-5">
+  <div class="col-md-8 mx-auto">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h3 class="text-center text-primary mb-4 fw-bold">Editar Cobro</h3>
+
+        <form action="/notes/editcobro/{{cobro._id}}?_method=PUT" method="POST">
+
+          <!-- Juzgado -->
+          {{!-- <div class="mb-3">
+            <label for="numjuzgado" class="form-label">Juzgado</label>
+            <input type="text" id="numjuzgado" name="numjuzgado" value="{{cobro.numjuzgado}}" class="form-control"
+              placeholder="Ej: Juzgado Civil Nº 3">
+              
+          </div> --}}
+          <div class="flex items-center justify-between mb-2">
+              <label for="selectJuzgado" class="block text-sm font-medium text-gray-700">Ingrese N° Juzgado:</label>
+              <input type="text" value="{{cobro.numjuzgado}}" 
+              inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+              id="numjuzgado" name="numjuzgado" placeholder="Numero de Juzgado..."
+              class="hidden w-full mt-2 px-4 py-2 border border-blue-400 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-blue-50" required>
+          </div>
+
+          <!-- Nº Expediente -->
+          <div class="mb-3">
+            <label for="numexpediente" class="form-label">Nº de Expediente</label>
+            <input type="text" id="numexpediente" name="numexpediente" value="{{cobro.numexpediente}}"
+              class="form-control" placeholder="Ej: 12345/2024" onkeyup="ponerMayuscula('numexpediente')" autofocus>
+          </div>
+
+          <!-- estadoexpediente -->
+          {{!-- <div class="mb-3">
+            <label for="caratula" class="form-label">Carátula</label>
+            <input type="text" id="estadoexpediente" name="estadoexpediente" value="{{cobro.estadoexpediente}}"
+              class="form-control" placeholder="Estado del Expediente">
+          </div> --}}
+          <div class="form-group mb-3">
+            <label for="estadoexpediente" class="form-label">Estado del Expediente</label>
+            <select name="estadoexpediente" id="estadoexpediente" class="form-select" required>
+              <option></option>
+              <option>A despacho</option>
+              <option>En vista/giro</option>
+              <option>En fiscalía</option>
+              <option>Pre-paralizado</option>
+              <option>Paralizado</option>
+              <option>Archivado</option>
+              <option>Otro...</option>
+            </select>
+          </div>
+
+          <!-- Caratula -->
+          <div class="mb-3">
+            <label for="caratula" class="form-label">Carátula</label>
+            <input type="text" id="caratula" name="caratula" value="{{cobro.caratula}}" class="form-control"
+              placeholder="Carátula del Expediente">
+          </div>
+
+          <!-- Secretaría -->
+          <div class="mb-3">
+            <label for="secretaria" class="form-label">Secretaría</label>
+            <input type="text" id="secretaria" name="secretaria" value="{{cobro.secretaria}}" class="form-control"
+              placeholder="Ej: Secretaría B">
+          </div>
+
+          <div class="mb-3">
+            <label for="dateturno" class="form-label fw-bold">Fecha Cobro:  (si desea cambiar registre nueva cobro)</label>
+            <input onkeyup="ponerminuscula()" id="dateturno" type="text" class="form-control"
+              name="dateturno" value="{{cobro.dateturno}}" disabled>
+          </div>
+          
+          <!-- Hora Cobro -->
+          <div class="mb-3">
+            <label for="horacobro" class="form-label">Hora Cobro</label>
+            <input type="time" id="horacobro" name="horacobro" value="{{cobro.horacobro}}"
+              class="form-control" placeholder="Ej: 10:00 AM" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="horacobro" class="form-label">Fecha que Pidio el Turno</label>
+            <input type="text" id="dateturno" name="dateturno" value="{{cobro.date}}" class="form-control"
+              placeholder="Ej: 10:00 AM" disabled>
+          </div>
+
+          <div class="form-group">
+            Observaciones:
+            <input type="text" style="font-weight: bold; color:green" minlength="0" maxlength="50" name="observaciones"
+              class="form-control" placeholder="Observaciones" value="{{cobro.observaciones}}"></input>
+          </div>
+          <p></p>
+
+          <!-- Botón guardar -->
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">Guardar Cobro</button>
+          </div>
+          <!-- Volver -->
+          <div class="text-center">
+            <a href="/Cobro/listado" class="text-decoration-none text-muted">
+              <i class="fas fa-arrow-left me-1"></i> Volver al listado
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

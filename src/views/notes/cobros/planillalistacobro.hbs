@@ -1,0 +1,97 @@
+<div class="container my-4">
+  <!-- Filtros de búsqueda -->
+  <div class="row g-3 mb-3">
+    <div class="col-md-3">
+      <form action="/Cobro/findjuzgado" method="POST">
+        <input type="search" class="form-control" name="juzgado" placeholder="Buscar x Juzgado..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
+      </form>
+    </div>
+
+    <div class="col-md-3">
+      <form action="/cobro/findexpediente" method="POST">
+        <input type="search" class="form-control" name="numexpediente"
+          placeholder="Buscar x Expediente..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
+      </form>
+    </div>
+
+    <div class="col-md-3">
+      <form action="/cobro/findcaratula" method="POST">
+        <input type="search" class="form-control" name="caratula" placeholder="Buscar x Carátula..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
+      </form>
+    </div>
+
+    <div class="col-md-3">
+      <form action="/cobro/findfecha" method="POST">
+        <input type="search" class="form-control" name="dateturno" placeholder="Buscar por Fecha..." />
+        <button class="btn btn-outline-primary w-50 mt-2" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Botones de acción --> 
+  <div class="d-flex justify-content-between align-items-center mb-3">     
+    <a href="/Cobros/add" class="btn btn-success">+ Agregar Cobro</a>
+    <a href="/cobro/listado" class="btn btn-outline-secondary btn-sm">↻ Recargar Listado Total</a>
+  </div>
+
+  <!-- Tabla de Cobros -->
+  {{!-- <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle border rounded shadow-sm">
+      <thead class="table-light text-center"> --}}
+        <!-- Tabla responsiva de clientes -->
+        {{#if cobros.length}}
+        <div class="table-responsive rounded shadow-sm border">
+          <table class="table table-striped table-bordered align-middle text-nowrap">
+            <thead class="table-primary text-dark text-center">
+              <tr>
+                <th>Cliente</th>
+                <th>Concepto</th>
+                <th>Metodo</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Opciones</th>
+                <th>+Más</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each cobros}}
+              <tr class="text-center">
+                <td class="text-capitalize">{{ clienteId }}</td>
+                <td>{{ concepto }}</td>
+                <td>{{ metodoPago }}</td>
+                <td><strong>${{ montoTotal }}</td>
+                <td class="text-lowercase text-danger fw-bold">{{ soloFecha }}</td>
+                <td class="text-lowercase text-danger fw-bold">{{ soloHora }}</td>
+                <td>
+                  <div class="d-flex justify-content-center gap-2">
+                    <a href="/cobro/list/{{_id}}" class="btn btn-info btn-sm w-100">+Info</a>                    
+                  </div>
+                </td>
+                <td>
+                  {{!-- <a href="/cobro/edit/{{_id}}"  class="btn btn-outline-warning btn-sm w-100">Editar</a> --}}
+                  <form onSubmit="return confirm('Desea enviar Cobro seleccionada a Papelera?')" style=""
+                    action="/cobro/marcadelete/{{_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <button class="btn btn-outline-danger btn-sm w-100"  type="submit">
+                      Papelera
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        {{else}}
+        <div class="alert alert-warning text-center mt-5" role="alert">
+          🚫 No Hay Cobros por mostrar - Pulse Recargar.
+        </div>
+        {{/if}}
+        {{!-- </tbody>
+    </table>
+  </div> --}}
+</div>

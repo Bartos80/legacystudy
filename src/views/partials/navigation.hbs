@@ -22,6 +22,22 @@
           {{!-- <a class="dropdown-item" href="/mesaentrada/Estadisticas">Estadísticas</a> --}}
         </div>
       </li>
+      {{!-- Cobros --}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle  text-warning" href="#" id="cobrosDropdown" data-toggle="dropdown">
+          <i class="fas fa-money-check-alt me-1"></i> Cobros
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/cobro/listado">Cobros Generales</a>
+          <a class="dropdown-item" href="/cobros/nuevocobro">Agregar Cobro</a>
+          <a class="dropdown-item" href="/cobros/cajadiaria">Caja Diaria</a>
+          {{!-- <a class="dropdown-item" href="/">A Clientes</a>
+          <a class="dropdown-item" href="/">A Profesionales</a>
+          <a class="dropdown-item" href="/">A Asociados</a>
+          <a class="dropdown-item" href="/">Ver Cobro Judicial/Sellados</a> --}}
+
+        </div>
+      </li>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="turnosDropdown" data-toggle="dropdown">
@@ -58,19 +74,6 @@
             <a class="dropdown-item" href="/abogados/add">Agregar Abogado</a>
             <a class="dropdown-item" href="/juzgados/add">Agregar Juzgado</a>
             <a class="dropdown-item" href="/estudios/add">Agregar Estudio</a>
-          </div>
-        </li>
-        {{!-- Cobros --}}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="cobrosDropdown" data-toggle="dropdown">
-            <i class="fas fa-money-check-alt me-1"></i> Cobros
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/">A Clientes</a>
-            <a class="dropdown-item" href="/">A Profesionales</a>
-            <a class="dropdown-item" href="/">A Asociados</a>
-            <a class="dropdown-item" href="/">Ver Tasa Judicial/Sellados</a>
-            <a class="dropdown-item" href="/">Agregar Tasa</a>
           </div>
         </li>
 
@@ -115,18 +118,13 @@
             <a class="dropdown-item" href="/expedientes/borradolistado">Expedientes</a>
           </div>
         </li>
-
-
       </ul>
-
-
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link text-danger font-weight-bold" href="/users/logout">CerrarSesion</a>
 
         </li>
       </ul>
-
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link text-success font-weight-bold" href="/users/logout"></a>
